@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
-//@ApiModel(value = "EntityStatistics", description = "Statistics for an entity type")
 public class EntityStatistics extends Statistics {
     private Double pValue;
     private Double fdr;

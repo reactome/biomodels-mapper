@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
-//@ApiModel(value = "ReactionStatistics", description = "Statistics for a reaction type")
 public class ReactionStatistics extends Statistics {
 
     @JsonCreator
