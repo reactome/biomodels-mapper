@@ -57,7 +57,7 @@ public class SBMLModelFactory {
         } catch (BioModelsWSException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
     private static String[] getSBMLModelAuthors(String modelId) {
@@ -66,7 +66,7 @@ public class SBMLModelFactory {
         } catch (BioModelsWSException e) {
             e.printStackTrace();
         }
-        return null;
+        return new String[0];
     }
 
     private static String getSBMLModelPublication(String modelId) {
@@ -75,7 +75,7 @@ public class SBMLModelFactory {
         } catch (BioModelsWSException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
     private static String getSBMLModelName(String modelId) {
@@ -84,7 +84,7 @@ public class SBMLModelFactory {
         } catch (BioModelsWSException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
     /**

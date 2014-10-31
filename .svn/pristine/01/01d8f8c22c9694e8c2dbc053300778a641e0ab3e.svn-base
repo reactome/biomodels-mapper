@@ -1,0 +1,58 @@
+<!-- ANT Build file for the tool extracting annotation for further analysis in Reactome -->
+<!-- Camille Laibe <camille.laibe@ebi.ac.uk> -->
+<!-- 20140704 -->
+
+<project name="ExtractAnnoFromFile" default="run" basedir=".">
+	
+	<property name="build" value="bin" />
+	<property name="sources" value="src" />
+	<property name="libs" value="lib" />
+    <!-- compilation params -->
+    <property name="debug" value="on" />
+    <property name="optimize" value="off" />
+    <property name="target" value="1.6" />
+	
+    <!-- These libraries need to be included in the CLASSPATH -->
+    <path id="classpath">
+        <fileset dir="${libs}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+	
+    <!-- This section cleans the build folder -->
+    <target name="clean" description="Clean the build folder">
+        <echo>Cleans the build directory...</echo>
+        <delete dir="${build}" verbose="false" includeEmptyDirs="true" />
+    </target>
+	
+    <!-- This section prepares the directory structure needed -->
+    <target name="prepare" depends="clean" description="Creates build directories">
+        <echo>Prepares the build directory...</echo>
+        <mkdir dir="${build}" />
+    </target>
+	
+    <!-- This section compiles the Java files -->
+    <target name="build" depends="prepare" description="Compiles Java files" >
+        <echo>Compiles the Java classes...</echo>
+        <javac srcdir="${sources}" 
+               destdir="${build}" 
+               debug="${debug}" 
+               target="${target}" 
+        	   source="${target}" 
+               optimize="${optimize}">
+            <include name="**/*.java" />
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+	
+	<target name="run" depends="build" description="Compiles Java files" >
+		<echo>Launches the annotation extraction tool...</echo>
+	    <java classname="uk.ac.ebi.biomodels.tools.ExtractAnnoFromFile" fork="yes" >
+	    	<arg value="${path}" />
+		    <classpath>
+		        <path refid="classpath" />
+		    	<pathelement path="${build}" />
+		    </classpath>
+        </java>
+	</target>
+</project>
