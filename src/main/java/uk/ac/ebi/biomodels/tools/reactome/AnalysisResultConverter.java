@@ -8,7 +8,7 @@ import uk.ac.ebi.biomodels.datastructure.reactomeanalysisservice.AnalysisResult;
 import java.io.IOException;
 
 /**
- * Created by Maximilian Koch on 30/10/2014.
+ * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public class AnalysisResultConverter {
 

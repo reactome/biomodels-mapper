@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Maximilian Koch on 30/10/2014.
+ * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public class AnalysisServiceHandler {
 

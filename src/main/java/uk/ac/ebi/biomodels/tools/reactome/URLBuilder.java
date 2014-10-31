@@ -9,7 +9,7 @@ public class URLBuilder {
 
     public static URI getIdentifiersURL() {
         return URI.create("http://reactomedev.oicr.on.ca/AnalysisService/identifiers/" +
-                "?pageSize=20&page=1&sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL");
+                "?pageSize=20&page=1");
     }
 
     public static URI getTokenURL(String token, String resource) {

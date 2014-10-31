@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Set;
 
 /**
- * Created by Maximilian Koch on 30/10/2014.
+ * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public class AnalysisServiceRequest {
     private static CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -22,8 +22,11 @@ public class AnalysisServiceRequest {
     public static HttpResponse requestByModel(SBMLModel sbmlModel) {
         HttpPost httpPost = new HttpPost(URLBuilder.getIdentifiersURL());
         StringEntity stringEntity = null;
+
         try {
-            stringEntity = new StringEntity(annotationsToAnalysisFormat(sbmlModel.getSbmlModelAnnotations()));
+            Set<Annotation> sample = sbmlModel.getSbmlModelAnnotations();
+            String name = sbmlModel.getName();
+            stringEntity = new StringEntity(annotationsToAnalysisFormat(name, sample));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -48,8 +51,10 @@ public class AnalysisServiceRequest {
         return response;
     }
 
-    private static String annotationsToAnalysisFormat(Set<Annotation> annotations) {
+    private static String annotationsToAnalysisFormat(String model, Set<Annotation> annotations) {
         StringBuilder annotationsInAnalysisFormat = new StringBuilder();
+        //Adding the name of the model to the sample data for a better identification in the PathwayBrowser result
+        annotationsInAnalysisFormat.append("#").append(model).append(System.getProperty("line.separator"));
         for (Annotation annotation : annotations) {
             annotationsInAnalysisFormat.append(annotation.getEntityId()).append(System.getProperty("line.separator"));
         }

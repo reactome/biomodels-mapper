@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Set;
 
 /**
- * Created by Maximilian Koch on 28/10/2014.
+ * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public class SBMLModel {
     private final String name;
