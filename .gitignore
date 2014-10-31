@@ -47,3 +47,6 @@ local.properties
 
 # Logs
 *.log
+
+# Hidden files
+.DS_Store
