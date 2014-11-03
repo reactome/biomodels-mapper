@@ -25,7 +25,8 @@ public class SBMLModelFactory {
     public static Set<String> getAllModelIdsByAllTaxonomyIds() {
         Set<String> allModelIdsByTaxonomies = new HashSet<String>();
         for (String bioModelsTaxonomyId : Species.getAllBioModelsTaxonomyIds()) {
-            allModelIdsByTaxonomies.addAll(Arrays.asList(getModelsIdByTaxonomyId(bioModelsTaxonomyId)));
+            String[] modelIDs = getModelsIdByTaxonomyId(bioModelsTaxonomyId);
+            allModelIdsByTaxonomies.addAll(Arrays.asList(modelIDs));
         }
         return allModelIdsByTaxonomies;
     }
@@ -96,7 +97,8 @@ public class SBMLModelFactory {
     }
 
     private static Species getSBMLModelTaxonomy(Model model) {
-        return Species.getSpeciesByBioModelsTaxonomyid(ExtractInformationFromSBMLModel.getModelTaxonomy(model));
+        String sbmlXMLInformation = ExtractInformationFromSBMLModel.getModelTaxonomy(model);
+        return Species.getSpeciesByBioModelsTaxonomyid(sbmlXMLInformation);
     }
 
     private static Set<Annotation> getSBMLModelAnnotations(Model model) {
@@ -109,7 +111,12 @@ public class SBMLModelFactory {
      */
     public static SBMLModel getSBMLModel(String modelId) {
         Model model = getSBMLXMLInformation(getModelSBMLByModelId(modelId));
-        return new SBMLModel(getSBMLModelName(modelId), modelId, getSBMLModelAuthors(modelId),
-                getSBMLModelPublication(modelId), getSBMLModelTaxonomy(model), getSBMLModelAnnotations(model));
+        String sbmlModelName = getSBMLModelName(modelId);
+        String[] sbmlModelAuthors = getSBMLModelAuthors(modelId);
+        String sbmlModelPublications = getSBMLModelPublication(modelId);
+        Species sbmlModelTaxonomy = getSBMLModelTaxonomy(model);
+        Set<Annotation> sbmlModelAnnotations = getSBMLModelAnnotations(model);
+        return new SBMLModel(sbmlModelName, modelId, sbmlModelAuthors,
+                sbmlModelPublications, sbmlModelTaxonomy, sbmlModelAnnotations);
     }
 }

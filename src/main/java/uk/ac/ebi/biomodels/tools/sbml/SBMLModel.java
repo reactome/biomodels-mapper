@@ -18,7 +18,8 @@ public class SBMLModel {
     private final Set<Annotation> sbmlModelAnnotations;
     //private AnalysisResult reactomeAnalysisResult;
 
-    public SBMLModel(String name, String bioModelsID, String[] authors, String publication, Species species, Set<Annotation> sbmlModelAnnotations) {
+    public SBMLModel(String name, String bioModelsID, String[] authors, String publication, Species species,
+                     Set<Annotation> sbmlModelAnnotations) {
         this.name = name;
         this.bioModelsID = bioModelsID;
         this.authors = authors;

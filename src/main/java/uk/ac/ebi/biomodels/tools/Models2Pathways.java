@@ -20,7 +20,8 @@ public class Models2Pathways {
                     //There is no point to continue for models without annotations
                     System.out.println(" >> EMPTY");
                 }else{
-                    AnalysisResult analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(SBMLModelFactory.getSBMLModel(sbmlID));
+                    SBMLModel sbmlModel = SBMLModelFactory.getSBMLModel(sbmlID);
+                    AnalysisResult analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(sbmlModel);
                     System.out.println(" >> " + analysisResult.getPathwaysFound() + " pathways found");
                 }
 
