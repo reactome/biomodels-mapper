@@ -3,7 +3,7 @@ package uk.ac.ebi.biomodels.tools.reactome;
 import java.net.URI;
 
 /**
- * Created by Maximilian Koch on 31/10/2014.
+ * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public class URLBuilder {
 

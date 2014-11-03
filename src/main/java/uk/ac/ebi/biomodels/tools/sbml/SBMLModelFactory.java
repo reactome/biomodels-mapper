@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Maximilian Koch on 29/10/2014.
+ * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public class SBMLModelFactory {
     private static final BioModelsWSClient client = new BioModelsWSClient();

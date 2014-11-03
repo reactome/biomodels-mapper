@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Maximilian Koch on 27/10/2014.
+ * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public enum Species {
     HOMO_SAPIENS("9606", "48887"),

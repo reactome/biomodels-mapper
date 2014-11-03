@@ -1,7 +1,7 @@
 package uk.ac.ebi.biomodels.enums;
 
 /**
- * Created by Maximilian Koch on 16/10/2014.
+ * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public enum Namespace {
     UNIPROT("uniprot"),
