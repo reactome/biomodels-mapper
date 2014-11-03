@@ -96,9 +96,8 @@ public class PathwaySummary {
 
         PathwaySummary that = (PathwaySummary) o;
 
-        if (dbId != null ? !dbId.equals(that.dbId) : that.dbId != null) return false;
+        return !(dbId != null ? !dbId.equals(that.dbId) : that.dbId != null);
 
-        return true;
     }
 
     @Override

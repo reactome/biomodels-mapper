@@ -33,9 +33,8 @@ public class ResourceSummary implements Comparable<ResourceSummary> {
 
         ResourceSummary that = (ResourceSummary) o;
 
-        if (resource != null ? !resource.equals(that.resource) : that.resource != null) return false;
+        return !(resource != null ? !resource.equals(that.resource) : that.resource != null);
 
-        return true;
     }
 
     @Override

@@ -31,7 +31,7 @@ public class ExtractInformationFromSBMLModel {
         } catch (XMLStreamException e) {
             //logger.error("Error on reading Model as XML", e);
         }
-        return model.getModel();
+        return model != null ? model.getModel() : null;
     }
 
     /**
