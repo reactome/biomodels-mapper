@@ -11,6 +11,7 @@ import uk.ac.ebi.biomodels.tools.sbml.SBMLModel;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.Set;
 
 /**
@@ -19,14 +20,20 @@ import java.util.Set;
 public class AnalysisServiceRequest {
     private static CloseableHttpClient httpclient = HttpClients.createDefault();
 
+    /**
+     * POST-Request against Reactome Analysis Service
+     * @param sbmlModel
+     * @return
+     */
     public static HttpResponse requestByModel(SBMLModel sbmlModel) {
         HttpPost httpPost = new HttpPost(URLBuilder.getIdentifiersURL());
         StringEntity stringEntity = null;
 
         try {
-            Set<Annotation> sample = sbmlModel.getSbmlModelAnnotations();
+            Set<Annotation> annotations = sbmlModel.getSbmlModelAnnotations();
             String name = sbmlModel.getName();
-            stringEntity = new StringEntity(annotationsToAnalysisFormat(name, sample));
+            String annotationsAsString = Annotation.annotationsToAnalysisFormat(name, annotations);
+            stringEntity = new StringEntity(annotationsAsString);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -40,8 +47,15 @@ public class AnalysisServiceRequest {
         return response;
     }
 
+    /**
+     * GET-Request against Reactome Analysis Service
+     * @param token
+     * @param resource
+     * @return
+     */
     public static HttpResponse requestByToken(String token, String resource) {
-        HttpGet httpGet = new HttpGet(URLBuilder.getTokenURL(token, resource));
+        URI tokenURL = URLBuilder.getTokenURL(token, resource);
+        HttpGet httpGet = new HttpGet(tokenURL);
         HttpResponse response = null;
         try {
             response = httpclient.execute(httpGet);
@@ -49,15 +63,5 @@ public class AnalysisServiceRequest {
             e.printStackTrace();
         }
         return response;
-    }
-
-    private static String annotationsToAnalysisFormat(String model, Set<Annotation> annotations) {
-        StringBuilder annotationsInAnalysisFormat = new StringBuilder();
-        //Adding the name of the model to the sample data for a better identification in the PathwayBrowser result
-        annotationsInAnalysisFormat.append("#").append(model).append(System.getProperty("line.separator"));
-        for (Annotation annotation : annotations) {
-            annotationsInAnalysisFormat.append(annotation.getEntityId()).append(System.getProperty("line.separator"));
-        }
-        return String.valueOf(annotationsInAnalysisFormat);
     }
 }
