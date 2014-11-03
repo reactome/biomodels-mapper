@@ -19,24 +19,26 @@ import java.util.Set;
  * @version 20140704
  */
 public class ExtractInformationFromSBMLModel {
-    //private static final Logger logger = LoggerFactory.getLogger(ExtractAnnotationFromSBMLModel.class);
 
+    /**
+     * Reads SBML-Model string and converts it to an Model-object
+     * @param sbmlModelAsString
+     * @return
+     */
     public static Model getSBMLDModel(String sbmlModelAsString) {
         SBMLReader reader = new SBMLReader();
         SBMLDocument model = null;
         try {
             model = reader.readSBMLFromString(sbmlModelAsString);
-        } catch (NullPointerException e) {
-            //logger.error("Model is empty", e);
         } catch (XMLStreamException e) {
-            //logger.error("Error on reading Model as XML", e);
+            e.printStackTrace();
         }
         return model != null ? model.getModel() : null;
     }
 
     /**
      * Extracts all the necessary annotations.
-     * WARNING: currently only display the information on the console.
+     *
      */
     public static Set<Annotation> extractAnnotation(Model model) {
         Set<Annotation> annotationsOfSBML = new HashSet<Annotation>();

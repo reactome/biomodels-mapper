@@ -1,5 +1,6 @@
 package uk.ac.ebi.biomodels.tools.reactome;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import uk.ac.ebi.biomodels.datastructure.reactomeanalysisservice.AnalysisResult;
@@ -29,10 +30,12 @@ public class AnalysisServiceHandler {
             AnalysisResult analysisResult = AnalysisResultConverter.getAnalysisResultObject(jsonResult);
             if (analysisResult.getPathwaysFound() != 0) {
                 if (tokenRequestRequired(analysisResult.getResourceSummary())) {
-                    httpResponse = AnalysisServiceRequest.requestByToken(analysisResult.getSummary().getToken(),
-                            getResource(analysisResult.getResourceSummary()));
+                    String token = analysisResult.getSummary().getToken();
+                    String resourceSummary = getResource(analysisResult.getResourceSummary());
+                    httpResponse = AnalysisServiceRequest.requestByToken(token, resourceSummary);
                     try {
-                        jsonResult = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+                        HttpEntity entity = httpResponse.getEntity();
+                        jsonResult = EntityUtils.toString(entity, "UTF-8");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

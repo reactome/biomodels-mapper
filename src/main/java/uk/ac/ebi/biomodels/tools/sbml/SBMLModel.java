@@ -18,6 +18,18 @@ public class SBMLModel {
     private final Set<Annotation> sbmlModelAnnotations;
     //private AnalysisResult reactomeAnalysisResult;
 
+    /**
+     * SBMLModel represents given information from the given
+     * SBMLModel/XML and the BioModels-Webservice
+     *
+     * @param name
+     * @param bioModelsID
+     * @param authors
+     * @param publication
+     * @param species
+     * @param sbmlModelAnnotations
+     */
+
     public SBMLModel(String name, String bioModelsID, String[] authors, String publication, Species species,
                      Set<Annotation> sbmlModelAnnotations) {
         this.name = name;

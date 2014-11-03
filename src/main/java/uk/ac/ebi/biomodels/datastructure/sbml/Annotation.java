@@ -1,5 +1,7 @@
 package uk.ac.ebi.biomodels.datastructure.sbml;
 
+import java.util.Set;
+
 /**
  * Stores one annotation (without any qualifier)
  *
@@ -56,5 +58,15 @@ public class Annotation {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public static String annotationsToAnalysisFormat(String model, Set<Annotation> annotations) {
+        StringBuilder annotationsInAnalysisFormat = new StringBuilder();
+        //Adding the name of the model to the sample data for a better identification in the PathwayBrowser result
+        annotationsInAnalysisFormat.append("#").append(model).append(System.getProperty("line.separator"));
+        for (Annotation annotation : annotations) {
+            annotationsInAnalysisFormat.append(annotation.getEntityId()).append(System.getProperty("line.separator"));
+        }
+        return String.valueOf(annotationsInAnalysisFormat);
     }
 }

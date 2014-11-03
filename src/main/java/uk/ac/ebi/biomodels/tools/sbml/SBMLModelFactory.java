@@ -107,7 +107,7 @@ public class SBMLModelFactory {
 
     /**
      *
-     *Returns a SBML-Model object.
+     *Returns a SBML-Model object by given model id (e.g.:"BIOMD0000000464").
      */
     public static SBMLModel getSBMLModel(String modelId) {
         Model model = getSBMLXMLInformation(getModelSBMLByModelId(modelId));
