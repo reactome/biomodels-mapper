@@ -27,5 +27,4 @@ public class AnalysisResultConverter {
         }
         return analysisResult;
     }
-
 }
