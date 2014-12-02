@@ -3,8 +3,8 @@ package uk.ac.ebi.models2pathways.tools.sbml;
 
 import org.sbml.jsbml.*;
 import uk.ac.ebi.models2pathways.enums.Namespace;
-import uk.ac.ebi.models2pathways.mapping.sbml.Bag;
-import uk.ac.ebi.models2pathways.mapping.sbml.ModelElement;
+import uk.ac.ebi.models2pathways.resources.mapping.sbml.Bag;
+import uk.ac.ebi.models2pathways.resources.mapping.sbml.ModelElement;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.HashSet;
@@ -39,8 +39,8 @@ public class ExtractInformationFromSBMLModel {
     /**
      * Extracts all the necessary annotations.
      */
-    public static Set<uk.ac.ebi.models2pathways.mapping.sbml.Annotation> extractAnnotation(Model model) {
-        Set<uk.ac.ebi.models2pathways.mapping.sbml.Annotation> annotationsOfSBML = new HashSet<uk.ac.ebi.models2pathways.mapping.sbml.Annotation>();
+    public static Set<uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation> extractAnnotation(Model model) {
+        Set<uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation> annotationsOfSBML = new HashSet<uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation>();
         for (Species species : model.getListOfSpecies()) {
             ModelElement component = extractComponentAnnotation(species);
             annotationsOfSBML.addAll(displayRelevantAnnotation(component));
@@ -80,7 +80,7 @@ public class ExtractInformationFromSBMLModel {
             bag.setQualifier(getQualifier(cvTerm));
             // retrieves all the URIs
             for (String uri : cvTerm.getResources()) {
-                uk.ac.ebi.models2pathways.mapping.sbml.Annotation annotation = new uk.ac.ebi.models2pathways.mapping.sbml.Annotation();
+                uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation annotation = new uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation();
                 annotation.setUri(uri);
                 annotation.setEntityId(extractIdFromURI(uri));
                 annotation.setNamespace(extractNamespaceFromURI(uri));
@@ -111,9 +111,9 @@ public class ExtractInformationFromSBMLModel {
     /**
      * Displays all annotations of a given sbml element which are relevant for the reactome data analyis tool.
      */
-    private static Set<uk.ac.ebi.models2pathways.mapping.sbml.Annotation> displayRelevantAnnotation(ModelElement component) {
+    private static Set<uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation> displayRelevantAnnotation(ModelElement component) {
         Integer counterTmp;
-        Set<uk.ac.ebi.models2pathways.mapping.sbml.Annotation> annotationsOfSBML = new HashSet<uk.ac.ebi.models2pathways.mapping.sbml.Annotation>();
+        Set<uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation> annotationsOfSBML = new HashSet<uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation>();
         counterTmp = findAllAnnotationFromDataCollection(component, Namespace.UNIPROT.name());
         if (counterTmp > 0) {
             // some UniProt annotation found
@@ -150,10 +150,12 @@ public class ExtractInformationFromSBMLModel {
         Integer counter = 0;
         if (component.getBags() != null) {
             for (Bag bag : component.getBags()) {
-                for (uk.ac.ebi.models2pathways.mapping.sbml.Annotation annotation : bag.getAnnotations()) {
-                    if (annotation.getNamespace().equalsIgnoreCase(namespace)) {
-                        counter++;
-                    }
+                for (uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation annotation : bag.getAnnotations()) {
+                    try {
+                        if (annotation.getNamespace().equalsIgnoreCase(namespace)) {
+                            counter++;
+                        }
+                    } catch (NullPointerException ignored) {}
                 }
             }
         }
@@ -163,10 +165,10 @@ public class ExtractInformationFromSBMLModel {
     /**
      * Prints all the annotation of a sbml component from a given data collection.
      */
-    private static Set<uk.ac.ebi.models2pathways.mapping.sbml.Annotation> getAllAnnotationFromDataCollection(ModelElement component, String namespace) {
-        Set<uk.ac.ebi.models2pathways.mapping.sbml.Annotation> annotationsOfSBML = new HashSet<uk.ac.ebi.models2pathways.mapping.sbml.Annotation>();
+    private static Set<uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation> getAllAnnotationFromDataCollection(ModelElement component, String namespace) {
+        Set<uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation> annotationsOfSBML = new HashSet<uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation>();
         for (Bag bag : component.getBags()) {
-            for (uk.ac.ebi.models2pathways.mapping.sbml.Annotation annotation : bag.getAnnotations()) {
+            for (uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation annotation : bag.getAnnotations()) {
                 if (annotation.getNamespace().equalsIgnoreCase(namespace)) {
                     if (annotation.getEntityId().contains(":")) {
                         annotation.setEntityId(annotation.getEntityId().split(":")[1]);
@@ -190,7 +192,13 @@ public class ExtractInformationFromSBMLModel {
      * Extracts the namespace from an Identifiers.org URI.
      * E.g. http://identifiers.org/taxonomy/8292   >>>  taxonomy
      */
+    //TODO: Got: "StringIndexOutOfBoundsException"
     private static String extractNamespaceFromURI(String uri) {
-        return uri.substring(23, uri.indexOf("/", 24));
+        try {
+            return uri.substring(23, uri.indexOf("/", 24));
+        } catch (StringIndexOutOfBoundsException e) {
+            System.err.println("StringIndexOutOfBoundsException on " + uri);
+        }
+        return null;
     }
 }

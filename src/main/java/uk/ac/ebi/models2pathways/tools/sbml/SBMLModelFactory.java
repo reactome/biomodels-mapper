@@ -4,7 +4,7 @@ import org.sbml.jsbml.Model;
 import uk.ac.ebi.biomodels.ws.BioModelsWSClient;
 import uk.ac.ebi.biomodels.ws.BioModelsWSException;
 import uk.ac.ebi.models2pathways.enums.Species;
-import uk.ac.ebi.models2pathways.mapping.sbml.Annotation;
+import uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation;
 
 import java.util.Arrays;
 import java.util.HashSet;

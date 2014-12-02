@@ -1,7 +1,7 @@
 package uk.ac.ebi.models2pathways.tools.sbml;
 
 import uk.ac.ebi.models2pathways.enums.Species;
-import uk.ac.ebi.models2pathways.mapping.sbml.Annotation;
+import uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -20,7 +20,7 @@ public class SBMLModel {
 
     /**
      * SBMLModel represents given information from the given
-     * SBMLModel/XML and the BioModels-Webservice
+     * SBMLModel/XML and the BioModel-Webservice
      *
      * @param name
      * @param bioModelsID
