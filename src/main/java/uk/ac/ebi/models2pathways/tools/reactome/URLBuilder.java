@@ -8,11 +8,11 @@ import java.net.URI;
 public class URLBuilder {
 
     public static URI getIdentifiersURL() {
-        return URI.create("http://reactomedev.oicr.on.ca/AnalysisService/identifiers/?pageSize=10000&page=0&sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL");
+        return URI.create("http://reactomedev.oicr.on.ca/AnalysisService/identifiers/?pageSize=0&page=0");
     }
 
     public static URI getTokenURL(String token, String resource) {
         return URI.create("http://reactomedev.oicr.on.ca/AnalysisService/token/"
-                + token + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=" + resource);
+                + token + "?resource=" + resource);
     }
 }
