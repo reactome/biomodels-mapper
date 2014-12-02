@@ -6,22 +6,24 @@
     <session-factory>
 
         <property name="connection.url">jdbc:mysql://localhost:3306/models2pathway</property>
-        <property name="connection.username">root</property>
-        <property name="connection.password">root</property>
+        <property name="connection.username">Models2Pathways</property>
+        <property name="connection.password">Models2Pathways</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
 
         <property name="format_sql">true</property>
-        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.auto">create-drop</property>
 
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
+        <property name="connection.pool_size">5</property>
         <property name="current_session_context_class">thread</property>
 
-        <mapping class="uk.ac.ebi.models2pathways.mapping.database.BioModels" />
 
-        <!-- <mapping resource="com/mkyong/user/DBUser.hbm.xml"></mapping> -->
+        <mapping class="uk.ac.ebi.models2pathways.database.entitys.BioModel"/>
+        <mapping class="uk.ac.ebi.models2pathways.database.entitys.Pathway"/>
+        <mapping class="uk.ac.ebi.models2pathways.database.entitys.XReferences"/>
+
     </session-factory>
 </hibernate-configuration>
