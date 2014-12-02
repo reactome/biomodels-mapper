@@ -1,5 +1,5 @@
 Tool to extracts some useful annotation from all the SBML files (coming from BioModels Database) present in a given folder.
-The aim is to later find relevant pathways from Reactome matching individual models, and therefore increase the linkings between the 2 resources.
+The aim is to later find relevant pathway from Reactome matching individual models, and therefore increase the linkings between the 2 resources.
 
 How to run the tool:
 * edit variable MODELS_FOLDER_PATH in ExtractAnnoFromFile.java to point to the folder containing the SBML files
