@@ -1,4 +1,4 @@
-package uk.ac.ebi.models2pathways.mapping.sbml;
+package uk.ac.ebi.models2pathways.resources.mapping.sbml;
 
 import java.util.ArrayList;
 import java.util.List;
