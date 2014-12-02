@@ -6,7 +6,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import uk.ac.ebi.models2pathways.mapping.sbml.Annotation;
+import uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation;
 import uk.ac.ebi.models2pathways.tools.sbml.SBMLModel;
 
 import java.io.IOException;

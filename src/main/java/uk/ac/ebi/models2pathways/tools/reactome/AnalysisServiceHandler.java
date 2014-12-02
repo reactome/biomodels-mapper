@@ -3,9 +3,9 @@ package uk.ac.ebi.models2pathways.tools.reactome;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
-import uk.ac.ebi.models2pathways.mapping.reactomeanalysisservice.AnalysisResult;
-import uk.ac.ebi.models2pathways.mapping.reactomeanalysisservice.PathwaySummary;
-import uk.ac.ebi.models2pathways.mapping.reactomeanalysisservice.ResourceSummary;
+import uk.ac.ebi.models2pathways.resources.mapping.reactomeanalysisservice.AnalysisResult;
+import uk.ac.ebi.models2pathways.resources.mapping.reactomeanalysisservice.PathwaySummary;
+import uk.ac.ebi.models2pathways.resources.mapping.reactomeanalysisservice.ResourceSummary;
 import uk.ac.ebi.models2pathways.tools.sbml.SBMLModel;
 
 import java.io.IOException;

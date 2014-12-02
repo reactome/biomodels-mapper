@@ -3,7 +3,7 @@ package uk.ac.ebi.models2pathways.tools.reactome;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uk.ac.ebi.models2pathways.mapping.reactomeanalysisservice.AnalysisResult;
+import uk.ac.ebi.models2pathways.resources.mapping.reactomeanalysisservice.AnalysisResult;
 
 import java.io.IOException;
 
