@@ -1,4 +1,4 @@
-package uk.ac.ebi.models2pathways.database.entitys;
+package uk.ac.ebi.models2pathways.database.entities;
 
 /**
  * @author Maximilian Koch <mkoch@ebi.ac.uk>
@@ -51,4 +51,11 @@ public class XReferencesId implements java.io.Serializable {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "XReferencesId{" +
+                "bioModel=" + bioModel +
+                ", pathway=" + pathway +
+                '}';
+    }
 }

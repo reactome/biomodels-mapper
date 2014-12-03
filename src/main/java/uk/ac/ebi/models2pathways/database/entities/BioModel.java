@@ -1,4 +1,4 @@
-package uk.ac.ebi.models2pathways.database.entitys;
+package uk.ac.ebi.models2pathways.database.entities;
 
 /**
  * @author Maximilian Koch <mkoch@ebi.ac.uk>

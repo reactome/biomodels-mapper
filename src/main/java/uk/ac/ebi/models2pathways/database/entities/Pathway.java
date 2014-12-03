@@ -1,4 +1,4 @@
-package uk.ac.ebi.models2pathways.database.entitys;
+package uk.ac.ebi.models2pathways.database.entities;
 
 /**
  * @author Maximilian Koch <mkoch@ebi.ac.uk>
@@ -81,5 +81,14 @@ public class Pathway implements java.io.Serializable {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (xReferences != null ? xReferences.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Pathway{" +
+                "pathwayId='" + pathwayId + '\'' +
+                ", name='" + name + '\'' +
+                ", xReferences=" + xReferences +
+                '}';
     }
 }
