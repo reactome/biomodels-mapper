@@ -1,12 +1,12 @@
 package uk.ac.ebi.models2pathways.entrypoint;
 
+import uk.ac.ebi.models2pathways.helper.AnalysisServiceHandler;
 import uk.ac.ebi.models2pathways.helper.DatabaseInsertionHelper;
 import uk.ac.ebi.models2pathways.helper.DatabaseSetUpHelper;
+import uk.ac.ebi.models2pathways.helper.SBMLModelFactory;
 import uk.ac.ebi.models2pathways.model.reactome.AnalysisResult;
-import uk.ac.ebi.models2pathways.helper.AnalysisServiceHandler;
 import uk.ac.ebi.models2pathways.model.reactome.PathwaySummary;
 import uk.ac.ebi.models2pathways.model.sbml.SBMLModel;
-import uk.ac.ebi.models2pathways.helper.SBMLModelFactory;
 
 
 /**
@@ -53,28 +53,21 @@ public class Models2Pathways {
                             }
                         }
                     }
-                    if(analysisResult == null || analysisResult.getPathwaysFound() == 0){
+                    if (analysisResult == null || analysisResult.getPathwaysFound() == 0) {
                         System.out.println(" >> No pathways found with pValue " + extendedPValue);
                         continue;
                     }
                 }
-                if(analysisResult != null){
+                if (analysisResult != null) {
                     DatabaseInsertionHelper.createNewBioModelEntry(sbmlModel);
                     for (PathwaySummary pathwaySummary : analysisResult.getPathways()) {
                         DatabaseInsertionHelper.createNewPathwayEntry(pathwaySummary);
                         System.out.println(pathwaySummary.getEntities().getpValue());
                         DatabaseInsertionHelper.createNewXReferenceEntry(pathwaySummary, sbmlModel, hasMinPValue, false);
                         System.out.println(" >> " + analysisResult.getPathwaysFound() + " pathways found");
-                        try {
-                            Thread.sleep(10000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }
-
             }
-
         }
         System.out.println("Process finished");
     }

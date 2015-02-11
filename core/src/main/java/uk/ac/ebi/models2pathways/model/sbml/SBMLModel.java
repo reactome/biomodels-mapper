@@ -1,7 +1,7 @@
 package uk.ac.ebi.models2pathways.model.sbml;
 
 import uk.ac.ebi.models2pathways.enums.Species;
-import uk.ac.ebi.models2pathways.helper.Annotation;
+import uk.ac.ebi.models2pathways.utils.Annotation;
 
 import java.util.Arrays;
 import java.util.Set;

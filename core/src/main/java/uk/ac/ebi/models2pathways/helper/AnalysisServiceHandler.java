@@ -1,5 +1,8 @@
 package uk.ac.ebi.models2pathways.helper;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -26,7 +29,7 @@ public class AnalysisServiceHandler {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            AnalysisResult analysisResult = AnalysisResultConverter.getAnalysisResultObject(jsonResult);
+            AnalysisResult analysisResult = getAnalysisResultObject(jsonResult);
             if (analysisResult.getPathwaysFound() != 0) {
                 String token = analysisResult.getSummary().getToken();
                 String resourceSummary = getResource(analysisResult.getResourceSummary());
@@ -37,7 +40,7 @@ public class AnalysisServiceHandler {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                analysisResult = AnalysisResultConverter.getAnalysisResultObject(jsonResult);
+                analysisResult = getAnalysisResultObject(jsonResult);
             }
 
             analysisResult.setPathways(getReliablePathways(analysisResult.getPathways(), customPValue));
@@ -59,5 +62,21 @@ public class AnalysisServiceHandler {
     private static String getResource(List<ResourceSummary> resourceSummary) {
         ResourceSummary rs = resourceSummary.size() == 2 ? resourceSummary.get(1) : resourceSummary.get(0);
         return rs.getResource();
+    }
+
+    public static AnalysisResult getAnalysisResultObject(String jsonString) {
+        AnalysisResult analysisResult = null;
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            analysisResult = mapper.readValue(jsonString, AnalysisResult.class);
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return analysisResult;
     }
 }

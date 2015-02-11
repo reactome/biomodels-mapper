@@ -5,6 +5,8 @@ import uk.ac.ebi.biomodels.ws.BioModelsWSClient;
 import uk.ac.ebi.biomodels.ws.BioModelsWSException;
 import uk.ac.ebi.models2pathways.enums.Species;
 import uk.ac.ebi.models2pathways.model.sbml.SBMLModel;
+import uk.ac.ebi.models2pathways.utils.Annotation;
+import uk.ac.ebi.models2pathways.utils.ExtractInformationFromSBMLModel;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -1,6 +1,7 @@
 package uk.ac.ebi.models2pathways.database;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.SQLException;
@@ -17,19 +18,19 @@ public class Models2PathwayDAO {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         closeConnection();
     }
-    
+
     public void createPathwaysTable() {
         String query = "CREATE TABLE Pathways (pathwayID VARCHAR(255) PRIMARY KEY, name VARCHAR(255))";
         jdbcTemplate.execute(query);
         closeConnection();
     }
-    
+
     public void createBioModelsTable() {
         String query = "CREATE TABLE BioModels (biomodelID VARCHAR(255) PRIMARY KEY, name VARCHAR(255), authors VARCHAR(255))";
         jdbcTemplate.execute(query);
         closeConnection();
     }
-    
+
     public void createXReferencesTable() {
         String query = "CREATE TABLE xReferences (pathwayID VARCHAR(255) NOT NULL, " +
                 "biomodelID VARCHAR(255) NOT NULL, " +
@@ -49,7 +50,7 @@ public class Models2PathwayDAO {
         jdbcTemplate.execute(query);
         closeConnection();
     }
-    
+
     public void dropPathwaysTable() {
         String query = "DROP TABLE Pathways";
         try {
@@ -58,7 +59,7 @@ public class Models2PathwayDAO {
         }
         closeConnection();
     }
-    
+
     public void dropBioModelsTable() {
         String query = "DROP TABLE BioModels";
         try {
@@ -76,16 +77,22 @@ public class Models2PathwayDAO {
         }
         closeConnection();
     }
-    
+
     public void insertPathway(String pathwayID, String name) {
         String query = "INSERT INTO Pathways values (?,?);";
-        jdbcTemplate.update(query, pathwayID, name);
-
+        try {
+            jdbcTemplate.update(query, pathwayID, name);
+        } catch (DuplicateKeyException ignore) {
+        }
+        closeConnection();
     }
 
     public void insertBioModel(String biomodelID, String name, String authors) {
         String query = "INSERT INTO BioModels values (?,?,?);";
-        jdbcTemplate.update(query, biomodelID, name, authors);
+        try {
+            jdbcTemplate.update(query, biomodelID, name, authors);
+        } catch (DuplicateKeyException ignore) {
+        }
         closeConnection();
     }
 
@@ -93,7 +100,11 @@ public class Models2PathwayDAO {
                                  int reactionsTotal, int reactionsFound, int entitiesTotal, int entitiesFound, String species,
                                  boolean hasMinPValue, boolean hasApproval) {
         String query = "INSERT INTO xReferences values (?,?,?,?,?,?,?,?,?,?,?,?);";
-        jdbcTemplate.update(query, pathwayID, biomodelID, pValue, fdr, resource, reactionsTotal, reactionsFound, entitiesTotal, entitiesFound, species, hasMinPValue, hasApproval);
+        try {
+            jdbcTemplate.update(query, pathwayID, biomodelID, pValue, fdr, resource, reactionsTotal, reactionsFound,
+                    entitiesTotal, entitiesFound, species, hasMinPValue, hasApproval);
+        } catch (DuplicateKeyException ignore) {
+        }
         closeConnection();
     }
 

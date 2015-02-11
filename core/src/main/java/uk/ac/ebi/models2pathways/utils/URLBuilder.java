@@ -1,4 +1,4 @@
-package uk.ac.ebi.models2pathways.helper;
+package uk.ac.ebi.models2pathways.utils;
 
 import java.net.URI;
 

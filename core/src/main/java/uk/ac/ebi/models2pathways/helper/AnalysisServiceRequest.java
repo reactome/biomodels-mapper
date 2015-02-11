@@ -7,6 +7,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import uk.ac.ebi.models2pathways.model.sbml.SBMLModel;
+import uk.ac.ebi.models2pathways.utils.Annotation;
+import uk.ac.ebi.models2pathways.utils.URLBuilder;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
