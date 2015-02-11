@@ -35,23 +35,6 @@ public enum Species {
         return bioModelsTaxonomyIds;
     }
 
-//    public static Set<String> getAllReactomeTaxonomyIds() {
-//        Set<String> reactomeTaxonomyIds = new HashSet<String>();
-//        for (Species species : Species.values()) {
-//            reactomeTaxonomyIds.add(species.getReactomeTaxonomyId());
-//        }
-//        return reactomeTaxonomyIds;
-//    }
-//
-//    public static Species getSpeciesByReactomeTaxonomyId(String reactomeTaxonomyId) {
-//        for (Species species : Species.values()) {
-//            if (species.reactomeTaxonomyId.equals(reactomeTaxonomyId)) {
-//                return species;
-//            }
-//        }
-//        return null;
-//    }
-
     public static Species getSpeciesByBioModelsTaxonomyid(String bioModelsTaxonomyid) {
         for (Species species : Species.values()) {
             if (species.bioModelsTaxonomyid.equals(bioModelsTaxonomyid)) {
@@ -60,10 +43,6 @@ public enum Species {
         }
         return null;
     }
-
-//    public String getReactomeTaxonomyId() {
-//        return reactomeTaxonomyId;
-//    }
 
     public String getBioModelsTaxonomyId() {
         return bioModelsTaxonomyid;
