@@ -1,7 +1,7 @@
-package uk.ac.ebi.models2pathways.tools.sbml;
+package uk.ac.ebi.models2pathways.model.sbml;
 
 import uk.ac.ebi.models2pathways.enums.Species;
-import uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation;
+import uk.ac.ebi.models2pathways.helper.Annotation;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -29,7 +29,6 @@ public class SBMLModel {
      * @param species
      * @param sbmlModelAnnotations
      */
-
     public SBMLModel(String name, String bioModelsID, String[] authors, String publication, Species species,
                      Set<Annotation> sbmlModelAnnotations) {
         this.name = name;

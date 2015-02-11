@@ -1,10 +1,10 @@
-package uk.ac.ebi.models2pathways.tools.sbml;
+package uk.ac.ebi.models2pathways.helper;
 
 import org.sbml.jsbml.Model;
 import uk.ac.ebi.biomodels.ws.BioModelsWSClient;
 import uk.ac.ebi.biomodels.ws.BioModelsWSException;
 import uk.ac.ebi.models2pathways.enums.Species;
-import uk.ac.ebi.models2pathways.resources.mapping.sbml.Annotation;
+import uk.ac.ebi.models2pathways.model.sbml.SBMLModel;
 
 import java.util.Arrays;
 import java.util.HashSet;

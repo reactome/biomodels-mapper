@@ -1,4 +1,4 @@
-package uk.ac.ebi.models2pathways.resources.mapping.reactomeanalysisservice;
+package uk.ac.ebi.models2pathways.model.reactome;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

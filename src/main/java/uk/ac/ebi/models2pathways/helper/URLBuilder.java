@@ -1,4 +1,4 @@
-package uk.ac.ebi.models2pathways.tools.reactome;
+package uk.ac.ebi.models2pathways.helper;
 
 import java.net.URI;
 
