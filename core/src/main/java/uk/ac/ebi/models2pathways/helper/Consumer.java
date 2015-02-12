@@ -1,5 +1,6 @@
-package uk.ac.ebi.models2pathways.entrypoint;
+package uk.ac.ebi.models2pathways.helper;
 
+import uk.ac.ebi.models2pathways.entrypoint.Models2Pathways;
 import uk.ac.ebi.models2pathways.helper.AnalysisServiceHandler;
 import uk.ac.ebi.models2pathways.helper.DatabaseInsertionHelper;
 import uk.ac.ebi.models2pathways.model.reactome.AnalysisResult;

@@ -1,6 +1,7 @@
-package uk.ac.ebi.models2pathways.entrypoint;
+package uk.ac.ebi.models2pathways.helper;
 
 import uk.ac.ebi.models2pathways.database.Models2PathwayDAO;
+import uk.ac.ebi.models2pathways.entrypoint.Models2Pathways;
 import uk.ac.ebi.models2pathways.helper.SBMLModelFactory;
 import uk.ac.ebi.models2pathways.model.sbml.SBMLModel;
 

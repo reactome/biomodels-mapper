@@ -2,7 +2,9 @@ package uk.ac.ebi.models2pathways.entrypoint;
 
 import com.martiansoftware.jsap.JSAPResult;
 import uk.ac.ebi.models2pathways.database.DataSourceFactory;
+import uk.ac.ebi.models2pathways.helper.Consumer;
 import uk.ac.ebi.models2pathways.helper.DatabaseSetUpHelper;
+import uk.ac.ebi.models2pathways.helper.Producer;
 import uk.ac.ebi.models2pathways.model.sbml.SBMLModel;
 import uk.ac.ebi.models2pathways.utils.JSAPHandler;
 
