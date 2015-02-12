@@ -5,6 +5,7 @@ import com.martiansoftware.jsap.FlaggedOption;
 import com.martiansoftware.jsap.JSAP;
 import com.martiansoftware.jsap.JSAPException;
 import com.martiansoftware.jsap.JSAPResult;
+import uk.ac.ebi.models2pathways.entrypoint.Models2Pathways;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
@@ -15,29 +16,38 @@ public class JSAPHandler {
         FlaggedOption opt1 = new FlaggedOption("database")
                 .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(true)
-                .setShortFlag('d');
+                .setShortFlag('d')
+                .setLongFlag("database");
+        opt1.setHelp("Path to database");
 
         FlaggedOption opt2 = new FlaggedOption("username")
                 .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(true)
-                .setShortFlag('u');
+                .setShortFlag('u')
+                .setLongFlag("username");
+        opt2.setHelp("The database user");
 
         FlaggedOption opt3 = new FlaggedOption("password")
                 .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(true)
-                .setShortFlag('p');
+                .setShortFlag('p')
+                .setLongFlag("password");
+        opt3.setHelp("The password to connect to the database");
 
         FlaggedOption opt4 = new FlaggedOption("significantPValue")
                 .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(false)
                 .setDefault(String.valueOf(0.05))
-                .setLongFlag("pValue");
+                .setLongFlag("significantPValue");
+        opt4.setHelp("Value of the pValue for significant results");
 
         FlaggedOption opt5 = new FlaggedOption("extendedPValue")
                 .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(false)
                 .setDefault(String.valueOf(0.1))
                 .setLongFlag("extendedPValue");
+        opt5.setHelp("Value of the pValue for possible results");
+
         try {
             jsap.registerParameter(opt1);
             jsap.registerParameter(opt2);
@@ -47,7 +57,21 @@ public class JSAPHandler {
         } catch (JSAPException e) {
             e.printStackTrace();
         }
-        return jsap.parse(args);
+
+        JSAPResult jsapResult = jsap.parse(args);
+
+        if (!jsapResult.success()) {
+            System.err.println();
+            System.err.println("Usage: java "
+                    + Models2Pathways.class.getName());
+            System.err.println("                "
+                    + jsap.getUsage());
+            System.err.println();
+            // show full help as well
+            System.err.println(jsap.getHelp());
+            System.exit(1);
+        }
+        return jsapResult;
     }
 
 }
