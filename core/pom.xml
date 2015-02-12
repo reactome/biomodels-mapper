@@ -114,7 +114,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>uk.ac.ebi.models2pathways.entrypoint.Models2Pathways</mainClass>
+                    <mainClass>org.reactome.server.core.entrypoint.Models2Pathways</mainClass>
                 </configuration>
             </plugin>
             <plugin>

@@ -1,7 +1,8 @@
-package org.reactome.server.models2pathways.service.database;
+package org.reactome.server.widget.database;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.log4j.Logger;
+
+import java.util.logging.Logger;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
