@@ -9,15 +9,16 @@ import org.apache.log4j.Logger;
 public class DataSourceFactory {
     private static Logger logger = Logger.getLogger(DataSourceFactory.class.getName());
 
-    private static String databaseDriverClass;
-    private static String connectionURL;
+    private static String databaseLocation;
+    private static String username;
+    private static String password;
 
     public static BasicDataSource getDatabaseConnection() {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("org.h2.Driver");
-        basicDataSource.setUrl("jdbc:h2:/Users/maximiliankoch/models2pathways/database/models2pathways");
-        basicDataSource.setUsername("Models2Pathways");
-        basicDataSource.setPassword("Models2Pathways");
+        basicDataSource.setUrl("jdbc:h2:" + databaseLocation);
+        basicDataSource.setUsername(username);
+        basicDataSource.setPassword(password);
         basicDataSource.setMaxActive(5);
         return basicDataSource;
 //        BasicDataSource basicDataSource = new BasicDataSource();
@@ -29,11 +30,27 @@ public class DataSourceFactory {
 //        return basicDataSource;
     }
 
-    public void setDatabaseDriverClass(String databaseDriverClass) {
-        DataSourceFactory.databaseDriverClass = databaseDriverClass;
+    public static String getDatabaseLocation() {
+        return databaseLocation;
     }
 
-    public void setConnectionURL(String connectionURL) {
-        DataSourceFactory.connectionURL = connectionURL;
+    public static void setDatabaseLocation(String databaseLocation) {
+        DataSourceFactory.databaseLocation = databaseLocation;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static void setUsername(String username) {
+        DataSourceFactory.username = username;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        DataSourceFactory.password = password;
     }
 }

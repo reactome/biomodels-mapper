@@ -12,13 +12,15 @@ import java.util.concurrent.BlockingQueue;
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
  */
 public class Consumer implements Runnable {
-    private final static Double significantPValue = 0.05;
-    private final static Double extendedPValue = 0.1;
+    private Double significantPValue;
+    private Double extendedPValue;
 
     private BlockingQueue<SBMLModel> sbmlModelBlockingQueue;
 
-    public Consumer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue) {
+    public Consumer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue, String significantPValue, String extendedPValue) {
         this.sbmlModelBlockingQueue = sbmlModelBlockingQueue;
+        this.significantPValue = Double.valueOf(significantPValue);
+        this.extendedPValue = Double.valueOf(extendedPValue);
     }
 
     @Override
