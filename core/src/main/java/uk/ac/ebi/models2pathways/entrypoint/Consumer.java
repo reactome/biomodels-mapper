@@ -23,7 +23,7 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (!Models2Pathways.isProducerFinished()) {
             SBMLModel sbmlModel = null;
             try {
                 sbmlModel = sbmlModelBlockingQueue.take();
