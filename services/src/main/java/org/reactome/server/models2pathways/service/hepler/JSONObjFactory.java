@@ -13,6 +13,7 @@ public class JSONObjFactory {
         Models2PathwayDAO models2PathwayDAO = new Models2PathwayDAO();
         BioModelsIdentifier bioModelsIdentifier = new BioModelsIdentifier();
         bioModelsIdentifier.setBioModelsIdentifiers(models2PathwayDAO.getAllBioModelsIdentifier(pathwayIdentifier));
+        models2PathwayDAO.getAmount();
         return bioModelsIdentifier;
     }
     

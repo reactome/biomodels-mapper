@@ -2,8 +2,8 @@ package org.reactome.server.core.entrypoint;
 
 import com.martiansoftware.jsap.JSAPResult;
 import org.reactome.server.core.database.DataSourceFactory;
-import org.reactome.server.core.helper.Consumer;
 import org.reactome.server.core.database.DatabaseSetUpHelper;
+import org.reactome.server.core.helper.Consumer;
 import org.reactome.server.core.helper.Producer;
 import org.reactome.server.core.model.sbml.SBMLModel;
 import org.reactome.server.core.utils.JSAPHandler;
@@ -20,8 +20,7 @@ public class Models2Pathways {
     final static Logger logger = Logger.getLogger(Models2Pathways.class.getName());
     final static int BLOCKING_QUEUE_SIZE = 3;
 
-    //boolean for killing consumer thread
-    private static boolean producerFinished;
+    private static Thread PRODUCER;
 
     public static void main(String[] args) {
         logger.info("Process has been started");
@@ -41,14 +40,13 @@ public class Models2Pathways {
         Producer producer = new Producer(sbmlModelBlockingQueue);
         Consumer consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getString("significantPValue"), jsapResult.getString("extendedPValue"));
         new Thread(consumer).start();
-        new Thread(producer).start();
+
+        Models2Pathways.PRODUCER = new Thread(producer);
+        Models2Pathways.PRODUCER.start();
     }
 
-    public static boolean isProducerFinished() {
-        return producerFinished;
+    public static boolean isProducerAlive() {
+        return Models2Pathways.PRODUCER.isAlive();
     }
 
-    public static void setProducerFinished(boolean producerFinished) {
-        Models2Pathways.producerFinished = producerFinished;
-    }
 }

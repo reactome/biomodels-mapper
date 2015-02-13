@@ -47,6 +47,16 @@ public class Models2PathwayDAO {
         return pathwayIdentifiers;
     }
 
+    public void getAmount() {
+        Set<String> pathwayIdentifiers = new HashSet<>();
+        String query = "SELECT COUNT(*) FROM xReferences ";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(query);
+        while (rowSet.next()) {
+            System.out.println(rowSet.getString(1));
+        }
+        closeConnection();
+    }
+
     private void closeConnection() {
         try {
             jdbcTemplate.getDataSource().getConnection().close();
