@@ -13,7 +13,6 @@ public class DatabaseSetUpHelper {
         models2PathwayDAO.dropXReferencesTable();
         models2PathwayDAO.dropBioModelsTable();
         models2PathwayDAO.dropPathwaysTable();
-        logger.info("All tables successfully deleted");
     }
 
     public static void CreateSchema() {
@@ -21,6 +20,5 @@ public class DatabaseSetUpHelper {
         models2PathwayDAO.createPathwaysTable();
         models2PathwayDAO.createBioModelsTable();
         models2PathwayDAO.createXReferencesTable();
-        logger.info("All tables successfully created");
     }
 }

@@ -23,18 +23,11 @@ public class DataSourceFactory {
         Properties properties = getProperties();
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName(properties.getProperty("models2pathways.database.driver"));
-        basicDataSource.setUrl(properties.getProperty("models2pathways.database.url") + databaseLocation + properties.getProperty("models2pathways.database.url.extension"));
+        basicDataSource.setUrl(properties.getProperty("models2pathways.database.url") + databaseLocation + ";");
         basicDataSource.setUsername(username);
         basicDataSource.setPassword(password);
         basicDataSource.setMaxActive(Integer.parseInt(properties.getProperty("models2pathways.database.connections")));
         return basicDataSource;
-//        BasicDataSource basicDataSource = new BasicDataSource();
-//        basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-//        basicDataSource.setUrl("jdbc:mysql://localhost:3306/models2pathways");
-//        basicDataSource.setUsername("root");
-//        basicDataSource.setPassword("");
-//        basicDataSource.setMaxActive(5);
-//        return basicDataSource;
     }
 
     public static String getDatabaseLocation() {

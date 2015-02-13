@@ -4,6 +4,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 /**
@@ -28,14 +29,13 @@ public class Models2PathwayDAO {
         String query = "CREATE TABLE Pathways (pathwayID VARCHAR(255) PRIMARY KEY, name VARCHAR(255))";
         jdbcTemplate.execute(query);
         closeConnection();
-        logger.info("Pathways table created");
+        
     }
 
     public void createBioModelsTable() {
         String query = "CREATE TABLE BioModels (biomodelID VARCHAR(255) PRIMARY KEY, name VARCHAR(255), authors VARCHAR(255))";
         jdbcTemplate.execute(query);
         closeConnection();
-        logger.info("BioModels table created");
     }
 
     public void createXReferencesTable() {
@@ -56,7 +56,6 @@ public class Models2PathwayDAO {
                 "FOREIGN KEY (biomodelID) REFERENCES BioModels (biomodelID))";
         jdbcTemplate.execute(query);
         closeConnection();
-        logger.info("xReferences table created");
     }
 
     public void dropPathwaysTable() {
@@ -66,7 +65,6 @@ public class Models2PathwayDAO {
         } catch (Exception ignored) {
         }
         closeConnection();
-        logger.info("Pathways table deleted");
     }
 
     public void dropBioModelsTable() {
@@ -76,7 +74,6 @@ public class Models2PathwayDAO {
         } catch (Exception ignored) {
         }
         closeConnection();
-        logger.info("BioModels table deleted");
     }
 
     public void dropXReferencesTable() {
@@ -86,7 +83,6 @@ public class Models2PathwayDAO {
         } catch (Exception ignored) {
         }
         closeConnection();
-        logger.info("xReferences table deleted");
     }
 
     /*********************************************************************************************
@@ -126,10 +122,10 @@ public class Models2PathwayDAO {
     }
 
     private void closeConnection() {
-//        try {
-//            jdbcTemplate.getDataSource().getConnection().close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            jdbcTemplate.getDataSource().getConnection().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -27,6 +27,7 @@ public class DatabaseInsertionHelper {
         models2PathwayDAO.insertXReference(pathwaySummary.getStId(), sbmlModel.getBioModelsID(), pathwaySummary.getEntities().getpValue(), pathwaySummary.getEntities().getFdr(),
                 pathwaySummary.getEntities().getResource(), pathwaySummary.getReactions().getTotal(), pathwaySummary.getReactions().getFound(), pathwaySummary.getEntities().getTotal(),
                 pathwaySummary.getEntities().getFound(), pathwaySummary.getSpecies().getName(), hasMinPValue, hasApproval);
+        System.out.println("created xReference");
 
     }
 }

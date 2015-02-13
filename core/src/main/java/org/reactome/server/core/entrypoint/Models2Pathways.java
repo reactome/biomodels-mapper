@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  */
 public class Models2Pathways {
     final static Logger logger = Logger.getLogger(Models2Pathways.class.getName());
+    final static int BLOCKING_QUEUE_SIZE = 3;
 
     //boolean for killing consumer thread
     private static boolean producerFinished;
@@ -31,11 +32,11 @@ public class Models2Pathways {
         DataSourceFactory.setPassword(jsapResult.getString("password"));
 
         //Shared blockingqueue for producert consumer.
-        BlockingQueue<SBMLModel> sbmlModelBlockingQueue = new LinkedBlockingDeque<SBMLModel>(3);
-        //Database set up 
+        BlockingQueue<SBMLModel> sbmlModelBlockingQueue = new LinkedBlockingDeque<SBMLModel>(BLOCKING_QUEUE_SIZE);
+        //Database set up
         DatabaseSetUpHelper.DropSchema();
         DatabaseSetUpHelper.CreateSchema();
-        
+
         //Let's go... starting threads
         Producer producer = new Producer(sbmlModelBlockingQueue);
         Consumer consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getString("significantPValue"), jsapResult.getString("extendedPValue"));
