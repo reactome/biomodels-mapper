@@ -3,8 +3,8 @@ package org.reactome.server.core.helper;
 import org.reactome.server.core.database.DatabaseInsertionHelper;
 import org.reactome.server.core.entrypoint.Models2Pathways;
 import org.reactome.server.core.model.reactome.AnalysisResult;
-import org.reactome.server.core.model.sbml.SBMLModel;
 import org.reactome.server.core.model.reactome.PathwaySummary;
+import org.reactome.server.core.model.sbml.SBMLModel;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
@@ -28,7 +28,7 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-        while (!Models2Pathways.isProducerFinished()) {
+        while (!Models2Pathways.isProducerAlive()) {
             SBMLModel sbmlModel = null;
             try {
                 sbmlModel = sbmlModelBlockingQueue.take();

@@ -1,6 +1,5 @@
 package org.reactome.server.core.helper;
 
-import org.reactome.server.core.entrypoint.Models2Pathways;
 import org.reactome.server.core.model.sbml.SBMLModel;
 
 import java.util.concurrent.BlockingQueue;
@@ -31,7 +30,6 @@ public class Producer implements Runnable {
                     e.printStackTrace();
                 }
             }
-            Models2Pathways.setProducerFinished(true);
         } finally {
             Thread.currentThread().interrupt();
         }
