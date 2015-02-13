@@ -10,8 +10,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
 /**
- * Created by Maximilian Koch (mkoch@ebi.ac.uk).
- */
+* Created by Maximilian Koch (mkoch@ebi.ac.uk).
+*/
 public class Consumer implements Runnable {
     final static Logger logger = Logger.getLogger(Consumer.class.getName());
 
@@ -49,7 +49,6 @@ public class Consumer implements Runnable {
                 }
             } else if (analysisResult.getPathwaysFound() == 0) {
                 System.out.println("Couldn't find pathways on pValue " + significantPValue);
-                
                 System.out.println("Request on extended pValue " + extendedPValue);
                 hasMinPValue = false;
                 analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(sbmlModel, extendedPValue);

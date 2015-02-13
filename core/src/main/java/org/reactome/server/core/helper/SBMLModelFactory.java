@@ -8,14 +8,18 @@ import uk.ac.ebi.biomodels.ws.BioModelsWSClient;
 import uk.ac.ebi.biomodels.ws.BioModelsWSException;
 import org.reactome.server.core.enums.Species;
 
+import java.net.SocketException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public class SBMLModelFactory {
+    final static Logger logger = Logger.getLogger(Producer.class.getName());
+
     private static final BioModelsWSClient client = new BioModelsWSClient();
 
     /**
@@ -45,7 +49,7 @@ public class SBMLModelFactory {
         } catch (BioModelsWSException e) {
             e.printStackTrace();
         }
-        return new String[0];
+        return null;
     }
 
     /**
@@ -60,7 +64,7 @@ public class SBMLModelFactory {
         } catch (BioModelsWSException e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 
     private static String[] getSBMLModelAuthors(String modelId) {
@@ -69,7 +73,7 @@ public class SBMLModelFactory {
         } catch (BioModelsWSException e) {
             e.printStackTrace();
         }
-        return new String[0];
+        return null;
     }
 
     private static String getSBMLModelPublication(String modelId) {
@@ -78,7 +82,7 @@ public class SBMLModelFactory {
         } catch (BioModelsWSException e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 
     private static String getSBMLModelName(String modelId) {
@@ -87,7 +91,7 @@ public class SBMLModelFactory {
         } catch (BioModelsWSException e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 
     /**
