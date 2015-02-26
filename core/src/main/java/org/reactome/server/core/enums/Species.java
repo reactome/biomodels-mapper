@@ -19,11 +19,11 @@ public enum Species {
     SACCHAROMYCES_CEREVISIAE("4932", "68322"),
     SCHIZOSACCHAROMYCES_POMBE("4896", "68324");
 
-    private final String bioModelsTaxonomyid;
+    private final String bioModelsTaxonomyId;
     private final String reactomeTaxonomyId;
 
-    private Species(String bioModelsTaxonomyid, String reactomeTaxonomyId) {
-        this.bioModelsTaxonomyid = bioModelsTaxonomyid;
+    private Species(String bioModelsTaxonomyId, String reactomeTaxonomyId) {
+        this.bioModelsTaxonomyId = bioModelsTaxonomyId;
         this.reactomeTaxonomyId = reactomeTaxonomyId;
     }
 
@@ -37,7 +37,7 @@ public enum Species {
 
     public static Species getSpeciesByBioModelsTaxonomyid(String bioModelsTaxonomyid) {
         for (Species species : Species.values()) {
-            if (species.bioModelsTaxonomyid.equals(bioModelsTaxonomyid)) {
+            if (species.bioModelsTaxonomyId.equals(bioModelsTaxonomyid)) {
                 return species;
             }
         }
@@ -45,13 +45,18 @@ public enum Species {
     }
 
     public String getBioModelsTaxonomyId() {
-        return bioModelsTaxonomyid;
+        return bioModelsTaxonomyId;
+    }
+
+
+    public String getReactomeTaxonomyId() {
+        return reactomeTaxonomyId;
     }
 
     @Override
     public String toString() {
         return "Species{" +
-                "bioModelsTaxonomyid='" + bioModelsTaxonomyid + '\'' +
+                "bioModelsTaxonomyId='" + bioModelsTaxonomyId + '\'' +
                 ", reactomeTaxonomyId='" + reactomeTaxonomyId + '\'' +
                 '}';
     }
