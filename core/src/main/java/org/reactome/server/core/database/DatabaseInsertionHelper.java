@@ -9,16 +9,16 @@ import org.reactome.server.core.model.sbml.SBMLModel;
 public class DatabaseInsertionHelper {
     
     public static void createNewPathwayEntry(PathwaySummary pathwaySummary) {
-        Models2PathwayDAO.insertPathway(pathwaySummary.getStId(), pathwaySummary.getName());
+        Models2PathwayDAOImpl.insertPathway(pathwaySummary.getStId(), pathwaySummary.getName());
     }
 
     public static void createNewBioModelEntry(SBMLModel sbmlModel) {
-        Models2PathwayDAO.insertBioModel(sbmlModel.getBioModelsID(), sbmlModel.getName());
+        Models2PathwayDAOImpl.insertBioModel(sbmlModel.getBioModelsID(), sbmlModel.getName());
 
     }
 
     public static void createNewXReferenceEntry(PathwaySummary pathwaySummary, SBMLModel sbmlModel, boolean hasMinPValue, boolean hasApproval) {
-        Models2PathwayDAO.insertXReference(pathwaySummary.getStId(), sbmlModel.getBioModelsID(), pathwaySummary.getEntities().getpValue(), pathwaySummary.getEntities().getFdr(),
+        Models2PathwayDAOImpl.insertXReference(pathwaySummary.getStId(), sbmlModel.getBioModelsID(), pathwaySummary.getEntities().getpValue(), pathwaySummary.getEntities().getFdr(),
                 pathwaySummary.getEntities().getResource(), pathwaySummary.getReactions().getTotal(), pathwaySummary.getReactions().getFound(), pathwaySummary.getEntities().getTotal(),
                 pathwaySummary.getEntities().getFound(), pathwaySummary.getSpecies().getName(), hasMinPValue, hasApproval);
     }
