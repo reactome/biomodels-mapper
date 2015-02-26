@@ -19,6 +19,9 @@ public class Consumer implements Runnable {
     private Double significantPValue;
     private Double extendedPValue;
     private BlockingQueue<SBMLModel> sbmlModelBlockingQueue;
+    private Integer numberOfCreatePathwayEntries = 0;
+    private Integer numberOfCreateBioModelEntries = 0;
+    private Integer numberOfCreateXReferences = 0;
 
     public Consumer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue, String significantPValue, String extendedPValue) {
         this.sbmlModelBlockingQueue = sbmlModelBlockingQueue;
@@ -69,11 +72,13 @@ public class Consumer implements Runnable {
             if (analysisResult != null) {
                 //Database
                 DatabaseInsertionHelper.createNewBioModelEntry(sbmlModel);
+                numberOfCreateBioModelEntries += 1;
                 for (PathwaySummary pathwaySummary : analysisResult.getPathways()) {
                     //Database
                     DatabaseInsertionHelper.createNewPathwayEntry(pathwaySummary);
-                    System.out.println(pathwaySummary.getEntities().getpValue());
+                    numberOfCreatePathwayEntries += 1;
                     DatabaseInsertionHelper.createNewXReferenceEntry(pathwaySummary, sbmlModel, hasMinPValue, false);
+                    numberOfCreateXReferences += 1;
                     System.out.println(" >> " + analysisResult.getPathwaysFound() + " pathways found");
                     //File output
                     if (FileHandler.isInitialized) {
@@ -88,6 +93,10 @@ public class Consumer implements Runnable {
             }
         }
         FileHandler.closeFile();
+        
+        System.out.println("Created pathway entries: " + numberOfCreatePathwayEntries);
+        System.out.println("Created biomodel entries: " + numberOfCreatePathwayEntries);
+        System.out.println("Created xReferences: " + numberOfCreatePathwayEntries);
         System.out.println("Process finished");
     }
 }
