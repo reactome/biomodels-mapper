@@ -48,12 +48,20 @@ public class JSAPHandler {
                 .setLongFlag("extendedPValue");
         opt5.setHelp("Value of the pValue for possible results");
 
+        FlaggedOption opt6 = new FlaggedOption("output")
+                .setStringParser(JSAP.STRING_PARSER)
+                .setRequired(false)
+                .setShortFlag('o')
+                .setLongFlag("output");
+        opt1.setHelp("Path to output tsv");
+
         try {
             jsap.registerParameter(opt1);
             jsap.registerParameter(opt2);
             jsap.registerParameter(opt3);
             jsap.registerParameter(opt4);
             jsap.registerParameter(opt5);
+            jsap.registerParameter(opt6);
         } catch (JSAPException e) {
             e.printStackTrace();
         }
