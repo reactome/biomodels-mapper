@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
@@ -25,6 +24,8 @@ public class AnalysisResult {
     private List<PathwaySummary> pathways;
 
     private List<ResourceSummary> resourceSummary;
+
+    private String token;
 
     @JsonCreator
     public AnalysisResult(
@@ -88,5 +89,13 @@ public class AnalysisResult {
 
     public void setResourceSummary(List<ResourceSummary> resourceSummary) {
         this.resourceSummary = resourceSummary;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
