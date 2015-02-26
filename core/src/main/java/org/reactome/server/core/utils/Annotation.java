@@ -32,20 +32,6 @@ public class Annotation {
         return String.valueOf(annotationsInAnalysisFormat);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Entity id: ");
-        stringBuilder.append(entityId);
-        stringBuilder.append("\nResource: ");
-        stringBuilder.append(namespace);
-        //str.append("\nURI: ");
-        //str.append(uri);
-        stringBuilder.append("\n");
-
-        return stringBuilder.toString();
-    }
-
     public String getNamespace() {
         return this.namespace;
     }
@@ -68,5 +54,36 @@ public class Annotation {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Annotation that = (Annotation) o;
+
+        if (entityId != null ? !entityId.equals(that.entityId) : that.entityId != null) return false;
+        if (namespace != null ? !namespace.equals(that.namespace) : that.namespace != null) return false;
+        if (uri != null ? !uri.equals(that.uri) : that.uri != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = namespace != null ? namespace.hashCode() : 0;
+        result = 31 * result + (entityId != null ? entityId.hashCode() : 0);
+        result = 31 * result + (uri != null ? uri.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Annotation{" +
+                "namespace='" + namespace + '\'' +
+                ", entityId='" + entityId + '\'' +
+                ", uri='" + uri + '\'' +
+                '}';
     }
 }
