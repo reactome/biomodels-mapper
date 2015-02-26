@@ -5,19 +5,19 @@ import org.reactome.server.core.entrypoint.Models2Pathways;
 import org.reactome.server.core.model.reactome.AnalysisResult;
 import org.reactome.server.core.model.reactome.PathwaySummary;
 import org.reactome.server.core.model.sbml.SBMLModel;
+import org.reactome.server.core.output.FileHandler;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
 /**
-* Created by Maximilian Koch (mkoch@ebi.ac.uk).
-*/
+ * Created by Maximilian Koch (mkoch@ebi.ac.uk).
+ */
 public class Consumer implements Runnable {
     final static Logger logger = Logger.getLogger(Consumer.class.getName());
 
     private Double significantPValue;
     private Double extendedPValue;
-
     private BlockingQueue<SBMLModel> sbmlModelBlockingQueue;
 
     public Consumer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue, String significantPValue, String extendedPValue) {
@@ -28,7 +28,7 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-        while (!Models2Pathways.isProducerAlive()) {
+        while (Models2Pathways.isProducerAlive()) {
             SBMLModel sbmlModel = null;
             try {
                 sbmlModel = sbmlModelBlockingQueue.take();
@@ -67,12 +67,16 @@ public class Consumer implements Runnable {
                 }
             }
             if (analysisResult != null) {
+                //Database
                 DatabaseInsertionHelper.createNewBioModelEntry(sbmlModel);
                 for (PathwaySummary pathwaySummary : analysisResult.getPathways()) {
+                    //Database
                     DatabaseInsertionHelper.createNewPathwayEntry(pathwaySummary);
                     System.out.println(pathwaySummary.getEntities().getpValue());
                     DatabaseInsertionHelper.createNewXReferenceEntry(pathwaySummary, sbmlModel, hasMinPValue, false);
                     System.out.println(" >> " + analysisResult.getPathwaysFound() + " pathways found");
+                    //File output
+                    FileHandler.addRow(pathwaySummary, analysisResult, sbmlModel, hasMinPValue);
                 }
                 try {
                     Thread.sleep(1000);
@@ -81,6 +85,7 @@ public class Consumer implements Runnable {
                 }
             }
         }
+        FileHandler.closeFile();
         System.out.println("Process finished");
     }
 }
