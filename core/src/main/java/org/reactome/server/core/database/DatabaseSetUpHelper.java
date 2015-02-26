@@ -9,18 +9,18 @@ public class DatabaseSetUpHelper {
     final static Logger logger = Logger.getLogger(DatabaseSetUpHelper.class.getName());
 
     public static void dropSchema() {
-        Models2PathwayDAO.dropXReferencesTable();
-        Models2PathwayDAO.dropBioModelsTable();
-        Models2PathwayDAO.dropPathwaysTable();
+        Models2PathwayDAOImpl.dropXReferencesTable();
+        Models2PathwayDAOImpl.dropBioModelsTable();
+        Models2PathwayDAOImpl.dropPathwaysTable();
     }
 
     public static void createSchema() {
-        Models2PathwayDAO.createPathwaysTable();
-        Models2PathwayDAO.createBioModelsTable();
-        Models2PathwayDAO.createXReferencesTable();
+        Models2PathwayDAOImpl.createPathwaysTable();
+        Models2PathwayDAOImpl.createBioModelsTable();
+        Models2PathwayDAOImpl.createXReferencesTable();
     }
 
     public static void createJDBCTemplate() {
-        Models2PathwayDAO.createJDBCTemplate();
+        Models2PathwayDAOImpl.createJDBCTemplate();
     }
 }

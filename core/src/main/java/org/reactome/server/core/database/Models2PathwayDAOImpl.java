@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
  */
-public class Models2PathwayDAO {
-    final static Logger logger = Logger.getLogger(Models2PathwayDAO.class.getName());
+public class Models2PathwayDAOImpl {
+    final static Logger logger = Logger.getLogger(Models2PathwayDAOImpl.class.getName());
 
     private static JdbcTemplate jdbcTemplate;
 
@@ -128,4 +128,6 @@ public class Models2PathwayDAO {
             e.printStackTrace();
         }
     }
+
+
 }
