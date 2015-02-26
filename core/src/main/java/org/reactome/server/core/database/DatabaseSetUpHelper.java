@@ -8,17 +8,19 @@ import java.util.logging.Logger;
 public class DatabaseSetUpHelper {
     final static Logger logger = Logger.getLogger(DatabaseSetUpHelper.class.getName());
 
-    public static void DropSchema() {
-        Models2PathwayDAO models2PathwayDAO = new Models2PathwayDAO();
-        models2PathwayDAO.dropXReferencesTable();
-        models2PathwayDAO.dropBioModelsTable();
-        models2PathwayDAO.dropPathwaysTable();
+    public static void dropSchema() {
+        Models2PathwayDAO.dropXReferencesTable();
+        Models2PathwayDAO.dropBioModelsTable();
+        Models2PathwayDAO.dropPathwaysTable();
     }
 
-    public static void CreateSchema() {
-        Models2PathwayDAO models2PathwayDAO = new Models2PathwayDAO();
-        models2PathwayDAO.createPathwaysTable();
-        models2PathwayDAO.createBioModelsTable();
-        models2PathwayDAO.createXReferencesTable();
+    public static void createSchema() {
+        Models2PathwayDAO.createPathwaysTable();
+        Models2PathwayDAO.createBioModelsTable();
+        Models2PathwayDAO.createXReferencesTable();
+    }
+
+    public static void createJDBCTemplate() {
+        Models2PathwayDAO.createJDBCTemplate();
     }
 }

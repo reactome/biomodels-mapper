@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  */
 public class Models2Pathways {
     final static Logger logger = Logger.getLogger(Models2Pathways.class.getName());
+
     final static int BLOCKING_QUEUE_SIZE = 3;
 
     private static Thread PRODUCER;
@@ -43,8 +44,9 @@ public class Models2Pathways {
         //Shared blockingqueue for producert consumer.
         BlockingQueue<SBMLModel> sbmlModelBlockingQueue = new LinkedBlockingDeque<SBMLModel>(BLOCKING_QUEUE_SIZE);
         //Database set up
-        DatabaseSetUpHelper.DropSchema();
-        DatabaseSetUpHelper.CreateSchema();
+        DatabaseSetUpHelper.createJDBCTemplate();
+        DatabaseSetUpHelper.dropSchema();
+        DatabaseSetUpHelper.createSchema();
         logger.info("Database has been dropped and new created");
 
         //Let's go... starting threads
@@ -62,5 +64,4 @@ public class Models2Pathways {
     public static boolean isProducerAlive() {
         return Models2Pathways.PRODUCER.isAlive();
     }
-
 }
