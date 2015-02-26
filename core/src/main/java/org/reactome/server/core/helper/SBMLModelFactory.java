@@ -1,14 +1,13 @@
 package org.reactome.server.core.helper;
 
+import org.reactome.server.core.enums.Species;
 import org.reactome.server.core.model.sbml.SBMLModel;
 import org.reactome.server.core.utils.Annotation;
 import org.reactome.server.core.utils.ExtractInformationFromSBMLModel;
 import org.sbml.jsbml.Model;
 import uk.ac.ebi.biomodels.ws.BioModelsWSClient;
 import uk.ac.ebi.biomodels.ws.BioModelsWSException;
-import org.reactome.server.core.enums.Species;
 
-import java.net.SocketException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -67,33 +66,6 @@ public class SBMLModelFactory {
         return null;
     }
 
-    private static String[] getSBMLModelAuthors(String modelId) {
-        try {
-            return client.getAuthorsByModelId(modelId);
-        } catch (BioModelsWSException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private static String getSBMLModelPublication(String modelId) {
-        try {
-            return client.getPublicationByModelId(modelId);
-        } catch (BioModelsWSException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private static String getSBMLModelName(String modelId) {
-        try {
-            return client.getModelNameById(modelId);
-        } catch (BioModelsWSException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     /**
      * Getting information out of the SBML-Model/XML
      */
@@ -113,14 +85,11 @@ public class SBMLModelFactory {
     /**
      * Returns a SBML-Model object by given model id (e.g.:"BIOMD0000000464").
      */
-    public static SBMLModel getSBMLModel(String modelId) {
+    public static SBMLModel getSBMLModelByModelId(String modelId) {
         Model model = getSBMLXMLInformation(getModelSBMLByModelId(modelId));
-        String sbmlModelName = getSBMLModelName(modelId);
-        String[] sbmlModelAuthors = getSBMLModelAuthors(modelId);
-        String sbmlModelPublications = getSBMLModelPublication(modelId);
+        String sbmlModelName = model.getName();
         Species sbmlModelTaxonomy = getSBMLModelTaxonomy(model);
         Set<Annotation> sbmlModelAnnotations = getSBMLModelAnnotations(model);
-        return new SBMLModel(sbmlModelName, modelId, sbmlModelAuthors,
-                sbmlModelPublications, sbmlModelTaxonomy, sbmlModelAnnotations);
+        return new SBMLModel(sbmlModelName, modelId, sbmlModelTaxonomy, sbmlModelAnnotations);
     }
 }
