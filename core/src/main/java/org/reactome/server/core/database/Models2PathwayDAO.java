@@ -33,7 +33,7 @@ public class Models2PathwayDAO {
     }
 
     public void createBioModelsTable() {
-        String query = "CREATE TABLE BioModels (biomodelID VARCHAR(255) PRIMARY KEY, name VARCHAR(255), authors VARCHAR(255))";
+        String query = "CREATE TABLE BioModels (biomodelID VARCHAR(255) PRIMARY KEY, name VARCHAR(255))";
         jdbcTemplate.execute(query);
         closeConnection();
     }
@@ -92,7 +92,7 @@ public class Models2PathwayDAO {
      *********************************************************************************************/
 
     public void insertPathway(String pathwayID, String name) {
-        String query = "INSERT INTO Pathways values (?,?);";
+        String query = "INSERT INTO Pathways values (?,?)";
         try {
             jdbcTemplate.update(query, pathwayID, name);
         } catch (DuplicateKeyException ignore) {
@@ -100,10 +100,10 @@ public class Models2PathwayDAO {
         closeConnection();
     }
 
-    public void insertBioModel(String biomodelID, String name, String authors) {
-        String query = "INSERT INTO BioModels values (?,?,?);";
+    public void insertBioModel(String biomodelID, String name) {
+        String query = "INSERT INTO BioModels values (?,?)";
         try {
-            jdbcTemplate.update(query, biomodelID, name, authors);
+            jdbcTemplate.update(query, biomodelID, name);
         } catch (DuplicateKeyException ignore) {
         }
         closeConnection();
@@ -112,7 +112,7 @@ public class Models2PathwayDAO {
     public void insertXReference(String pathwayID, String biomodelID, double pValue, double fdr, String resource,
                                  int reactionsTotal, int reactionsFound, int entitiesTotal, int entitiesFound, String species,
                                  boolean hasMinPValue, boolean hasApproval) {
-        String query = "INSERT INTO xReferences values (?,?,?,?,?,?,?,?,?,?,?,?);";
+        String query = "INSERT INTO xReferences values (?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             jdbcTemplate.update(query, pathwayID, biomodelID, pValue, fdr, resource, reactionsTotal, reactionsFound,
                     entitiesTotal, entitiesFound, species, hasMinPValue, hasApproval);
