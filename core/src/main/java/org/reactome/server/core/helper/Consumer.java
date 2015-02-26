@@ -76,7 +76,9 @@ public class Consumer implements Runnable {
                     DatabaseInsertionHelper.createNewXReferenceEntry(pathwaySummary, sbmlModel, hasMinPValue, false);
                     System.out.println(" >> " + analysisResult.getPathwaysFound() + " pathways found");
                     //File output
-                    FileHandler.addRow(pathwaySummary, analysisResult, sbmlModel, hasMinPValue);
+                    if (FileHandler.isInitialized) {
+                        FileHandler.addRow(pathwaySummary, analysisResult, sbmlModel, hasMinPValue);
+                    }
                 }
                 try {
                     Thread.sleep(1000);
