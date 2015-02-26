@@ -1,10 +1,7 @@
 package org.reactome.server.core.database;
 
-import org.reactome.server.core.model.sbml.SBMLModel;
 import org.reactome.server.core.model.reactome.PathwaySummary;
-
-import java.util.Arrays;
-import java.util.logging.Logger;
+import org.reactome.server.core.model.sbml.SBMLModel;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
@@ -18,7 +15,7 @@ public class DatabaseInsertionHelper {
 
     public static void createNewBioModelEntry(SBMLModel sbmlModel) {
         Models2PathwayDAO models2PathwayDAO = new Models2PathwayDAO();
-        models2PathwayDAO.insertBioModel(sbmlModel.getBioModelsID(), sbmlModel.getName(), Arrays.toString(sbmlModel.getAuthors()));
+        models2PathwayDAO.insertBioModel(sbmlModel.getBioModelsID(), sbmlModel.getName());
 
     }
 
