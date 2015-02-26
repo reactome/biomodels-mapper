@@ -17,13 +17,14 @@ import java.util.Date;
 public class FileHandler {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("YYYY-MM-dd_hh-mm-ss");
     private static final String FILE_NAME = "models2pathways";
+    public static boolean isInitialized = false;
     private static String locationPath;
     private static FileWriter fileWriter;
-
 
     public static void createFile() {
         try {
             fileWriter = new FileWriter(getLocationPath() + ".tsv", true);
+            isInitialized = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
