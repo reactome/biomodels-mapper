@@ -27,11 +27,6 @@ public class URLBuilder {
         return propertiesHelper.getAnalysisURLProperties();
     }
 
-    public static URI getPathwaySBMLURL(long dbId) {
-        String URL = "http://reactomews.oicr.on.ca:8080/ReactomeRESTfulAPI/RESTfulWS/sbmlExporter/" + dbId;
-        return URI.create(URL);
-    }
-
     public static URI getAnalysisURL(Long species, String token) {
         String URL = "http://reactomedev.oicr.on.ca/PathwayBrowser/#SPECIES=" + species.toString() + "&DTAB=AN&ANALYSIS=" + token;
         return URI.create(URL);
