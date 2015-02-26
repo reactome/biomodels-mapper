@@ -34,6 +34,7 @@ public class Producer implements Runnable {
             }
         } finally {
             Thread.currentThread().interrupt();
+            logger.info("Producer has finished");
         }
     }
 }

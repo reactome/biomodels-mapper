@@ -32,6 +32,8 @@ public class Models2Pathways {
         DataSourceFactory.setPassword(jsapResult.getString("password"));
         FileHandler.setLocationPath(jsapResult.getString("output"));
 
+        logger.info("Database location has been set: " + DataSourceFactory.getDatabaseLocation());
+
         //Setting up output file
         if (!jsapResult.getString("output").isEmpty()) {
             FileHandler.createFile();
@@ -43,16 +45,18 @@ public class Models2Pathways {
         //Database set up
         DatabaseSetUpHelper.DropSchema();
         DatabaseSetUpHelper.CreateSchema();
+        logger.info("Database has been dropped and new created");
 
         //Let's go... starting threads
         Producer producer = new Producer(sbmlModelBlockingQueue);
 
         Models2Pathways.PRODUCER = new Thread(producer);
         Models2Pathways.PRODUCER.start();
+        logger.info("Started producer process");
 
         Consumer consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getString("significantPValue"), jsapResult.getString("extendedPValue"));
         new Thread(consumer).start();
-
+        logger.info("Started consumer process");
     }
 
     public static boolean isProducerAlive() {

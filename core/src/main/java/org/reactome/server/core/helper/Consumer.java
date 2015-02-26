@@ -51,8 +51,8 @@ public class Consumer implements Runnable {
                     }
                 }
             } else if (analysisResult.getPathwaysFound() == 0) {
-                System.out.println("Couldn't find pathways on pValue " + significantPValue);
-                System.out.println("Request on extended pValue " + extendedPValue);
+                logger.info("Couldn't find pathways on pValue " + significantPValue);
+                logger.info("Request on extended pValue " + extendedPValue);
                 hasMinPValue = false;
                 analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(sbmlModel, extendedPValue);
                 if (analysisResult == null) {
@@ -61,12 +61,12 @@ public class Consumer implements Runnable {
                         analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(sbmlModel, extendedPValue);
                         tries = tries - 1;
                         if (analysisResult == null && tries == 0) {
-                            System.out.println(" >> Couldn't request analysis result");
+                            logger.info(" >> Couldn't request analysis result");
                         }
                     }
                 }
                 if (analysisResult == null || analysisResult.getPathwaysFound() == 0) {
-                    System.out.println(" >> No pathways found with pValue " + extendedPValue);
+                    logger.info("No pathways found with pValue " + extendedPValue + " on " + sbmlModel.getBioModelsID());
                 }
             }
             if (analysisResult != null) {
@@ -79,7 +79,6 @@ public class Consumer implements Runnable {
                     numberOfCreatePathwayEntries += 1;
                     DatabaseInsertionHelper.createNewXReferenceEntry(pathwaySummary, sbmlModel, hasMinPValue, false);
                     numberOfCreateXReferences += 1;
-                    System.out.println(" >> " + analysisResult.getPathwaysFound() + " pathways found");
                     //File output
                     if (FileHandler.isInitialized) {
                         FileHandler.addRow(pathwaySummary, analysisResult, sbmlModel, hasMinPValue);
@@ -92,11 +91,12 @@ public class Consumer implements Runnable {
                 }
             }
         }
+        logger.info("Consumer has finished.");
         FileHandler.closeFile();
-        
-        System.out.println("Created pathway entries: " + numberOfCreatePathwayEntries);
-        System.out.println("Created biomodel entries: " + numberOfCreatePathwayEntries);
-        System.out.println("Created xReferences: " + numberOfCreatePathwayEntries);
-        System.out.println("Process finished");
+
+        logger.info("Created pathway entries: " + numberOfCreatePathwayEntries);
+        logger.info("Created biomodel entries: " + numberOfCreateBioModelEntries);
+        logger.info("Created xReferences: " + numberOfCreateXReferences);
+        logger.info("\nProcess finished");
     }
 }
