@@ -6,6 +6,7 @@ import org.reactome.server.core.database.DatabaseSetUpHelper;
 import org.reactome.server.core.helper.Consumer;
 import org.reactome.server.core.helper.Producer;
 import org.reactome.server.core.model.sbml.SBMLModel;
+import org.reactome.server.core.output.FileHandler;
 import org.reactome.server.core.utils.JSAPHandler;
 
 import java.util.concurrent.BlockingQueue;
@@ -29,6 +30,13 @@ public class Models2Pathways {
         DataSourceFactory.setDatabaseLocation(jsapResult.getString("database"));
         DataSourceFactory.setUsername(jsapResult.getString("username"));
         DataSourceFactory.setPassword(jsapResult.getString("password"));
+        FileHandler.setLocationPath(jsapResult.getString("output"));
+
+        //Setting up output file
+        if (!jsapResult.getString("output").isEmpty()) {
+            FileHandler.createFile();
+            FileHandler.addHeader();
+        }
 
         //Shared blockingqueue for producert consumer.
         BlockingQueue<SBMLModel> sbmlModelBlockingQueue = new LinkedBlockingDeque<SBMLModel>(BLOCKING_QUEUE_SIZE);
@@ -38,11 +46,13 @@ public class Models2Pathways {
 
         //Let's go... starting threads
         Producer producer = new Producer(sbmlModelBlockingQueue);
-        Consumer consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getString("significantPValue"), jsapResult.getString("extendedPValue"));
-        new Thread(consumer).start();
 
         Models2Pathways.PRODUCER = new Thread(producer);
         Models2Pathways.PRODUCER.start();
+
+        Consumer consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getString("significantPValue"), jsapResult.getString("extendedPValue"));
+        new Thread(consumer).start();
+
     }
 
     public static boolean isProducerAlive() {
