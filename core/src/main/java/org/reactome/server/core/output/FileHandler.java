@@ -10,11 +10,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
  */
 public class FileHandler {
+    final static Logger logger = Logger.getLogger(FileHandler.class.getName());
+
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("YYYY-MM-dd_hh-mm-ss");
     private static final String FILE_NAME = "models2pathways";
     public static boolean isInitialized = false;
@@ -22,12 +25,14 @@ public class FileHandler {
     private static FileWriter fileWriter;
 
     public static void createFile() {
+        String locationPath = getLocationPath();
         try {
-            fileWriter = new FileWriter(getLocationPath() + ".tsv", true);
+            fileWriter = new FileWriter(locationPath + ".tsv", true);
             isInitialized = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        logger.info("A tsv file has been created: " + locationPath);
     }
 
     public static void addHeader() {
