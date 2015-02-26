@@ -1,6 +1,5 @@
 package org.reactome.server.core.helper;
 
-import org.reactome.server.core.entrypoint.Models2Pathways;
 import org.reactome.server.core.model.sbml.SBMLModel;
 
 import java.util.concurrent.BlockingQueue;
@@ -12,7 +11,6 @@ import java.util.logging.Logger;
 public class Producer implements Runnable {
     final static Logger logger = Logger.getLogger(Producer.class.getName());
 
-
     private BlockingQueue<SBMLModel> sbmlModelBlockingQueue;
 
     public Producer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue) {
@@ -23,8 +21,7 @@ public class Producer implements Runnable {
     public void run() {
         try {
             for (String sbmlID : SBMLModelFactory.getAllModelIdsByAllTaxonomyIds()) {
-                System.out.println(sbmlID);
-                SBMLModel sbmlModel = (SBMLModelFactory.getSBMLModel(sbmlID));
+                SBMLModel sbmlModel = (SBMLModelFactory.getSBMLModelByModelId(sbmlID));
                 if (sbmlModel.getSBMLModelAnnotations().isEmpty()) {
                     //There is no point to continue for models without annotations
                     continue;
