@@ -39,6 +39,13 @@ public class Consumer implements Runnable {
                 e.printStackTrace();
             }
             boolean hasMinPValue = true;
+
+
+            //Remove all trivial chemicals
+            if (sbmlModel != null) {
+                sbmlModel.getSBMLModelAnnotations().removeAll(new TrivialChemicals().getTrivialChemicals());
+            }
+
             AnalysisResult analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(sbmlModel, significantPValue);
             if (analysisResult == null) {
                 int tries = 2;
