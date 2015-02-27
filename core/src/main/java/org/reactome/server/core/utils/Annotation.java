@@ -13,13 +13,9 @@ public class Annotation {
     private String entityId;
     private String uri;   // full URI, as extracted from the sbml file
 
-    /**
-     * Default constructor: builds an empty object.
-     */
-    public Annotation() {
-        this.namespace = null;
-        this.entityId = null;
-        this.uri = null;
+    public Annotation(String namespace, String entityId) {
+        this.namespace = namespace;
+        this.entityId = entityId;
     }
 
     public static String annotationsToAnalysisFormat(String model, Set<Annotation> annotations) {
@@ -65,7 +61,6 @@ public class Annotation {
 
         if (entityId != null ? !entityId.equals(that.entityId) : that.entityId != null) return false;
         if (namespace != null ? !namespace.equals(that.namespace) : that.namespace != null) return false;
-        if (uri != null ? !uri.equals(that.uri) : that.uri != null) return false;
 
         return true;
     }
@@ -74,7 +69,6 @@ public class Annotation {
     public int hashCode() {
         int result = namespace != null ? namespace.hashCode() : 0;
         result = 31 * result + (entityId != null ? entityId.hashCode() : 0);
-        result = 31 * result + (uri != null ? uri.hashCode() : 0);
         return result;
     }
 
