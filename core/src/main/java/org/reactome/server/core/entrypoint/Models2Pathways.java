@@ -43,11 +43,15 @@ public class Models2Pathways {
 
         //Shared blockingqueue for producert consumer.
         BlockingQueue<SBMLModel> sbmlModelBlockingQueue = new LinkedBlockingDeque<SBMLModel>(BLOCKING_QUEUE_SIZE);
-        //Database set up
-        DatabaseSetUpHelper.createJDBCTemplate();
-        DatabaseSetUpHelper.dropSchema();
-        DatabaseSetUpHelper.createSchema();
-        logger.info("Database has been dropped and new created");
+
+        if (jsapResult.getString("username") != null || jsapResult.getString("password") != null || jsapResult.getString("database") != null) {
+            //Database set up
+            DatabaseSetUpHelper.createJDBCTemplate();
+            DatabaseSetUpHelper.dropSchema();
+            DatabaseSetUpHelper.createSchema();
+            logger.info("Database has been dropped and new created");
+        }
+
 
         //Let's go... starting threads
         Producer producer = new Producer(sbmlModelBlockingQueue);
@@ -56,7 +60,7 @@ public class Models2Pathways {
         Models2Pathways.PRODUCER.start();
         logger.info("Started producer process");
 
-        Consumer consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getString("significantPValue"), jsapResult.getString("extendedPValue"));
+        Consumer consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getString("significantFDR"), jsapResult.getString("extendedFDR"));
         new Thread(consumer).start();
         logger.info("Started consumer process");
     }
