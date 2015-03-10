@@ -15,45 +15,53 @@ public class JSAPHandler {
         JSAP jsap = new JSAP();
         FlaggedOption opt1 = new FlaggedOption("database")
                 .setStringParser(JSAP.STRING_PARSER)
-                .setRequired(true)
+                .setRequired(false)
                 .setShortFlag('d')
                 .setLongFlag("database");
         opt1.setHelp("Path to database");
 
         FlaggedOption opt2 = new FlaggedOption("username")
                 .setStringParser(JSAP.STRING_PARSER)
-                .setRequired(true)
+                .setRequired(false)
                 .setShortFlag('u')
                 .setLongFlag("username");
         opt2.setHelp("The database user");
 
         FlaggedOption opt3 = new FlaggedOption("password")
                 .setStringParser(JSAP.STRING_PARSER)
-                .setRequired(true)
+                .setRequired(false)
                 .setShortFlag('p')
                 .setLongFlag("password");
         opt3.setHelp("The password to connect to the database");
 
-        FlaggedOption opt4 = new FlaggedOption("significantPValue")
+        FlaggedOption opt4 = new FlaggedOption("significantFDR")
                 .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(false)
-                .setDefault(String.valueOf(0.05))
-                .setLongFlag("significantPValue");
-        opt4.setHelp("Value of the pValue for significant results");
+                .setDefault(String.valueOf(0.005))
+                .setLongFlag(String.valueOf("significantFDR"));
+        opt4.setHelp("Value of the FDR for significant results");
 
-        FlaggedOption opt5 = new FlaggedOption("extendedPValue")
+        FlaggedOption opt5 = new FlaggedOption("extendedFDR")
                 .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(false)
-                .setDefault(String.valueOf(0.1))
-                .setLongFlag("extendedPValue");
-        opt5.setHelp("Value of the pValue for possible results");
+                .setDefault(String.valueOf(0.001))
+                .setLongFlag("extendedFDR");
+        opt5.setHelp("Value of the FDR for possible results");
 
         FlaggedOption opt6 = new FlaggedOption("output")
                 .setStringParser(JSAP.STRING_PARSER)
-                .setRequired(false)
+                .setRequired(true)
                 .setShortFlag('o')
                 .setLongFlag("output");
-        opt1.setHelp("Path to output tsv");
+        opt6.setHelp("Path to output tsv");
+
+        FlaggedOption opt7 = new FlaggedOption("coverage")
+                .setStringParser(JSAP.STRING_PARSER)
+                .setRequired(false)
+                .setShortFlag('c')
+                .setDefault(String.valueOf(0.5))
+                .setLongFlag("coverage");
+        opt7.setHelp("minimum pathway reaction coverage");
 
         try {
             jsap.registerParameter(opt1);
@@ -62,6 +70,7 @@ public class JSAPHandler {
             jsap.registerParameter(opt4);
             jsap.registerParameter(opt5);
             jsap.registerParameter(opt6);
+            jsap.registerParameter(opt7);
         } catch (JSAPException e) {
             e.printStackTrace();
         }
