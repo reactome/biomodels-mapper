@@ -10,14 +10,12 @@ import java.util.Properties;
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
  */
 public class DataSourceFactory {
+    private static final PropertiesHelper propertiesHelper = new PropertiesHelper();
     private static Logger logger = Logger.getLogger(DataSourceFactory.class.getName());
-
     private static String databaseLocation;
     private static String username;
     private static String password;
-
-    private static final PropertiesHelper propertiesHelper = new PropertiesHelper();
-
+    private static boolean hasBeenInitialized;
 
     public static BasicDataSource getDatabaseConnection() {
         Properties properties = getProperties();
@@ -27,6 +25,7 @@ public class DataSourceFactory {
         basicDataSource.setUsername(username);
         basicDataSource.setPassword(password);
         basicDataSource.setMaxActive(Integer.parseInt(properties.getProperty("models2pathways.database.connections")));
+        hasBeenInitialized = true;
         return basicDataSource;
     }
 
@@ -56,5 +55,9 @@ public class DataSourceFactory {
 
     private static Properties getProperties() {
         return propertiesHelper.getDBProperties();
+    }
+
+    public static boolean isHasBeenInitialized() {
+        return hasBeenInitialized;
     }
 }
