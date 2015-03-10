@@ -45,9 +45,10 @@ public class FileHandler {
                     "Total entities (Pathway)\t" +
                     "Matched BioModel entities in Pathway\t" +
                     "Overlap in %\t" +
+                    "Pathway Reaction Coverage in %\t" +
                     "pValue\t" +
                     "FDR\t" +
-                    "isValid\t" +
+                    "isValid (fdr <= 0.00001\t" +
                     "Reactome Curator\t" +
                     "BioModels Curator\t" +
                     "Comments\n");
@@ -61,12 +62,13 @@ public class FileHandler {
             //TODO urls to properties
             fileWriter.write(pathwaySummary.getSpecies().getName() + "\t" +
                     "=HYPERLINK(\"www.ebi.ac.uk/biomodels-main/" + sbmlModel.getBioModelsID() + "\", \"" + sbmlModel.getName() + "\")" + "\t" +
-                    "=HYPERLINK(\"www.reactome.org/content/detail/" + pathwaySummary.getStId() + "\", \"" + pathwaySummary.getName() + "\")" + "\t" +
+                    "=HYPERLINK(\"http://reactomedev.oicr.on.ca/PathwayBrowser/#" + pathwaySummary.getStId() + "&ANALYSIS=" + analysisResult.getToken() + "\", \"" + pathwaySummary.getName() + "\")" + "\t" +
                     "=HYPERLINK(\"" + URLBuilder.getAnalysisURL(pathwaySummary.getSpecies().getDbId(), analysisResult.getToken()) + "\", \" Analysis Link\")" + "\t" +
                     sbmlModel.getSBMLModelAnnotations().size() + "\t" +
                     pathwaySummary.getEntities().getTotal() + "\t" +
                     pathwaySummary.getEntities().getFound() + "\t" +
                     (double) pathwaySummary.getEntities().getFound() / Math.max((double) sbmlModel.getSBMLModelAnnotations().size(), (double) pathwaySummary.getEntities().getTotal()) + "\t" +
+                    (double) pathwaySummary.getEntities().getFound() / (double) pathwaySummary.getEntities().getTotal() + "\t" +
                     pathwaySummary.getEntities().getpValue() + "\t" +
                     pathwaySummary.getEntities().getFdr() + "\t" +
                     hasMinPValue + "\n");
