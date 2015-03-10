@@ -20,7 +20,7 @@ public class SBMLModelFactory {
     final static Logger logger = Logger.getLogger(Producer.class.getName());
 
     private static final BioModelsWSClient client = new BioModelsWSClient();
-
+    //todo ConnectException
     /**
      * Returns a collection of all sbml-Model-Names based on all taxonomy ids
      * which are given in Species enum
@@ -46,6 +46,7 @@ public class SBMLModelFactory {
         try {
             return client.getModelsIdByTaxonomyId(bioModelsTaxonomyId);
         } catch (BioModelsWSException e) {
+            System.out.println(bioModelsTaxonomyId);
             e.printStackTrace();
         }
         return null;
