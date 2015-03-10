@@ -1,7 +1,5 @@
 package org.reactome.server.core.helper;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -23,13 +21,15 @@ import java.util.logging.Logger;
 public class AnalysisServiceHandler {
     final static Logger logger = Logger.getLogger(AnalysisServiceHandler.class.getName());
 
-    public static AnalysisResult getReactomeAnalysisResultBySBMLModel(SBMLModel sbmlModel, Double customPValue) {
+    private static final String DEFAULT_CHARSET = "UTF-8";
+
+    public static AnalysisResult getReactomeAnalysisResultBySBMLModel(SBMLModel sbmlModel, Double customFDR, Double reactionCoverage) {
         HttpResponse httpResponse = AnalysisServiceRequest.requestByModel(sbmlModel);
         String token = null;
         String jsonResult = null;
         if (httpResponse.getStatusLine().getStatusCode() == 200) {
             try {
-                jsonResult = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+                jsonResult = EntityUtils.toString(httpResponse.getEntity(), DEFAULT_CHARSET);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -40,31 +40,31 @@ public class AnalysisServiceHandler {
                 httpResponse = AnalysisServiceRequest.requestByToken(token, resourceSummary);
                 try {
                     HttpEntity entity = httpResponse.getEntity();
-                    jsonResult = EntityUtils.toString(entity, "UTF-8");
+                    jsonResult = EntityUtils.toString(entity, DEFAULT_CHARSET);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 analysisResult = getAnalysisResultObject(jsonResult);
             }
-
-            analysisResult.setPathways(getReliablePathways(analysisResult.getPathways(), customPValue, sbmlModel));
+            analysisResult.setReliablePathways(getReliablePathways(analysisResult.getPathways(), customFDR, sbmlModel, reactionCoverage));
             analysisResult.setToken(token);
             return analysisResult;
         }
         return null;
     }
 
-    private static List<PathwaySummary> getReliablePathways(List<PathwaySummary> pathways, Double customPValue, SBMLModel sbmlModel) {
-        List<PathwaySummary> reliablePathways = new ArrayList<PathwaySummary>();
+    private static List<PathwaySummary> getReliablePathways(List<PathwaySummary> pathways, Double customFDR, SBMLModel sbmlModel, Double reactionCoverage) {
+        List<PathwaySummary> reliablePathways = new ArrayList<>();
         for (PathwaySummary pathway : pathways) {
-            if (pathway.isLlp() && pathway.getEntities().getpValue() <= customPValue) {
+            if (pathway.isLlp() && pathway.getEntities().getFdr() <= customFDR) {
                 try {
-                    if (pathway.getSpecies().getDbId().toString().equals(Species.getSpeciesByBioModelsTaxonomyid(sbmlModel.getBioModelsTaxonomyId().getBioModelsTaxonomyId()).getReactomeTaxonomyId()))
+                    if (pathway.getSpecies().getDbId().toString().equals(
+                            Species.getSpeciesByBioModelsTaxonomyid(sbmlModel.getBioModelsTaxonomyId().getBioModelsTaxonomyId()).getReactomeTaxonomyId())
+                            && ((double) pathway.getEntities().getFound() / (double) pathway.getEntities().getTotal()) >= reactionCoverage) {
                         reliablePathways.add(pathway);
-                } catch (NullPointerException e) {
-                    continue;
+                    }
+                } catch (NullPointerException ignored) {
                 }
-
             }
         }
         return reliablePathways;
@@ -81,10 +81,6 @@ public class AnalysisServiceHandler {
 
         try {
             analysisResult = mapper.readValue(jsonString, AnalysisResult.class);
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
