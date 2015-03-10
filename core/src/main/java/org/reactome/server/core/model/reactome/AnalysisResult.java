@@ -23,6 +23,8 @@ public class AnalysisResult {
 
     private List<PathwaySummary> pathways;
 
+    private List<PathwaySummary> reliablePathways;
+
     private List<ResourceSummary> resourceSummary;
 
     private String token;
@@ -97,5 +99,13 @@ public class AnalysisResult {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public List<PathwaySummary> getReliablePathways() {
+        return reliablePathways;
+    }
+
+    public void setReliablePathways(List<PathwaySummary> reliablePathways) {
+        this.reliablePathways = reliablePathways;
     }
 }
