@@ -18,6 +18,10 @@ public class Annotation {
         this.entityId = entityId;
     }
 
+    public Annotation() {
+
+    }
+
     public static String annotationsToAnalysisFormat(String model, Set<Annotation> annotations) {
         StringBuilder annotationsInAnalysisFormat = new StringBuilder();
         //Adding the name of the model to the sample data for a better identification in the PathwayBrowser result
