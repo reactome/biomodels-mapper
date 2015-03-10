@@ -112,28 +112,35 @@ public class ExtractInformationFromSBMLModel {
     private static Set<Annotation> displayRelevantAnnotation(ModelElement component) {
         Integer counterTmp;
         Set<Annotation> annotationsOfSBML = new HashSet<Annotation>();
-        counterTmp = findAllAnnotationFromDataCollection(component, Namespace.UNIPROT.name());
+        counterTmp = findAllAnnotationFromDataCollection(component, Namespace.UNIPROT.getNamespace());
         if (counterTmp > 0) {
             // some UniProt annotation found
-            annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.UNIPROT.name()));
+            annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.UNIPROT.getNamespace()));
         } else {
             // no UniProt annotation found
-            counterTmp = findAllAnnotationFromDataCollection(component, Namespace.CHEBI.name());
+            counterTmp = findAllAnnotationFromDataCollection(component, Namespace.CHEBI.getNamespace());
             if (counterTmp > 0) {
                 // some ChEBI annotation found
-                annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.CHEBI.name()));
+                annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.CHEBI.getNamespace()));
             } else {
                 // no ChEBI annotation found
-                counterTmp = findAllAnnotationFromDataCollection(component, Namespace.CHEMBL_COMPOUND.name());
+                counterTmp = findAllAnnotationFromDataCollection(component, Namespace.CHEMBL_COMPOUND.getNamespace());
                 if (counterTmp > 0) {
                     // some ChEMBL Compound annotation found
-                    annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.CHEMBL_COMPOUND.name()));
+                    annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.CHEMBL_COMPOUND.getNamespace()));
                 } else {
                     // no ChEMBL Compound annotation found
-                    counterTmp = findAllAnnotationFromDataCollection(component, Namespace.ENSEMBL.name());
+                    counterTmp = findAllAnnotationFromDataCollection(component, Namespace.ENSEMBL.getNamespace());
                     if (counterTmp > 0) {
                         // some Ensembl annotation found
-                        annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.ENSEMBL.name()));
+                        annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.ENSEMBL.getNamespace()));
+                    } else {
+                        // no Ensembl Compound annotation found
+                        counterTmp = findAllAnnotationFromDataCollection(component, Namespace.OBO_CHEBI.getNamespace());
+                        if (counterTmp > 0) {
+                            // some obo ChEBI annotation found
+                            annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.OBO_CHEBI.getNamespace()));
+                        }
                     }
                 }
             }
