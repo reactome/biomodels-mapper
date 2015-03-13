@@ -16,6 +16,7 @@ public class JSAPHandler {
         FlaggedOption opt1 = new FlaggedOption("significantFDR")
                 .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(false)
+                .setShortFlag('s')
                 .setDefault(String.valueOf(0.005))
                 .setLongFlag(String.valueOf("significantFDR"));
         opt1.setHelp("Value of the FDR for significant results");
@@ -23,7 +24,7 @@ public class JSAPHandler {
         FlaggedOption opt2 = new FlaggedOption("extendedFDR")
                 .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(false)
-                .setDefault(String.valueOf(false))
+                .setShortFlag('e')
                 .setLongFlag("extendedFDR");
         opt2.setHelp("Value of the FDR for possible results");
 
