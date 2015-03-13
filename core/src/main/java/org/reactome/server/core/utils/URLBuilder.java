@@ -26,9 +26,4 @@ public class URLBuilder {
     private static Properties getProperties() {
         return propertiesHelper.getAnalysisURLProperties();
     }
-
-    public static URI getAnalysisURL(Long species, String token) {
-        String URL = "http://reactomedev.oicr.on.ca/PathwayBrowser/#SPECIES=" + species.toString() + "&DTAB=AN&ANALYSIS=" + token;
-        return URI.create(URL);
-    }
 }
