@@ -20,10 +20,16 @@ public class Consumer implements Runnable {
     private Double reactionCoverage;
     private BlockingQueue<SBMLModel> sbmlModelBlockingQueue;
 
-    public Consumer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue, String significantFDR, String extendedFDR, String reactionCoverage) {
+    public Consumer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue, double significantFDR, double reactionCoverage) {
         this.sbmlModelBlockingQueue = sbmlModelBlockingQueue;
-        this.significantFDR = Double.valueOf(significantFDR);
-        this.extendedFDR = Double.valueOf(extendedFDR);
+        this.significantFDR = significantFDR;
+        this.reactionCoverage = reactionCoverage;
+    }
+
+    public Consumer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue, double significantFDR, double extendedFDR, String reactionCoverage) {
+        this.sbmlModelBlockingQueue = sbmlModelBlockingQueue;
+        this.significantFDR = significantFDR;
+        this.extendedFDR = extendedFDR;
         this.reactionCoverage = Double.valueOf(reactionCoverage);
     }
 
@@ -31,7 +37,6 @@ public class Consumer implements Runnable {
     public void run() {
         while (Models2Pathways.isProducerAlive()) {
             SBMLModel sbmlModel = null;
-            System.out.println(sbmlModelBlockingQueue.size());
             try {
                 sbmlModel = sbmlModelBlockingQueue.take();
             } catch (InterruptedException e) {
@@ -43,8 +48,9 @@ public class Consumer implements Runnable {
             }
 
             AnalysisResult analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(sbmlModel, significantFDR, reactionCoverage);
+            Integer NUMBER_OF_TRIES = 2;
             if (analysisResult == null) {
-                int tries = 2;
+                int tries = NUMBER_OF_TRIES;
                 while (analysisResult == null && tries != 0) {
                     analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(sbmlModel, significantFDR, reactionCoverage);
                     tries = tries - 1;
@@ -53,12 +59,12 @@ public class Consumer implements Runnable {
                         logger.info(sbmlModel + " retry to get analysis result");
                     }
                 }
-            } else if (analysisResult.getPathways().size() != 0 && analysisResult.getReliablePathways().size() == 0) {
+            } else if (extendedFDR != null && analysisResult.getPathways().size() != 0 && analysisResult.getReliablePathways().size() == 0) {
                 logger.info("Couldn't find pathways on FDR " + significantFDR);
                 logger.info("Request on extended FDR " + extendedFDR);
                 analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(sbmlModel, extendedFDR, reactionCoverage);
                 if (analysisResult == null) {
-                    int tries = 2;
+                    int tries = NUMBER_OF_TRIES;
                     while (analysisResult == null && tries != 0) {
                         analysisResult = AnalysisServiceHandler.getReactomeAnalysisResultBySBMLModel(sbmlModel, extendedFDR, reactionCoverage);
                         tries = tries - 1;
