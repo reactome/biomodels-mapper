@@ -29,7 +29,8 @@ public class Models2Pathways {
         FileExporter.setLocationPath(jsapResult.getString("output"));
 
         //Setting up output file
-        if (FileExporter.createFile()) {
+        FileExporter.createFile();
+        if (jsapResult.getBoolean("header")) {
             FileExporter.addHeader();
         }
 
@@ -43,8 +44,25 @@ public class Models2Pathways {
         Models2Pathways.PRODUCER.start();
         logger.info("Started producer process");
 
-        Consumer consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getString("significantFDR"), jsapResult.getString("extendedFDR"), jsapResult.getString("coverage"));
-        new Thread(consumer).start();
+        Consumer consumer = null;
+        if (jsapResult.getString("extendedFDR") == null) {
+            consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getDouble("significantFDR"), jsapResult.getDouble("coverage"));
+
+        } else {
+            if (jsapResult.getDouble("significantFDR") < jsapResult.getDouble("extendedFDR")) {
+                consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getDouble("significantFDR"), jsapResult.getDouble("extendedFDR"), jsapResult.getString("coverage"));
+            } else {
+                logger.info("significantFDR is bigger than extendedFDR");
+                System.exit(1);
+            }
+        }
+        try {
+            new Thread(consumer).start();
+        } catch (NullPointerException e) {
+            logger.info("NullPointerException on starting consumer thread");
+            e.printStackTrace();
+            System.exit(1);
+        }
         logger.info("Started consumer process");
     }
 
