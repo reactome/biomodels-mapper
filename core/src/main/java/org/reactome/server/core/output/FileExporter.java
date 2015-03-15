@@ -14,11 +14,13 @@ import java.util.logging.Logger;
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
  */
 public class FileExporter {
-    public static final String TAB = "\t";
-    public static final String NEW_LINE = System.getProperty("line.separator");
     final static Logger logger = Logger.getLogger(FileExporter.class.getName());
+
+    private static final String TAB = "\t";
+    private static final String NEW_LINE = System.getProperty("line.separator");
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("YYYY-MM-dd_hh-mm-ss");
     private static final String FILE_NAME = "models2pathways";
+    
     private static String locationPath;
     private static FileWriter fileWriter;
 
@@ -27,7 +29,9 @@ public class FileExporter {
         try {
             fileWriter = new FileWriter(locationPath + ".tsv", true);
         } catch (IOException e) {
+            logger.info("Error on crating tsv-file at " + locationPath);
             e.printStackTrace();
+            System.exit(1);
         }
         logger.info("A tsv file has been created: " + locationPath);
         return true;
