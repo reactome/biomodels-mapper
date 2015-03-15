@@ -46,7 +46,6 @@ public class SBMLModelFactory {
         try {
             return client.getModelsIdByTaxonomyId(bioModelsTaxonomyId);
         } catch (BioModelsWSException e) {
-            System.out.println(bioModelsTaxonomyId);
             e.printStackTrace();
         }
         return null;
