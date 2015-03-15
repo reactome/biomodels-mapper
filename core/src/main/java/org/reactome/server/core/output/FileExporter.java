@@ -20,7 +20,7 @@ public class FileExporter {
     private static final String NEW_LINE = System.getProperty("line.separator");
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("YYYY-MM-dd_hh-mm-ss");
     private static final String FILE_NAME = "models2pathways";
-    
+    private static final String[] HEADER = {"DB_ID", "ST_ID", "BM_ID", "BM_NAME"};
     private static String locationPath;
     private static FileWriter fileWriter;
 
@@ -39,10 +39,7 @@ public class FileExporter {
 
     public static void addHeader() {
         try {
-            fileWriter.write("DB_ID" + TAB +
-                    "ST_ID" + TAB +
-                    "BM_ID" + TAB +
-                    "BM_NAME" + NEW_LINE);
+            fileWriter.write(generateHeader());
             fileWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,5 +72,20 @@ public class FileExporter {
 
     public static void setLocationPath(String locationPath) {
         FileExporter.locationPath = locationPath;
+    }
+
+    private static String generateHeader() {
+        String header = "";
+        Integer count = 1;
+        for (String title : HEADER) {
+            header += title;
+            if (count < HEADER.length) {
+                header += TAB;
+            } else {
+                header += NEW_LINE;
+            }
+            count++;
+        }
+        return header;
     }
 }
