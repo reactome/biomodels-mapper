@@ -14,7 +14,7 @@ public class JSAPHandler {
     public static JSAPResult ArgumentHandler(String[] args) {
         JSAP jsap = new JSAP();
         FlaggedOption opt1 = new FlaggedOption("significantFDR")
-                .setStringParser(JSAP.STRING_PARSER)
+                .setStringParser(JSAP.DOUBLE_PARSER)
                 .setRequired(false)
                 .setShortFlag('s')
                 .setDefault(String.valueOf(0.005))
@@ -22,7 +22,7 @@ public class JSAPHandler {
         opt1.setHelp("Value of the FDR for significant results");
 
         FlaggedOption opt2 = new FlaggedOption("extendedFDR")
-                .setStringParser(JSAP.STRING_PARSER)
+                .setStringParser(JSAP.DOUBLE_PARSER)
                 .setRequired(false)
                 .setShortFlag('e')
                 .setLongFlag("extendedFDR");
@@ -36,18 +36,27 @@ public class JSAPHandler {
         opt3.setHelp("Path to output tsv");
 
         FlaggedOption opt4 = new FlaggedOption("coverage")
-                .setStringParser(JSAP.STRING_PARSER)
+                .setStringParser(JSAP.DOUBLE_PARSER)
                 .setRequired(false)
                 .setShortFlag('c')
                 .setDefault(String.valueOf(0.5))
                 .setLongFlag("coverage");
         opt4.setHelp("minimum pathway reaction coverage");
 
+        FlaggedOption opt5 = new FlaggedOption("header")
+                .setStringParser(JSAP.BOOLEAN_PARSER)
+                .setRequired(false)
+                .setShortFlag('h')
+                .setDefault(String.valueOf(true))
+                .setLongFlag("header");
+        opt5.setHelp("boolean for witting a header into the tsv-file");
+
         try {
             jsap.registerParameter(opt1);
             jsap.registerParameter(opt2);
             jsap.registerParameter(opt3);
             jsap.registerParameter(opt4);
+            jsap.registerParameter(opt5);
         } catch (JSAPException e) {
             e.printStackTrace();
         }
