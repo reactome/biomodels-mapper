@@ -1,6 +1,6 @@
-package org.reactome.server.core.utils;
+package org.reactome.server.core.models2pathways.biomodels.model;
 
-import java.util.Set;
+import org.reactome.server.core.models2pathways.core.model.Namespace;
 
 /**
  * Stores one annotation (without any qualifier)
@@ -9,34 +9,27 @@ import java.util.Set;
  * @version 20140703
  */
 public class Annotation {
-    private String namespace;   // data collection namespace
+    private Namespace namespace;   // data collection namespace
     private String entityId;
     private String uri;   // full URI, as extracted from the sbml file
 
-    public Annotation(String namespace, String entityId) {
+    public Annotation(Namespace namespace, String entityId, String uri) {
+        this.namespace = namespace;
+        this.entityId = entityId;
+        this.uri = uri;
+    }
+
+    public Annotation(Namespace namespace, String entityId) {
         this.namespace = namespace;
         this.entityId = entityId;
     }
 
-    public Annotation() {
 
+    public Namespace getNamespace() {
+        return namespace;
     }
 
-    public static String annotationsToAnalysisFormat(String model, Set<Annotation> annotations) {
-        StringBuilder annotationsInAnalysisFormat = new StringBuilder();
-        //Adding the name of the model to the sample data for a better identification in the PathwayBrowser result
-        annotationsInAnalysisFormat.append("#").append(model).append(System.getProperty("line.separator"));
-        for (Annotation annotation : annotations) {
-            annotationsInAnalysisFormat.append(annotation.getEntityId()).append(System.getProperty("line.separator"));
-        }
-        return String.valueOf(annotationsInAnalysisFormat);
-    }
-
-    public String getNamespace() {
-        return this.namespace;
-    }
-
-    public void setNamespace(String namespace) {
+    public void setNamespace(Namespace namespace) {
         this.namespace = namespace;
     }
 

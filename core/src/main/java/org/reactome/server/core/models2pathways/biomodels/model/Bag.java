@@ -1,4 +1,4 @@
-package org.reactome.server.core.utils;
+package org.reactome.server.core.models2pathways.biomodels.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,24 +14,7 @@ public class Bag {
     private String qualifier;
     private List<Annotation> annotations;
 
-    /**
-     * Default constructor: builds an empty object.
-     */
     public Bag() {
-        this.qualifier = null;
-        this.annotations = null;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Qualifier: ");
-        stringBuilder.append(this.qualifier);
-        stringBuilder.append("\nAnnotations:");
-        for (Annotation annotation : this.annotations) {
-            stringBuilder.append(annotation.toString());
-        }
-        return stringBuilder.toString();
     }
 
     public String getQualifier() {
