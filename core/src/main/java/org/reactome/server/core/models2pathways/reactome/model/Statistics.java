@@ -1,4 +1,4 @@
-package org.reactome.server.core.model.reactome;
+package org.reactome.server.core.models2pathways.reactome.model;
 
 /**
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>

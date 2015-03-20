@@ -1,7 +1,4 @@
-package org.reactome.server.core.model.reactome;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+package org.reactome.server.core.models2pathways.reactome.model;
 
 /**
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
@@ -10,10 +7,7 @@ public class SpeciesSummary {
     private Long dbId;
     private String name;
 
-    @JsonCreator
-    public SpeciesSummary(
-            @JsonProperty("dbId") Long dbId,
-            @JsonProperty("name") String name) {
+    public SpeciesSummary(Long dbId, String name) {
         this.dbId = dbId;
         this.name = name;
     }

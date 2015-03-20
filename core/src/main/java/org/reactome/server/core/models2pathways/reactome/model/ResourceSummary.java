@@ -1,7 +1,4 @@
-package org.reactome.server.core.model.reactome;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+package org.reactome.server.core.models2pathways.reactome.model;
 
 /**
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
@@ -10,10 +7,7 @@ public class ResourceSummary implements Comparable<ResourceSummary> {
     String resource;
     Integer pathways;
 
-    @JsonCreator
-    public ResourceSummary(
-            @JsonProperty("resource") String resource,
-            @JsonProperty("pathways") Integer pathways) {
+    public ResourceSummary(String resource, Integer pathways) {
         this.resource = resource;
         this.pathways = pathways;
     }
@@ -33,8 +27,9 @@ public class ResourceSummary implements Comparable<ResourceSummary> {
 
         ResourceSummary that = (ResourceSummary) o;
 
-        return !(resource != null ? !resource.equals(that.resource) : that.resource != null);
+        if (resource != null ? !resource.equals(that.resource) : that.resource != null) return false;
 
+        return true;
     }
 
     @Override
