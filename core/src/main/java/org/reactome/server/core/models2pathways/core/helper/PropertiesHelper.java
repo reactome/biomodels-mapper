@@ -1,4 +1,4 @@
-package org.reactome.server.core.utils;
+package org.reactome.server.core.models2pathways.core.helper;
 
 import java.io.IOException;
 import java.util.Properties;
