@@ -1,11 +1,11 @@
-package org.reactome.server.core.utils;
+package org.reactome.server.core.models2pathways.core.utils;
 
 
 import com.martiansoftware.jsap.FlaggedOption;
 import com.martiansoftware.jsap.JSAP;
 import com.martiansoftware.jsap.JSAPException;
 import com.martiansoftware.jsap.JSAPResult;
-import org.reactome.server.core.entrypoint.Models2Pathways;
+import org.reactome.server.core.models2pathways.core.entrypoint.Models2Pathways;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).

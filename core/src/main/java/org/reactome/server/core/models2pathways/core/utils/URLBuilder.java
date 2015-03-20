@@ -1,4 +1,6 @@
-package org.reactome.server.core.utils;
+package org.reactome.server.core.models2pathways.core.utils;
+
+import org.reactome.server.core.models2pathways.core.helper.PropertiesHelper;
 
 import java.net.URI;
 import java.util.Properties;
