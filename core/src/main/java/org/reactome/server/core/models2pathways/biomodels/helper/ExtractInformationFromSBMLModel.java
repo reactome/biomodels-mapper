@@ -1,7 +1,11 @@
-package org.reactome.server.core.utils;
+package org.reactome.server.core.models2pathways.biomodels.helper;
 
 
-import org.reactome.server.core.enums.Namespace;
+import org.reactome.server.core.models2pathways.biomodels.model.Annotation;
+import org.reactome.server.core.models2pathways.biomodels.model.Bag;
+import org.reactome.server.core.models2pathways.biomodels.model.ModelElement;
+import org.reactome.server.core.models2pathways.core.helper.NameSpaceHelper;
+import org.reactome.server.core.models2pathways.core.model.Namespace;
 import org.sbml.jsbml.*;
 
 import javax.xml.stream.XMLStreamException;
@@ -20,14 +24,14 @@ public class ExtractInformationFromSBMLModel {
     /**
      * Reads SBML-Model string and converts it to an Model-object
      *
-     * @param sbmlModelAsString
+     * @param sbmlModel
      * @return
      */
-    public static Model getSBMLDModel(String sbmlModelAsString) {
+    public static Model getSBMLDModel(String sbmlModel) {
         SBMLReader reader = new SBMLReader();
         SBMLDocument model = null;
         try {
-            model = reader.readSBMLFromString(sbmlModelAsString);
+            model = reader.readSBMLFromString(sbmlModel);
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
@@ -37,22 +41,22 @@ public class ExtractInformationFromSBMLModel {
     /**
      * Extracts all the necessary annotations.
      */
-    public static Set<Annotation> extractAnnotation(Model model) {
-        Set<Annotation> annotationsOfSBML = new HashSet<Annotation>();
-        for (Species species : model.getListOfSpecies()) {
+    public static Set<Annotation> extractAnnotation(Model sbmlModel) {
+        Set<Annotation> annotations = new HashSet<>();
+        for (Species species : sbmlModel.getListOfSpecies()) {
             ModelElement component = extractComponentAnnotation(species);
-            annotationsOfSBML.addAll(displayRelevantAnnotation(component));
+            annotations.addAll(displayRelevantAnnotation(component));
         }
-        return annotationsOfSBML;
+        return annotations;
     }
 
     /**
      * Extracts the taxonomical annotation from the model object.
      * Only considers "bqbiol:occursIn" or "bqbiol:hasTaxon" qualifiers.
      */
-    public static String getModelTaxonomy(Model model) {
+    public static String getModelTaxonomy(Model sbmlModel) {
         String taxonomy = null;
-        org.sbml.jsbml.Annotation modelAnnotation = model.getAnnotation();
+        org.sbml.jsbml.Annotation modelAnnotation = sbmlModel.getAnnotation();
         for (CVTerm cvTerm : modelAnnotation.getListOfCVTerms()) {
             String qualifier = getQualifier(cvTerm);
             // retrieves all the URIs
@@ -78,11 +82,8 @@ public class ExtractInformationFromSBMLModel {
             bag.setQualifier(getQualifier(cvTerm));
             // retrieves all the URIs
             for (String uri : cvTerm.getResources()) {
-                Annotation annotation = new Annotation();
-                annotation.setUri(uri);
-                annotation.setEntityId(extractIdFromURI(uri));
-                annotation.setNamespace(extractNamespaceFromURI(uri));
-                bag.addAnnotation(annotation);
+                bag.addAnnotation(new Annotation(NameSpaceHelper.getInstance().getNamespace(uri), extractIdFromURI(uri),
+                        extractNamespaceFromURI(uri)));
             }
             element.addBag(bag);
         }
@@ -111,38 +112,11 @@ public class ExtractInformationFromSBMLModel {
      */
     private static Set<Annotation> displayRelevantAnnotation(ModelElement component) {
         Integer counterTmp;
-        Set<Annotation> annotationsOfSBML = new HashSet<Annotation>();
-        counterTmp = findAllAnnotationFromDataCollection(component, Namespace.UNIPROT.getNamespace());
-        if (counterTmp > 0) {
-            // some UniProt annotation found
-            annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.UNIPROT.getNamespace()));
-        } else {
-            // no UniProt annotation found
-            counterTmp = findAllAnnotationFromDataCollection(component, Namespace.CHEBI.getNamespace());
+        Set<org.reactome.server.core.models2pathways.biomodels.model.Annotation> annotationsOfSBML = new HashSet<>();
+        for (Namespace namespace : NameSpaceHelper.getInstance().getNamespaces()) {
+            counterTmp = findAllAnnotationFromDataCollection(component, namespace);
             if (counterTmp > 0) {
-                // some ChEBI annotation found
-                annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.CHEBI.getNamespace()));
-            } else {
-                // no ChEBI annotation found
-                counterTmp = findAllAnnotationFromDataCollection(component, Namespace.CHEMBL_COMPOUND.getNamespace());
-                if (counterTmp > 0) {
-                    // some ChEMBL Compound annotation found
-                    annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.CHEMBL_COMPOUND.getNamespace()));
-                } else {
-                    // no ChEMBL Compound annotation found
-                    counterTmp = findAllAnnotationFromDataCollection(component, Namespace.ENSEMBL.getNamespace());
-                    if (counterTmp > 0) {
-                        // some Ensembl annotation found
-                        annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.ENSEMBL.getNamespace()));
-                    } else {
-                        // no Ensembl Compound annotation found
-                        counterTmp = findAllAnnotationFromDataCollection(component, Namespace.OBO_CHEBI.getNamespace());
-                        if (counterTmp > 0) {
-                            // some obo ChEBI annotation found
-                            annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, Namespace.OBO_CHEBI.getNamespace()));
-                        }
-                    }
-                }
+                annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, namespace));
             }
         }
         return annotationsOfSBML;
@@ -151,13 +125,13 @@ public class ExtractInformationFromSBMLModel {
     /**
      * Finds and counts all the annotation of a sbml component from a given data collection.
      */
-    private static Integer findAllAnnotationFromDataCollection(ModelElement component, String namespace) {
+    private static Integer findAllAnnotationFromDataCollection(ModelElement component, Namespace namespace) {
         Integer counter = 0;
         if (component.getBags() != null) {
             for (Bag bag : component.getBags()) {
                 for (Annotation annotation : bag.getAnnotations()) {
                     try {
-                        if (annotation.getNamespace().equalsIgnoreCase(namespace)) {
+                        if (annotation.getNamespace().getName().equals(namespace.getName())) {
                             counter++;
                         }
                     } catch (NullPointerException ignored) {
@@ -171,19 +145,19 @@ public class ExtractInformationFromSBMLModel {
     /**
      * Prints all the annotation of a sbml component from a given data collection.
      */
-    private static Set<Annotation> getAllAnnotationFromDataCollection(ModelElement component, String namespace) {
-        Set<Annotation> annotationsOfSBML = new HashSet<Annotation>();
+    private static Set<Annotation> getAllAnnotationFromDataCollection(ModelElement component, Namespace namespace) {
+        Set<Annotation> annotations = new HashSet<>();
         for (Bag bag : component.getBags()) {
             for (Annotation annotation : bag.getAnnotations()) {
-                if (annotation.getNamespace().equalsIgnoreCase(namespace)) {
+                if (annotation.getNamespace().getName().equalsIgnoreCase(namespace.getName())) {
                     if (annotation.getEntityId().contains(":")) {
                         annotation.setEntityId(annotation.getEntityId().split(":")[1]);
                     }
-                    annotationsOfSBML.add(annotation);
+                    annotations.add(annotation);
                 }
             }
         }
-        return annotationsOfSBML;
+        return annotations;
     }
 
     /**
