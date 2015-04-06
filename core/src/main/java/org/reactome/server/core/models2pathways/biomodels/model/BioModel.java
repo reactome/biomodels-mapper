@@ -7,9 +7,9 @@ import java.util.Set;
 /**
  * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
-public class SBMLModel {
+public class BioModel {
     private String name;
-    private Long bioMdId;
+    private String bioMdId;
     private Specie specie;
     private Set<Annotation> annotations;
 
@@ -22,7 +22,7 @@ public class SBMLModel {
      * @param specie
      * @param annotations
      */
-    public SBMLModel(String name, Long bioMdId, Specie specie, Set<Annotation> annotations) {
+    public BioModel(String name, String bioMdId, Specie specie, Set<Annotation> annotations) {
         this.name = name;
         this.bioMdId = bioMdId;
         this.specie = specie;
@@ -37,11 +37,11 @@ public class SBMLModel {
         this.name = name;
     }
 
-    public Long getBioMdId() {
+    public String getBioMdId() {
         return bioMdId;
     }
 
-    public void setBioMdId(Long bioMdId) {
+    public void setBioMdId(String bioMdId) {
         this.bioMdId = bioMdId;
     }
 
