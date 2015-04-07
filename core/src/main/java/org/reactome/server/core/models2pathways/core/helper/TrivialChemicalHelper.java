@@ -26,4 +26,11 @@ public class TrivialChemicalHelper {
     public void setTrivialChemicals(Set<TrivialChemical> trivialChemicals) {
         this.trivialChemicals = trivialChemicals;
     }
+
+    @Override
+    public String toString() {
+        return "TrivialChemicalHelper{" +
+                "trivialChemicals=" + trivialChemicals +
+                '}';
+    }
 }

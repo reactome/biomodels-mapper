@@ -36,4 +36,11 @@ public class SpeciesHelper {
     public void setSpecies(Set<Specie> species) {
         this.species = species;
     }
+
+    @Override
+    public String toString() {
+        return "SpeciesHelper{" +
+                "species=" + species +
+                '}';
+    }
 }

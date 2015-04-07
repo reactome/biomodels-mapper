@@ -46,4 +46,11 @@ public class NameSpaceHelper {
         }
         return namespaceSet;
     }
+
+    @Override
+    public String toString() {
+        return "NameSpaceHelper{" +
+                "namespaces=" + namespaces +
+                '}';
+    }
 }
