@@ -18,27 +18,24 @@ import java.util.Set;
 public class PropertiesLoader {
     private static final String SEPARATOR = "\t";
 
-    private static BufferedReader readFile(InputStream inputStream) {
-        return new BufferedReader(new InputStreamReader(inputStream));
-    }
-
     public Set<Specie> getSpecies() throws IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("species.properties");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("species.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         Set<Specie> species = new HashSet<>();
         String line;
-        while ((line = readFile(inputStream).readLine()) != null) {
+        while ((line = br.readLine()) != null) {
             String[] content = line.split(SEPARATOR);
-            System.out.println(content.length);
             species.add(new Specie(Long.valueOf(content[0]), Long.valueOf(content[1]), content[2]));
         }
         return species;
     }
 
     public Set<Namespace> getNamespaces() throws IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("namespaces.properties");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("namespaces.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         Set<Namespace> namespaces = new HashSet<>();
         String line;
-        while ((line = readFile(inputStream).readLine()) != null) {
+        while ((line = br.readLine()) != null) {
             String[] content = line.split(SEPARATOR);
             namespaces.add(new Namespace(content[0], Boolean.valueOf(content[1])));
         }
@@ -46,10 +43,11 @@ public class PropertiesLoader {
     }
 
     public Set<TrivialChemical> getTrivialChemicals() throws IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("trivialchemicals.properties");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("trivialchemicals.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         Set<TrivialChemical> trivialChemicals = new HashSet<>();
         String line;
-        while ((line = readFile(inputStream).readLine()) != null) {
+        while ((line = br.readLine()) != null) {
             String[] content = line.split(SEPARATOR);
             trivialChemicals.add(new TrivialChemical(Long.valueOf(content[0]), content[1]));
         }
