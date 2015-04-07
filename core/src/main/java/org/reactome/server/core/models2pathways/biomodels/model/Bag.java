@@ -39,4 +39,12 @@ public class Bag {
         }
         this.annotations.add(annotation);
     }
+
+    @Override
+    public String toString() {
+        return "Bag{" +
+                "qualifier='" + qualifier + '\'' +
+                ", annotations=" + annotations +
+                '}';
+    }
 }
