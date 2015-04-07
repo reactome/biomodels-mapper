@@ -2,6 +2,7 @@ package org.reactome.server.core.models2pathways.core.helper;
 
 import org.reactome.server.core.models2pathways.core.model.Specie;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -21,7 +22,7 @@ public class SpeciesHelper {
 
     public Specie getSpecieByBioMdSpecieId(Long id) {
         for (Specie specie : species) {
-            if (specie.getBioMdId() == id) {
+            if (Objects.equals(specie.getBioMdId(), id)) {
                 return specie;
             }
         }
