@@ -4,7 +4,7 @@ import org.reactome.server.analysis.core.components.EnrichmentAnalysis;
 import org.reactome.server.analysis.core.data.AnalysisData;
 import org.reactome.server.analysis.core.model.*;
 import org.reactome.server.core.models2pathways.biomodels.model.Annotation;
-import org.reactome.server.core.models2pathways.biomodels.model.SBMLModel;
+import org.reactome.server.core.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.core.models2pathways.core.helper.SpeciesHelper;
 import org.reactome.server.core.models2pathways.core.model.Specie;
 import org.reactome.server.core.models2pathways.reactome.model.*;
@@ -12,10 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
@@ -75,30 +72,24 @@ public class AnalysisCoreHelper {
         return new AnalysisStoredResult(userData, hierarchiesData);
     }
 
-    public List<PathwaySummary> getReliablePathways(List<PathwaySummary> pathways, Double customFDR, SBMLModel sbmlModel, Double reactionCoverage) {
+    public List<PathwaySummary> getReliablePathways(List<PathwaySummary> pathways, Double customFDR, BioModel bioModel, Double reactionCoverage) {
         List<PathwaySummary> reliablePathways = new ArrayList<>();
         for (PathwaySummary pathway : pathways) {
             try {
                 if (pathway.isLlp() && pathway.getEntities().getFdr() <= customFDR) {
                     try {
-                        if (pathway.getSpecies().getDbId() == SpeciesHelper.getInstance().getSpecieByBioMdSpecieId(sbmlModel.getSpecie().getBioMdId()).getReactId()
+                        if (Objects.equals(pathway.getSpecies().getDbId(), SpeciesHelper.getInstance().getSpecieByBioMdSpecieId(bioModel.getSpecie().getBioMdId()).getReactId())
                                 && ((double) pathway.getEntities().getFound() / (double) pathway.getEntities().getTotal()) >= reactionCoverage) {
                             reliablePathways.add(pathway);
                         }
                     } catch (NullPointerException e) {
                         e.printStackTrace();
-                        System.out.println(customFDR);
-                        System.out.println(pathway.getEntities());
-                        System.out.println(pathway.getSpecies().getDbId().toString());
                         System.exit(1);
                     }
 
                 }
             } catch (NullPointerException e) {
                 e.printStackTrace();
-                System.out.println(customFDR);
-                System.out.println(pathway.getEntities());
-                System.out.println(pathway.getSpecies().getDbId().toString());
                 System.exit(1);
             }
         }
