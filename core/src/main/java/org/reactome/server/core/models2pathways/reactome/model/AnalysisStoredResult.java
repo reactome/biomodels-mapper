@@ -251,4 +251,15 @@ public class AnalysisStoredResult {
             this.pathways = rtn;
         }
     }
+
+    @Override
+    public String toString() {
+        return "AnalysisStoredResult{" +
+                "summary=" + summary +
+                ", notFound=" + notFound +
+                ", pathways=" + pathways +
+                ", resourceSummary=" + resourceSummary +
+                ", expressionSummary=" + expressionSummary +
+                '}';
+    }
 }

@@ -9,5 +9,4 @@ public class ReactionStatistics extends Statistics {
     public ReactionStatistics(String resource, Integer total, Integer found, Double ratio) {
         super(resource, total, found, ratio);
     }
-
 }

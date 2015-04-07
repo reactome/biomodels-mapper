@@ -29,4 +29,13 @@ public class ExpressionSummary {
     public Double getMax() {
         return max;
     }
+
+    @Override
+    public String toString() {
+        return "ExpressionSummary{" +
+                "columnNames=" + columnNames +
+                ", min=" + min +
+                ", max=" + max +
+                '}';
+    }
 }

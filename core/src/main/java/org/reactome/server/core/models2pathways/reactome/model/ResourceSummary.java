@@ -41,4 +41,12 @@ public class ResourceSummary implements Comparable<ResourceSummary> {
     public int compareTo(ResourceSummary o) {
         return pathways.compareTo(o.pathways);
     }
+
+    @Override
+    public String toString() {
+        return "ResourceSummary{" +
+                "resource='" + resource + '\'' +
+                ", pathways=" + pathways +
+                '}';
+    }
 }

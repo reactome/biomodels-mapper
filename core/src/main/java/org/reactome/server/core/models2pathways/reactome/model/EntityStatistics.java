@@ -33,4 +33,13 @@ public class EntityStatistics extends Statistics {
     public List<Double> getExp() {
         return exp;
     }
+
+    @Override
+    public String toString() {
+        return "EntityStatistics{" +
+                "pValue=" + pValue +
+                ", fdr=" + fdr +
+                ", exp=" + exp +
+                '}';
+    }
 }

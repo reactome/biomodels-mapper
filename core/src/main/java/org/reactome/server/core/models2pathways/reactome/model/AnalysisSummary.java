@@ -58,4 +58,16 @@ public class AnalysisSummary {
     public boolean isText() {
         return text;
     }
+
+    @Override
+    public String toString() {
+        return "AnalysisSummary{" +
+                "token='" + token + '\'' +
+                ", type='" + type + '\'' +
+                ", sampleName='" + sampleName + '\'' +
+                ", species=" + species +
+                ", text=" + text +
+                ", fileName='" + fileName + '\'' +
+                '}';
+    }
 }

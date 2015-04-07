@@ -31,4 +31,14 @@ public abstract class Statistics {
     public Double getRatio() {
         return ratio;
     }
+
+    @Override
+    public String toString() {
+        return "Statistics{" +
+                "resource='" + resource + '\'' +
+                ", total=" + total +
+                ", found=" + found +
+                ", ratio=" + ratio +
+                '}';
+    }
 }

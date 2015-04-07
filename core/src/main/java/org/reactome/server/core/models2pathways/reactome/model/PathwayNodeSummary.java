@@ -51,4 +51,16 @@ public class PathwayNodeSummary {
     public boolean isLlp() {
         return llp;
     }
+
+    @Override
+    public String toString() {
+        return "PathwayNodeSummary{" +
+                "stId='" + stId + '\'' +
+                ", pathwayId=" + pathwayId +
+                ", name='" + name + '\'' +
+                ", species=" + species +
+                ", llp=" + llp +
+                ", data=" + data +
+                '}';
+    }
 }

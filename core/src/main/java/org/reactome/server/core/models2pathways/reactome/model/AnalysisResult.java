@@ -55,4 +55,17 @@ public class AnalysisResult {
     public void setReliablePathways(List<PathwaySummary> reliablePathways) {
         this.reliablePathways = reliablePathways;
     }
+
+    @Override
+    public String toString() {
+        return "AnalysisResult{" +
+                "summary=" + summary +
+                ", expression=" + expression +
+                ", identifiersNotFound=" + identifiersNotFound +
+                ", pathwaysFound=" + pathwaysFound +
+                ", pathways=" + pathways +
+                ", reliablePathways=" + reliablePathways +
+                ", resourceSummary=" + resourceSummary +
+                '}';
+    }
 }
