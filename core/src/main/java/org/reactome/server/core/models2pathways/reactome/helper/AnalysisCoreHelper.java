@@ -23,7 +23,7 @@ public class AnalysisCoreHelper {
 
     public AnalysisCoreHelper() {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-        structure = "/Users/maximiliankoch/models2pathways/analysis_v51.bin";
+        //structure = "/Users/maximiliankoch/models2pathways/analysis_v51.bin";
         AnalysisData analysisData = context.getBean(AnalysisData.class);
         analysisData.setFileName(structure);
         enrichmentAnalysis = context.getBean(EnrichmentAnalysis.class);

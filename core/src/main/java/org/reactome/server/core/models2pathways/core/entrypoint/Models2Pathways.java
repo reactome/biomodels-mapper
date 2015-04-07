@@ -10,6 +10,7 @@ import org.reactome.server.core.models2pathways.core.helper.TrivialChemicalHelpe
 import org.reactome.server.core.models2pathways.core.utils.FileExporter;
 import org.reactome.server.core.models2pathways.core.utils.JSAPHandler;
 import org.reactome.server.core.models2pathways.core.utils.PropertiesLoader;
+import org.reactome.server.core.models2pathways.reactome.helper.AnalysisCoreHelper;
 
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
@@ -32,6 +33,7 @@ public class Models2Pathways {
         //Set up all given arguments.
         JSAPResult jsapResult = JSAPHandler.ArgumentHandler(args);
         FileExporter.setLocationPath(jsapResult.getString("output"));
+        AnalysisCoreHelper.setStructure(jsapResult.getString("reactome"));
 
         //Load static properties files.
         //TODO: make those as profile. 

@@ -17,9 +17,12 @@ import java.util.Set;
  */
 public class PropertiesLoader {
     private static final String SEPARATOR = "\t";
+    private static final String SPECIES_FILENAME = "species.txt";
+    private static final String NAMESPACE_FILENAME = "namespaces.txt";
+    private static final String TRIVIALCHEMICALS_FILENAME = "trivialchemicals.txt";
 
     public Set<Specie> getSpecies() throws IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("species.txt");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(SPECIES_FILENAME);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         Set<Specie> species = new HashSet<>();
         String line;
@@ -31,7 +34,7 @@ public class PropertiesLoader {
     }
 
     public Set<Namespace> getNamespaces() throws IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("namespaces.txt");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(NAMESPACE_FILENAME);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         Set<Namespace> namespaces = new HashSet<>();
         String line;
@@ -43,7 +46,7 @@ public class PropertiesLoader {
     }
 
     public Set<TrivialChemical> getTrivialChemicals() throws IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("trivialchemicals.txt");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(TRIVIALCHEMICALS_FILENAME);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         Set<TrivialChemical> trivialChemicals = new HashSet<>();
         String line;
