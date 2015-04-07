@@ -25,7 +25,6 @@ public class BioModelHelper {
         Set<String> allBioMdIds = new HashSet<>();
         for (Specie specie : SpeciesHelper.getInstance().getSpecies()) {
             try {
-                System.out.println(specie.getBioMdId());
                 String[] tempBioMdIds = client.getModelsIdByTaxonomyId(specie.getBioMdId().toString());
                 Collections.addAll(allBioMdIds, tempBioMdIds);
             } catch (BioModelsWSException e) {

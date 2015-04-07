@@ -101,7 +101,7 @@ public class AnalysisCoreHelper {
         return rs.getResource();
     }
 
-    public SpeciesNode convertToSpeciesNode(Specie specie) throws NullPointerException {
+    public SpeciesNode convertToSpeciesNode(Specie specie) {
         return SpeciesNodeFactory.getSpeciesNode(specie.getReactId(), specie.getName());
     }
 

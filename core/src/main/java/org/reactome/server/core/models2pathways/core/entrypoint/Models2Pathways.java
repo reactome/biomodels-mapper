@@ -57,7 +57,7 @@ public class Models2Pathways {
 
         Models2Pathways.PRODUCER = new Thread(producer);
         Models2Pathways.PRODUCER.start();
-        logger.info("Started producer process");
+        logger.info("Producer process has been started");
 
         Consumer consumer = null;
         if (jsapResult.getString("extendedFDR") == null) {
@@ -78,7 +78,7 @@ public class Models2Pathways {
             e.printStackTrace();
             System.exit(1);
         }
-        logger.info("Started consumer process");
+        logger.info("Consumer process has been started");
     }
 
     public static boolean isProducerAlive() {
