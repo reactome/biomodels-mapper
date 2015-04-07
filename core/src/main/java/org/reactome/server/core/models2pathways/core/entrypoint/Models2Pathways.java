@@ -1,7 +1,7 @@
 package org.reactome.server.core.models2pathways.core.entrypoint;
 
 import com.martiansoftware.jsap.JSAPResult;
-import org.reactome.server.core.models2pathways.biomodels.model.SBMLModel;
+import org.reactome.server.core.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.core.models2pathways.core.Consumer;
 import org.reactome.server.core.models2pathways.core.Producer;
 import org.reactome.server.core.models2pathways.core.helper.NameSpaceHelper;
@@ -9,7 +9,7 @@ import org.reactome.server.core.models2pathways.core.helper.SpeciesHelper;
 import org.reactome.server.core.models2pathways.core.helper.TrivialChemicalHelper;
 import org.reactome.server.core.models2pathways.core.utils.FileExporter;
 import org.reactome.server.core.models2pathways.core.utils.JSAPHandler;
-import org.reactome.server.core.models2pathways.core.utils.ProptertiesLoader;
+import org.reactome.server.core.models2pathways.core.utils.PropertiesLoader;
 
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
@@ -33,23 +33,25 @@ public class Models2Pathways {
         JSAPResult jsapResult = JSAPHandler.ArgumentHandler(args);
         FileExporter.setLocationPath(jsapResult.getString("output"));
 
+        //Load static properties files.
+        //TODO: make those as profile. 
+        PropertiesLoader propertiesLoader = new PropertiesLoader();
         try {
-            SpeciesHelper.getInstance().setSpecies(ProptertiesLoader.readSpecies(""));
-            NameSpaceHelper.getInstance().setNamespaces(ProptertiesLoader.readNamespaces(""));
-            TrivialChemicalHelper.getInstance().setTrivialChemicals(ProptertiesLoader.readTrivialChemicals(""));
+            NameSpaceHelper.getInstance().setNamespaces(propertiesLoader.getNamespaces());
+            SpeciesHelper.getInstance().setSpecies(propertiesLoader.getSpecies());
+            TrivialChemicalHelper.getInstance().setTrivialChemicals(propertiesLoader.getTrivialChemicals());
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(1);
         }
 
         //Setting up output file
         FileExporter.createFile();
 
         //Shared blockingqueue for producert consumer.
-        BlockingQueue<SBMLModel> sbmlModelBlockingQueue = new LinkedBlockingDeque<>(BLOCKING_QUEUE_SIZE);
+        BlockingQueue<BioModel> bioModelBlockingQueue = new LinkedBlockingDeque<>(BLOCKING_QUEUE_SIZE);
 
         //Let's go... starting threads
-        Producer producer = new Producer(sbmlModelBlockingQueue);
+        Producer producer = new Producer(bioModelBlockingQueue);
 
         Models2Pathways.PRODUCER = new Thread(producer);
         Models2Pathways.PRODUCER.start();
@@ -57,11 +59,11 @@ public class Models2Pathways {
 
         Consumer consumer = null;
         if (jsapResult.getString("extendedFDR") == null) {
-            consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getDouble("significantFDR"), jsapResult.getDouble("coverage"));
+            consumer = new Consumer(bioModelBlockingQueue, jsapResult.getDouble("significantFDR"), jsapResult.getDouble("coverage"));
 
         } else {
             if (jsapResult.getDouble("significantFDR") < jsapResult.getDouble("extendedFDR")) {
-                consumer = new Consumer(sbmlModelBlockingQueue, jsapResult.getDouble("significantFDR"), jsapResult.getDouble("extendedFDR"), jsapResult.getString("coverage"));
+                consumer = new Consumer(bioModelBlockingQueue, jsapResult.getDouble("significantFDR"), jsapResult.getDouble("extendedFDR"), jsapResult.getString("coverage"));
             } else {
                 logger.info("significantFDR is bigger than extendedFDR");
                 System.exit(1);
