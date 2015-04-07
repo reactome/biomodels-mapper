@@ -1,7 +1,7 @@
 package org.reactome.server.core.models2pathways.core.utils;
 
+import org.reactome.server.core.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.core.models2pathways.reactome.model.PathwaySummary;
-import org.reactome.server.core.models2pathways.biomodels.model.SBMLModel;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,7 +28,8 @@ public class FileExporter {
         try {
             fileWriter = new FileWriter(locationPath + ".tsv", true);
         } catch (IOException e) {
-            logger.info("Error on crating tsv-file at " + locationPath);
+            logger.info("Error on creating output file at: \n" +
+                    locationPath + "tsv");
             e.printStackTrace();
             System.exit(1);
         }
@@ -36,15 +37,17 @@ public class FileExporter {
         return true;
     }
 
-    public static void addRow(PathwaySummary pathwaySummary, SBMLModel sbmlModel) {
+    public static void addRow(PathwaySummary pathwaySummary, BioModel bioModel) {
         try {
             fileWriter.write(pathwaySummary.getDbId() + TAB +
                     pathwaySummary.getStId() + TAB +
-                    sbmlModel.getBioMdId() + TAB +
-                    sbmlModel.getName() + NEW_LINE);
+                    bioModel.getBioMdId() + TAB +
+                    bioModel.getName() + NEW_LINE);
             fileWriter.flush();
         } catch (IOException e) {
+            logger.info("Error on witting in file");
             e.printStackTrace();
+            System.exit(1);
         }
     }
 
@@ -52,7 +55,9 @@ public class FileExporter {
         try {
             fileWriter.close();
         } catch (IOException e) {
+            logger.info("Error on closing output file.");
             e.printStackTrace();
+            System.exit(1);
         }
     }
 
