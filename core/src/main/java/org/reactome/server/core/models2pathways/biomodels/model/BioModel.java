@@ -63,10 +63,10 @@ public class BioModel {
 
     @Override
     public String toString() {
-        return "SBMLModel{" +
+        return "BioModel{" +
                 "name='" + name + '\'' +
                 ", bioMdId='" + bioMdId + '\'' +
-                ", bioModelsTaxonomyId='" + specie + '\'' +
+                ", specie=" + specie +
                 ", annotations=" + annotations +
                 '}';
     }
