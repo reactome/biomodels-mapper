@@ -52,7 +52,7 @@ public class JSAPHandler {
 
         FlaggedOption opt6 = new FlaggedOption("reactome")
                 .setStringParser(JSAP.STRING_PARSER)
-                .setRequired(false)
+                .setRequired(true)
                 .setShortFlag('r')
                 .setLongFlag("reactome");
         opt6.setHelp("Path to Reactome intermediate file, containing preprocessed to for the analysis");
