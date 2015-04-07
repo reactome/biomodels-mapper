@@ -4,7 +4,7 @@ import org.reactome.server.analysis.core.model.HierarchiesData;
 import org.reactome.server.analysis.core.model.SpeciesNode;
 import org.reactome.server.analysis.core.model.UserData;
 import org.reactome.server.core.models2pathways.biomodels.helper.AnnotationHelper;
-import org.reactome.server.core.models2pathways.biomodels.model.SBMLModel;
+import org.reactome.server.core.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.core.models2pathways.core.entrypoint.Models2Pathways;
 import org.reactome.server.core.models2pathways.core.helper.SpeciesHelper;
 import org.reactome.server.core.models2pathways.core.utils.FileExporter;
@@ -27,17 +27,17 @@ public class Consumer implements Runnable {
     private Double extendedFDR;
     private Double reactionCoverage;
     private AnalysisCoreHelper analysisCoreHelper;
-    private BlockingQueue<SBMLModel> sbmlModelBlockingQueue;
+    private BlockingQueue<BioModel> bioModelBlockingQueue;
 
-    public Consumer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue, double significantFDR, double reactionCoverage) {
-        this.sbmlModelBlockingQueue = sbmlModelBlockingQueue;
+    public Consumer(BlockingQueue<BioModel> bioModelBlockingQueue, double significantFDR, double reactionCoverage) {
+        this.bioModelBlockingQueue = bioModelBlockingQueue;
         this.significantFDR = significantFDR;
         this.reactionCoverage = reactionCoverage;
         this.analysisCoreHelper = new AnalysisCoreHelper();
     }
 
-    public Consumer(BlockingQueue<SBMLModel> sbmlModelBlockingQueue, double significantFDR, double extendedFDR, String reactionCoverage) {
-        this.sbmlModelBlockingQueue = sbmlModelBlockingQueue;
+    public Consumer(BlockingQueue<BioModel> bioModelBlockingQueue, double significantFDR, double extendedFDR, String reactionCoverage) {
+        this.bioModelBlockingQueue = bioModelBlockingQueue;
         this.significantFDR = significantFDR;
         this.extendedFDR = extendedFDR;
         this.reactionCoverage = Double.valueOf(reactionCoverage);
@@ -47,17 +47,19 @@ public class Consumer implements Runnable {
     @Override
     public void run() {
         while (Models2Pathways.isProducerAlive()) {
-            SBMLModel sbmlModel;
+            BioModel bioModel;
             try {
-                sbmlModel = sbmlModelBlockingQueue.take();
+                bioModel = bioModelBlockingQueue.take();
             } catch (InterruptedException e) {
+                logger.info("Error on process BioModels");
                 e.printStackTrace();
                 continue;
             }
 
             //Remove all trivial chemicals
-            sbmlModel.getAnnotations().removeAll(AnnotationHelper.getAnnotationsWithTrivialChemicals());
+            bioModel.getAnnotations().removeAll(AnnotationHelper.getAnnotationsWithTrivialChemicals());
             //On my way to get the AnalysisResult Object!!!
+            //TODO: clean up, this is not necessary!
             UserData userData;
             SpeciesNode speciesNode;
             HierarchiesData hierarchiesData;
@@ -65,16 +67,16 @@ public class Consumer implements Runnable {
             List<PathwaySummary> pathwaySummaryList;
             AnalysisResult analysisResult;
             try {
-                userData = analysisCoreHelper.getUserData(sbmlModel.getName(), sbmlModel.getAnnotations());
-                speciesNode = analysisCoreHelper.convertToSpeciesNode(SpeciesHelper.getInstance().getSpecieByBioMdSpecieId(sbmlModel.getBioMdId()));
+                userData = analysisCoreHelper.getUserData(bioModel.getName(), bioModel.getAnnotations());
+                speciesNode = analysisCoreHelper.convertToSpeciesNode(SpeciesHelper.getInstance().getSpecieByBioMdSpecieId(bioModel.getSpecie().getBioMdId()));
                 hierarchiesData = analysisCoreHelper.getHierarchiesData(userData, speciesNode);
                 analysisStoredResult = new AnalysisStoredResult(userData, hierarchiesData);
                 analysisStoredResult.setHitPathways(hierarchiesData.getUniqueHitPathways(speciesNode));
                 pathwaySummaryList = analysisCoreHelper.getPathwaySummaryList(hierarchiesData.getUniqueHitPathways(speciesNode), "TOTAL");
                 analysisResult = analysisCoreHelper.getAnalysisResult(analysisStoredResult, pathwaySummaryList);
             } catch (NullPointerException e) {
+                logger.info("NullPointerException on creating analysisResult object");
                 e.printStackTrace();
-                System.out.println("continue");
                 continue;
             }
             //Check resource
@@ -85,22 +87,23 @@ public class Consumer implements Runnable {
                 analysisResult = analysisCoreHelper.getAnalysisResult(analysisStoredResult, pathwaySummaryList);
             }
             //remove not significant pathways
-            analysisResult.setReliablePathways(analysisCoreHelper.getReliablePathways(analysisResult.getPathways(), significantFDR, sbmlModel, reactionCoverage));
+            analysisResult.setReliablePathways(analysisCoreHelper.getReliablePathways(analysisResult.getPathways(), significantFDR, bioModel, reactionCoverage));
             if (analysisResult.getReliablePathways().isEmpty() && extendedFDR != null) {
-                analysisResult.setReliablePathways(analysisCoreHelper.getReliablePathways(analysisResult.getPathways(), extendedFDR, sbmlModel, reactionCoverage));
+                analysisResult.setReliablePathways(analysisCoreHelper.getReliablePathways(analysisResult.getPathways(), extendedFDR, bioModel, reactionCoverage));
             }
             for (PathwaySummary pathwaySummary : analysisResult.getReliablePathways()) {
-                FileExporter.addRow(pathwaySummary, sbmlModel);
+                FileExporter.addRow(pathwaySummary, bioModel);
             }
-            System.out.println(analysisResult.getReliablePathways().size());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
+                logger.info("Error on Thread (" + Thread.currentThread().getName() + ") sleeping process");
                 e.printStackTrace();
             }
         }
-        logger.info("Consumer has finished.");
+        logger.info("Consumer process has been finished.");
         FileExporter.closeFile();
-        logger.info("\nProcess finished");
+        logger.info("\nProcess has been finished");
+        System.exit(1);
     }
 }
