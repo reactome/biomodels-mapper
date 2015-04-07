@@ -43,13 +43,19 @@ public class JSAPHandler {
                 .setLongFlag("coverage");
         opt4.setHelp("minimum pathway reaction coverage");
 
-        FlaggedOption opt5 = new FlaggedOption("header")
-                .setStringParser(JSAP.BOOLEAN_PARSER)
+        FlaggedOption opt5 = new FlaggedOption("biomodels")
+                .setStringParser(JSAP.STRING_PARSER)
                 .setRequired(false)
-                .setShortFlag('h')
-                .setDefault(String.valueOf(true))
-                .setLongFlag("header");
-        opt5.setHelp("boolean for witting a header into the tsv-file");
+                .setShortFlag('b')
+                .setLongFlag("biomodels");
+        opt5.setHelp("Path to folder of BioModels files. ALTERNATIVE TO BioModels-Webservice!");
+
+        FlaggedOption opt6 = new FlaggedOption("reactome")
+                .setStringParser(JSAP.STRING_PARSER)
+                .setRequired(false)
+                .setShortFlag('r')
+                .setLongFlag("reactome");
+        opt6.setHelp("Path to Reactome intermediate file, containing preprocessed to for the analysis");
 
         try {
             jsap.registerParameter(opt1);
@@ -57,6 +63,7 @@ public class JSAPHandler {
             jsap.registerParameter(opt3);
             jsap.registerParameter(opt4);
             jsap.registerParameter(opt5);
+            jsap.registerParameter(opt6);
         } catch (JSAPException e) {
             e.printStackTrace();
         }
