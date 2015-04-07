@@ -5,7 +5,9 @@ import org.reactome.server.core.models2pathways.biomodels.model.Annotation;
 import org.reactome.server.core.models2pathways.biomodels.model.Bag;
 import org.reactome.server.core.models2pathways.biomodels.model.ModelElement;
 import org.reactome.server.core.models2pathways.core.helper.NameSpaceHelper;
+import org.reactome.server.core.models2pathways.core.helper.SpeciesHelper;
 import org.reactome.server.core.models2pathways.core.model.Namespace;
+import org.reactome.server.core.models2pathways.core.model.Specie;
 import org.sbml.jsbml.*;
 
 import javax.xml.stream.XMLStreamException;
@@ -24,14 +26,14 @@ public class ExtractInformationFromSBMLModel {
     /**
      * Reads SBML-Model string and converts it to an Model-object
      *
-     * @param sbmlModel
+     * @param bioMdSBML
      * @return
      */
-    public static Model getSBMLDModel(String sbmlModel) {
+    public static Model convertBioModelSBMLString(String bioMdSBML) {
         SBMLReader reader = new SBMLReader();
         SBMLDocument model = null;
         try {
-            model = reader.readSBMLFromString(sbmlModel);
+            model = reader.readSBMLFromString(bioMdSBML);
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
@@ -41,9 +43,9 @@ public class ExtractInformationFromSBMLModel {
     /**
      * Extracts all the necessary annotations.
      */
-    public static Set<Annotation> extractAnnotation(Model sbmlModel) {
+    public static Set<Annotation> extractAnnotation(Model bioMdSBML) {
         Set<Annotation> annotations = new HashSet<>();
-        for (Species species : sbmlModel.getListOfSpecies()) {
+        for (Species species : bioMdSBML.getListOfSpecies()) {
             ModelElement component = extractComponentAnnotation(species);
             annotations.addAll(displayRelevantAnnotation(component));
         }
@@ -54,20 +56,20 @@ public class ExtractInformationFromSBMLModel {
      * Extracts the taxonomical annotation from the model object.
      * Only considers "bqbiol:occursIn" or "bqbiol:hasTaxon" qualifiers.
      */
-    public static String getModelTaxonomy(Model sbmlModel) {
-        String taxonomy = null;
-        org.sbml.jsbml.Annotation modelAnnotation = sbmlModel.getAnnotation();
+    public static Specie getModelTaxonomy(Model bioMdSBML) {
+        Specie specie = null;
+        org.sbml.jsbml.Annotation modelAnnotation = bioMdSBML.getAnnotation();
         for (CVTerm cvTerm : modelAnnotation.getListOfCVTerms()) {
             String qualifier = getQualifier(cvTerm);
             // retrieves all the URIs
             for (String uri : cvTerm.getResources()) {
                 if ((qualifier.equalsIgnoreCase("bqbiol:occursIn") || qualifier.equalsIgnoreCase("bqbiol:hasTaxon"))
                         && (uri.contains("taxonomy"))) {
-                    taxonomy = extractIdFromURI(uri);
+                    specie = SpeciesHelper.getInstance().getSpecieByBioMdSpecieId(Long.valueOf(extractIdFromURI(uri)));
                 }
             }
         }
-        return taxonomy;
+        return specie;
     }
 
     /**
@@ -82,10 +84,16 @@ public class ExtractInformationFromSBMLModel {
             bag.setQualifier(getQualifier(cvTerm));
             // retrieves all the URIs
             for (String uri : cvTerm.getResources()) {
-                bag.addAnnotation(new Annotation(NameSpaceHelper.getInstance().getNamespace(uri), extractIdFromURI(uri),
-                        extractNamespaceFromURI(uri)));
+                Annotation annotation = new Annotation(NameSpaceHelper.getInstance().getNamespace(extractNamespaceFromURI(uri)),
+                        extractIdFromURI(uri), uri);
+                if (annotation.getNamespace() == null) {
+                    continue;
+                }
+                bag.addAnnotation(annotation);
             }
-            element.addBag(bag);
+            if (bag.getAnnotations() != null) {
+                element.addBag(bag);
+            }
         }
         return element;
     }
@@ -112,14 +120,14 @@ public class ExtractInformationFromSBMLModel {
      */
     private static Set<Annotation> displayRelevantAnnotation(ModelElement component) {
         Integer counterTmp;
-        Set<org.reactome.server.core.models2pathways.biomodels.model.Annotation> annotationsOfSBML = new HashSet<>();
+        Set<Annotation> annotations = new HashSet<>();
         for (Namespace namespace : NameSpaceHelper.getInstance().getNamespaces()) {
             counterTmp = findAllAnnotationFromDataCollection(component, namespace);
             if (counterTmp > 0) {
-                annotationsOfSBML.addAll(getAllAnnotationFromDataCollection(component, namespace));
+                annotations.addAll(getAllAnnotationFromDataCollection(component, namespace));
             }
         }
-        return annotationsOfSBML;
+        return annotations;
     }
 
     /**
@@ -167,7 +175,6 @@ public class ExtractInformationFromSBMLModel {
     private static String extractIdFromURI(String uri) {
         return uri.substring(uri.lastIndexOf("/") + 1);
     }
-
     /**
      * Extracts the namespace from an Identifiers.org URI.
      * E.g. http://identifiers.org/taxonomy/8292   >>>  taxonomy
