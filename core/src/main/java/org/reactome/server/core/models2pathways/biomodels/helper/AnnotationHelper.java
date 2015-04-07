@@ -14,15 +14,16 @@ import java.util.Set;
  */
 public class AnnotationHelper {
 
-    public static String toAnalysisFormat(String model, Set<Annotation> annotations) {
-        StringBuilder annotationsInAnalysisFormat = new StringBuilder();
-        //Adding the name of the model to the sample data for a better identification in the PathwayBrowser result
-        annotationsInAnalysisFormat.append("#").append(model).append(System.getProperty("line.separator"));
-        for (Annotation annotation : annotations) {
-            annotationsInAnalysisFormat.append(annotation.getEntityId()).append(System.getProperty("line.separator"));
-        }
-        return String.valueOf(annotationsInAnalysisFormat);
-    }
+    //TODO Question: Do we need this if we don't use the webservice? 
+//    public static String toAnalysisFormat(String model, Set<Annotation> annotations) {
+//        StringBuilder annotationsInAnalysisFormat = new StringBuilder();
+//        //Adding the name of the model to the sample data for a better identification in the PathwayBrowser result
+//        annotationsInAnalysisFormat.append("#").append(model).append(System.getProperty("line.separator"));
+//        for (Annotation annotation : annotations) {
+//            annotationsInAnalysisFormat.append(annotation.getEntityId()).append(System.getProperty("line.separator"));
+//        }
+//        return String.valueOf(annotationsInAnalysisFormat);
+//    }
 
     public static Set<Annotation> getAnnotationsWithTrivialChemicals() {
         Set<Annotation> annotations = new HashSet<>();
