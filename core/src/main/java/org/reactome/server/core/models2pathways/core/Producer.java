@@ -27,6 +27,7 @@ public class Producer implements Runnable {
                     //There is no point to continue for model without annotations
                     continue;
                 }
+                System.out.println("Ready");
                 try {
                     bioModelBlockingQueue.put(bioModel);
                     Thread.sleep(1000);

@@ -57,6 +57,7 @@ public class BioModelHelper {
         String bioMdSBML = null;
         try {
             bioMdSBML = client.getModelSBMLById(bioMdId);
+            System.out.println(bioMdSBML);
         } catch (BioModelsWSException e) {
             logger.info("Error on retrieving SBML-Files on " + bioMdId + ".\n Please restart the process");
             e.printStackTrace();
