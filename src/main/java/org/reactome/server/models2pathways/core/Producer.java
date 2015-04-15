@@ -29,30 +29,21 @@ public class Producer implements Runnable {
     @Override
     public void run() {
         try {
-            for (File file : new File(path).listFiles()) {
-                if (file.getName().contains("BIOMD")) {
+            File files[] = new File(path).listFiles();
+            if (files == null) {
+                logger.info("No files in BioModels-Folder");
+                Thread.currentThread().interrupt();
+                System.exit(1);
+            }
+            for (File file : files) {
+                if (file.getName().startsWith("BIOMD")) {
                     BioModel bioModel = BioModelHelper.getBioModelByBioModelId(file);
                     if (bioModel.getSpecie() != null && SpeciesHelper.getInstance().getSpecies().contains(bioModel.getSpecie())) {
                         bioModelBlockingQueue.put(BioModelHelper.getBioModelByBioModelId(file));
                     }
                 }
             }
-//            for (String bioMdId : BioModelHelper.getAllSignificantBioModelIds()) {
-//                BioModel bioModel = BioModelHelper.getBioModelByBioModelId(bioMdId);
-//                if (bioModel.getAnnotations().isEmpty()) {
-//                    //There is no point to continue for model without annotations
-//                    continue;
-//                }
-//                System.out.println("Ready");
-//                try {
-//                    bioModelBlockingQueue.put(bioModel);
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    logger.info("Error on Thread (" + Thread.currentThread().getName() + ") sleeping process");
-//                    e.printStackTrace();
-//                }
-//            }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | NullPointerException e) {
             e.printStackTrace();
         } finally {
             Thread.currentThread().interrupt();
