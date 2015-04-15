@@ -4,7 +4,7 @@ Models2Pathways is a commandline-tool to find cross references between BioModels
 
 ### Version
 
-1.0
+1.0-SNAPSHOT
 
 ### Maven-Dependencies
 
