@@ -4,7 +4,7 @@ Models2Pathways is a commandline-tool to find cross references between BioModels
 
 ### Version
 
-1.0-SNAPSHOT
+1.0
 
 ### Installation
 
@@ -19,8 +19,18 @@ mvn clean package
 ### Usage
 
 ```sh
-java -jar m2p-core-1.0-SNAPSHOT-jar-with-dependencies.jar
-[(-s|--significantFDR) <significantFDR>] [(-e|--extendedFDR) <extendedFDR>] (-o|--output) <output> [(-c|--coverage) <coverage>] (-b|--biomodels) <biomodels> (-r|--reactome) <reactome>
+Usage: java -jar Models2Pathways-1.0-jar-with-dependencies.jar
+                (-o|--output) <output> (-b|--biomodels) <biomodels> (-r|--reactome) <reactome> [(-s|--significantFDR) <significantFDR>] [(-e|--extendedFDR) <extendedFDR>] [(-c|--coverage) <coverage>]
+
+  (-o|--output) <output>
+        Path to output tsv (MANDATORY)
+
+  (-b|--biomodels) <biomodels>
+        Path to folder of BioModels files. (MANDATORY
+
+  (-r|--reactome) <reactome>
+        Path to Reactome intermediate file, containing preprocessed to for the
+        analysis (MANDATORY
 
   [(-s|--significantFDR) <significantFDR>]
         Value of the FDR for significant results (default: 0.005)
@@ -28,18 +38,9 @@ java -jar m2p-core-1.0-SNAPSHOT-jar-with-dependencies.jar
   [(-e|--extendedFDR) <extendedFDR>]
         Value of the FDR for possible results
 
-  (-o|--output) <output>
-        Path to output tsv
-
   [(-c|--coverage) <coverage>]
         minimum pathway reaction coverage (default: 0.6)
 
-  (-b|--biomodels) <biomodels>
-        Path to folder of BioModels files. ALTERNATIVE TO BioModels-Webservice!
-
-  (-r|--reactome) <reactome>
-        Path to Reactome intermediate file, containing preprocessed to for the
-        analysis
 ```
 
 ### Maven-Dependencies
