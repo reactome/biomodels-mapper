@@ -103,7 +103,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.reactome.server.core.models2pathways.core.entrypoint.Models2Pathways</mainClass>
+                            <mainClass>org.reactome.server.models2pathways.core.entrypoint.Models2Pathways</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -126,7 +126,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.reactome.server.core.models2pathways.core.entrypoint.Models2Pathways</mainClass>
+                    <mainClass>org.reactome.server.models2pathways.core.entrypoint.Models2Pathways</mainClass>
                 </configuration>
             </plugin>
             <plugin>
