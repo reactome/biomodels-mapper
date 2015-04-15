@@ -1,23 +1,87 @@
-Tool to extracts some useful annotation from all the SBML files (coming from BioModels Database) present in a given folder.
-The aim is to later find relevant pathway from Reactome matching individual models, and therefore increase the linkings between the 2 resources.
+# Models2Pathways
 
-How to run the tool:
-* edit variable MODELS_FOLDER_PATH in ExtractAnnoFromFile.java to point to the folder containing the SBML files
-* run: ant
+Models2Pathways is a commandline-tool to find cross references between BioModels and Reactome.
+
+### Version
+
+1.0
+
+### Maven-Dependencies
+
+Models2Pathways includes a few thirparty dependencies:
+
+* jsbml 1.0
+* analysis-core 1.4.1
+* httpclient 4.3.5
+* jackson-annotations 2.4.3
+* jackson-databind 2.4.3
+* junit 4.8.2
+* jcl-over-slf4j 1.7.0
+* slf4j-api 1.7.0
+* slf4j-log4j12 1.7.0
+* log4j 1.2.14
+* javassist 3.12.1.GA
+* jsap 2.1
+* spring-core 4.1.5.RELEASE
+* spring-context 4.1.5.RELEASE
+
+### Filtered namespaces
+
+To take care, that we only extract annotations, which are possibly in Reactome, we only extract those who are having one of the following namesapces:
+* uniprot
+* chebi
+* obo.chebi
+* chembl.compound
+* ensembl
+
+### Filtered species
+
+To take care, that we only use BioModels with a species, which are possibly in Reactome, we only take those BioModels, who are having one of the following species:
+
+* HOMO SAPIENS
+* ARABIDOPSIS THALIANA
+* BOS TAURUS
+* DICTYOSTELIUM DISCOIDEUM
+* DROSOPHILA MELANOGASTE
+* ESCHERICHIA COLI
+* MUS MUSCULUS
+* MYCOBACTERIUM TUBERCULOSIS
+* RATTUS NORVEGICUS
+* SACCHAROMYCES CEREVISIAE
+* SCHIZOSACCHAROMYCES POMBE
+
+### Installation
+
+* To start with it, clone the project to your local machine
+* Build a package out of it to get a executable jar-file:
+```
+mvn clean package
+```
+* jar-file will be in the target-folder
 
 
-Current shortcomings:
----------------------
-* Extracts all UniProt identifiers for a given SBML species; if no UniProt, extracts all ChEBI; if no, extracts all ChEMBL Compound; if no, extracts all Ensembl identifiers.
-* Does not consider qualifiers.
-* Code could be better written and optimised.
+### Usage
 
+```sh
+java -jar m2p-core-1.0-SNAPSHOT-jar-with-dependencies.jar
+[(-s|--significantFDR) <significantFDR>] [(-e|--extendedFDR) <extendedFDR>] (-o|--output) <output> [(-c|--coverage) <coverage>] (-b|--biomodels) <biomodels> (-r|--reactome) <reactome>
 
-Open questions:
----------------
-* handling on non human related models?
-* handling of SBML species annotated with several identifiers:
-  complexes using hasPart (see BIOMD0000000015)
-  element not found in public database described using hasVersion (see BIOMD0000000004)
-* usage of qualifiers (often not a simple 'is', but can be 'hasVersion', 'isHomologTo', ...)
- 
+  [(-s|--significantFDR) <significantFDR>]
+        Value of the FDR for significant results (default: 0.005)
+
+  [(-e|--extendedFDR) <extendedFDR>]
+        Value of the FDR for possible results
+
+  (-o|--output) <output>
+        Path to output tsv
+
+  [(-c|--coverage) <coverage>]
+        minimum pathway reaction coverage (default: 0.6)
+
+  (-b|--biomodels) <biomodels>
+        Path to folder of BioModels files. ALTERNATIVE TO BioModels-Webservice!
+
+  (-r|--reactome) <reactome>
+        Path to Reactome intermediate file, containing preprocessed to for the
+        analysis
+```
