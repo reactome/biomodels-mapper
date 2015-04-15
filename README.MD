@@ -50,6 +50,16 @@ To take care, that we only use BioModels with a species, which are possibly in R
 * SACCHAROMYCES CEREVISIAE
 * SCHIZOSACCHAROMYCES POMBE
 
+### Installation
+
+* To start with it, clone the project to your local machine
+* Build a package out of it to get a executable jar-file:
+```
+mvn clean package
+```
+* jar-file will be in the target-folder
+
+
 ### Usage
 
 ```sh
