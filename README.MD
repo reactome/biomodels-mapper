@@ -6,6 +6,42 @@ Models2Pathways is a commandline-tool to find cross references between BioModels
 
 1.0-SNAPSHOT
 
+### Installation
+
+* To start with it, clone the project to your local machine
+* Build a package out of it to get a executable jar-file:
+```
+mvn clean package
+```
+* jar-file will be in the target-folder
+
+
+### Usage
+
+```sh
+java -jar m2p-core-1.0-SNAPSHOT-jar-with-dependencies.jar
+[(-s|--significantFDR) <significantFDR>] [(-e|--extendedFDR) <extendedFDR>] (-o|--output) <output> [(-c|--coverage) <coverage>] (-b|--biomodels) <biomodels> (-r|--reactome) <reactome>
+
+  [(-s|--significantFDR) <significantFDR>]
+        Value of the FDR for significant results (default: 0.005)
+
+  [(-e|--extendedFDR) <extendedFDR>]
+        Value of the FDR for possible results
+
+  (-o|--output) <output>
+        Path to output tsv
+
+  [(-c|--coverage) <coverage>]
+        minimum pathway reaction coverage (default: 0.6)
+
+  (-b|--biomodels) <biomodels>
+        Path to folder of BioModels files. ALTERNATIVE TO BioModels-Webservice!
+
+  (-r|--reactome) <reactome>
+        Path to Reactome intermediate file, containing preprocessed to for the
+        analysis
+```
+
 ### Maven-Dependencies
 
 Models2Pathways includes a few thirparty dependencies:
@@ -49,39 +85,3 @@ To take care, that we only use BioModels with a species, which are possibly in R
 * RATTUS NORVEGICUS
 * SACCHAROMYCES CEREVISIAE
 * SCHIZOSACCHAROMYCES POMBE
-
-### Installation
-
-* To start with it, clone the project to your local machine
-* Build a package out of it to get a executable jar-file:
-```
-mvn clean package
-```
-* jar-file will be in the target-folder
-
-
-### Usage
-
-```sh
-java -jar m2p-core-1.0-SNAPSHOT-jar-with-dependencies.jar
-[(-s|--significantFDR) <significantFDR>] [(-e|--extendedFDR) <extendedFDR>] (-o|--output) <output> [(-c|--coverage) <coverage>] (-b|--biomodels) <biomodels> (-r|--reactome) <reactome>
-
-  [(-s|--significantFDR) <significantFDR>]
-        Value of the FDR for significant results (default: 0.005)
-
-  [(-e|--extendedFDR) <extendedFDR>]
-        Value of the FDR for possible results
-
-  (-o|--output) <output>
-        Path to output tsv
-
-  [(-c|--coverage) <coverage>]
-        minimum pathway reaction coverage (default: 0.6)
-
-  (-b|--biomodels) <biomodels>
-        Path to folder of BioModels files. ALTERNATIVE TO BioModels-Webservice!
-
-  (-r|--reactome) <reactome>
-        Path to Reactome intermediate file, containing preprocessed to for the
-        analysis
-```
