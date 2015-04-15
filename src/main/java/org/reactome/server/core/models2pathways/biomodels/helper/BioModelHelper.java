@@ -1,5 +1,6 @@
 package org.reactome.server.core.models2pathways.biomodels.helper;
 
+import org.apache.commons.io.FilenameUtils;
 import org.reactome.server.core.models2pathways.biomodels.model.Annotation;
 import org.reactome.server.core.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.core.models2pathways.core.model.Specie;
@@ -19,7 +20,9 @@ public class BioModelHelper {
         Model model = ExtractInformationFromSBMLModel.convertBioModelSBMLString(bioMdFile);
         Specie specie = getBioModelTaxonomy(model);
         Set<Annotation> annotations = getBioModelAnnotations(model);
-        return new BioModel(model.getName(), model.getId(), specie, annotations);
+        String bioModelId = FilenameUtils.removeExtension(bioMdFile.getName());
+        System.out.println(bioModelId);
+        return new BioModel(model.getName(), bioModelId, specie, annotations);
     }
 
     private static Specie getBioModelTaxonomy(Model model) {
@@ -29,4 +32,6 @@ public class BioModelHelper {
     private static Set<Annotation> getBioModelAnnotations(Model model) {
         return ExtractInformationFromSBMLModel.extractAnnotation(model);
     }
+
+
 }
