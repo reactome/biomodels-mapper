@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.reactome.server.tools</groupId>
-    <artifactId>m2p-core</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>Models2Pathways</artifactId>
+    <version>1.0</version>
 
     <dependencies>
         <dependency>
