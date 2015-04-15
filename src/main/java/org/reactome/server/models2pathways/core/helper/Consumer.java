@@ -1,4 +1,4 @@
-package org.reactome.server.models2pathways.core;
+package org.reactome.server.models2pathways.core.helper;
 
 import org.reactome.server.analysis.core.model.HierarchiesData;
 import org.reactome.server.analysis.core.model.SpeciesNode;
@@ -6,7 +6,6 @@ import org.reactome.server.analysis.core.model.UserData;
 import org.reactome.server.models2pathways.biomodels.helper.AnnotationHelper;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.models2pathways.core.entrypoint.Models2Pathways;
-import org.reactome.server.models2pathways.core.helper.SpeciesHelper;
 import org.reactome.server.models2pathways.core.utils.FileExporter;
 import org.reactome.server.models2pathways.reactome.helper.AnalysisCoreHelper;
 import org.reactome.server.models2pathways.reactome.model.AnalysisResult;

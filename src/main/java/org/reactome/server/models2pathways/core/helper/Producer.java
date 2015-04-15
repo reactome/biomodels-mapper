@@ -1,10 +1,9 @@
-package org.reactome.server.models2pathways.core;
+package org.reactome.server.models2pathways.core.helper;
 
 //import BioModelHelper;
 
 import org.reactome.server.models2pathways.biomodels.helper.BioModelHelper;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
-import org.reactome.server.models2pathways.core.helper.SpeciesHelper;
 
 import java.io.File;
 import java.util.concurrent.BlockingQueue;
