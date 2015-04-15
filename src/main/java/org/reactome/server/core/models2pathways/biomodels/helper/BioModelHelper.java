@@ -21,7 +21,6 @@ public class BioModelHelper {
         Specie specie = getBioModelTaxonomy(model);
         Set<Annotation> annotations = getBioModelAnnotations(model);
         String bioModelId = FilenameUtils.removeExtension(bioMdFile.getName());
-        System.out.println(bioModelId);
         return new BioModel(model.getName(), bioModelId, specie, annotations);
     }
 
