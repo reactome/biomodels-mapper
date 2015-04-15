@@ -20,6 +20,8 @@ public class FileExporter {
     private static final String NEW_LINE = System.getProperty("line.separator");
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("YYYY-MM-dd_hh-mm-ss");
     private static final String FILE_NAME = "models2pathways";
+    private static final String PATHWAY_BROWSER_BASE_URL = "http://www.reactome.org/PathwayBrowser/#";
+    private static final String GO_EVIDENCE_CODE = "IEA";
     private static String locationPath;
     private static FileWriter fileWriter;
 
@@ -43,9 +45,9 @@ public class FileExporter {
                     bioModel.getBioMdId() + TAB +
                             pathwaySummary.getStId() + TAB +
                             pathwaySummary.getEntities().getFdr() + TAB +
-                            "http://www.reactome.org/PathwayBrowser/#" + pathwaySummary.getStId() + TAB +
+                            PATHWAY_BROWSER_BASE_URL + pathwaySummary.getStId() + TAB +
                             pathwaySummary.getName() + TAB +
-                            "IEA" + TAB +
+                            GO_EVIDENCE_CODE + TAB +
                             bioModel.getSpecie().getName() + NEW_LINE);
             fileWriter.flush();
         } catch (IOException e) {
