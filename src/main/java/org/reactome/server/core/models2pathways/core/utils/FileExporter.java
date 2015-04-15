@@ -39,9 +39,14 @@ public class FileExporter {
 
     public static void addRow(PathwaySummary pathwaySummary, BioModel bioModel) {
         try {
-            fileWriter.write(bioModel.getBioMdId() + TAB +
-                    pathwaySummary.getStId() + TAB +
-                    bioModel.getName() + NEW_LINE);
+            fileWriter.write(
+                    bioModel.getBioMdId() + TAB +
+                            pathwaySummary.getStId() + TAB +
+                            pathwaySummary.getEntities().getFdr() + TAB +
+                            "http://www.reactome.org/PathwayBrowser/#" + pathwaySummary.getStId() + TAB +
+                            pathwaySummary.getName() + TAB +
+                            "IEA" + TAB +
+                            bioModel.getSpecie().getName() + NEW_LINE);
             fileWriter.flush();
         } catch (IOException e) {
             logger.info("Error on witting in file");
