@@ -26,11 +26,11 @@ Usage: java -jar Models2Pathways-1.0-jar-with-dependencies.jar
         Path to output tsv (MANDATORY)
 
   (-b|--biomodels) <biomodels>
-        Path to folder of BioModels files. (MANDATORY
+        Path to folder of BioModels files. (MANDATORY)
 
   (-r|--reactome) <reactome>
         Path to Reactome intermediate file, containing preprocessed to for the
-        analysis (MANDATORY
+        analysis (MANDATORY)
 
   [(-s|--significantFDR) <significantFDR>]
         Value of the FDR for significant results (default: 0.005)
@@ -86,3 +86,29 @@ To take care, that we only use BioModels with a species, which are possibly in R
 * RATTUS NORVEGICUS
 * SACCHAROMYCES CEREVISIAE
 * SCHIZOSACCHAROMYCES POMBE
+
+
+### How to change filtered species?
+Go to src/main/resources and adopt species.txt
+
+### How to change trivial chemicals?
+Go to src/main/resources and adopt trivialchemicals.txt
+
+### How to change namspaces?
+Go to src/main/resources and adopt namespaces.txt
+
+### How to change the default FDR?
+
+### How to change the default reactions coverage?
+
+### How to change the format of the result/output file?
+
+### What is the format of the result/output file?
+
+### What is the 'extended' FDR?
+
+### What is the structure in src/main/resources/species.txt?
+
+### What is the structure in src/main/resources/namespaces.txt?
+
+### What is the structure in src/main/resources/trivialchemicals.txt?
