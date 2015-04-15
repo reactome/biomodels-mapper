@@ -2,11 +2,7 @@ package org.reactome.server.models2pathways.core.entrypoint;
 
 import com.martiansoftware.jsap.JSAPResult;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
-import org.reactome.server.models2pathways.core.Consumer;
-import org.reactome.server.models2pathways.core.Producer;
-import org.reactome.server.models2pathways.core.helper.NameSpaceHelper;
-import org.reactome.server.models2pathways.core.helper.SpeciesHelper;
-import org.reactome.server.models2pathways.core.helper.TrivialChemicalHelper;
+import org.reactome.server.models2pathways.core.helper.*;
 import org.reactome.server.models2pathways.core.utils.FileExporter;
 import org.reactome.server.models2pathways.core.utils.JSAPHandler;
 import org.reactome.server.models2pathways.core.utils.PropertiesLoader;
