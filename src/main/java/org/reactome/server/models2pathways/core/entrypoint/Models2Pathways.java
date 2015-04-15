@@ -29,10 +29,11 @@ public class Models2Pathways {
     private static Thread PRODUCER;
 
     public static void main(String[] args) {
+        JSAPResult jsapResult = JSAPHandler.ArgumentHandler(args);
+
         logger.info("Process has been started");
         //HierarchiesDataContainer.POOL_SIZE = 10;
         //Set up all given arguments.
-        JSAPResult jsapResult = JSAPHandler.ArgumentHandler(args);
         FileExporter.setLocationPath(jsapResult.getString("output"));
         AnalysisCoreHelper.setStructure(jsapResult.getString("reactome"));
         Producer.setPath(jsapResult.getString("biomodels"));
