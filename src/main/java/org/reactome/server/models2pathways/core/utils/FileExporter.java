@@ -68,7 +68,7 @@ public class FileExporter {
     }
 
     private static String getLocationPath() {
-        return locationPath + FILE_NAME + DATE_FORMAT.format(new Date());
+        return locationPath + FILE_NAME;
     }
 
     public static void setLocationPath(String locationPath) {
