@@ -3,15 +3,10 @@ package org.reactome.server.models2pathways.core.utils;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.models2pathways.reactome.model.PathwaySummary;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -84,8 +79,8 @@ public class FileExporter {
     public static void setLocationPath(String locationPath) {
         FileExporter.locationPath = locationPath;
     }
-    
-    private static void removeFile(){
+
+    private static void removeFile() {
         try {
             Files.deleteIfExists(Paths.get(getLocationPath() + ".tsv"));
         } catch (IOException e) {
