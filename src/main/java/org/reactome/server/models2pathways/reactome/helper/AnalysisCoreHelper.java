@@ -56,7 +56,7 @@ public class AnalysisCoreHelper {
     }
 
     public HierarchiesData getHierarchiesData(UserData userData, SpeciesNode species) throws NullPointerException {
-        return enrichmentAnalysis.overRepresentation(userData.getIdentifiers(), species);
+        return enrichmentAnalysis.overRepresentation(userData.getIdentifiers(), species, false);
     }
 
     public List<PathwaySummary> getPathwaySummaryList(List<PathwayNode> pathwayNodeList, String resource) {
