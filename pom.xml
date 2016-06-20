@@ -195,5 +195,12 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
+        <repository>
+            <id>ebi-repo-mvn</id>
+            <name>The EBI repository</name>
+            <url>http://www.ebi.ac.uk/~maven/m2repo</url>
+            <releases><enabled>true</enabled></releases>
+        </repository>
     </repositories>
 </project>
