@@ -204,14 +204,9 @@
         </repository>
 
         <repository>
-            <id>oss.sonatype.org-snapshot</id>
-            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>biojava-legacy-repo</id>
+            <name>BioJava's Git based legacy maven repo</name>
+            <url>https://github.com/biojava/maven-repo/raw/master/</url>
         </repository>
     </repositories>
 </project>
