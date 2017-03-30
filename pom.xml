@@ -86,7 +86,7 @@
         <dependency>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>1.3.2</version>
+            <version>1.6.0</version>
         </dependency>
     </dependencies>
 
@@ -130,7 +130,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.3.2</version>
+                <version>1.6.0</version>
                 <configuration>
                     <mainClass>org.reactome.server.models2pathways.core.entrypoint.Models2Pathways</mainClass>
                 </configuration>
