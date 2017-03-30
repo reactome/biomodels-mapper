@@ -42,7 +42,7 @@ public class AnalysisCoreHelper {
     }
 
     public SpeciesNode getSpeciesNode(Specie specie) {
-        return SpeciesNodeFactory.getSpeciesNode(specie.getReactId(), specie.getName());
+        return SpeciesNodeFactory.getSpeciesNode(specie.getReactId(), null, specie.getName());
     }
 
     public UserData getUserData(String bioModelsName, Set<Annotation> annotations) {
@@ -101,7 +101,7 @@ public class AnalysisCoreHelper {
     }
 
     public SpeciesNode convertToSpeciesNode(Specie specie) {
-        return SpeciesNodeFactory.getSpeciesNode(specie.getReactId(), specie.getName());
+        return SpeciesNodeFactory.getSpeciesNode(specie.getReactId(), null, specie.getName());
     }
 
     @Scope("singleton")
