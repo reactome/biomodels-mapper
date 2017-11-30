@@ -1,7 +1,7 @@
 package org.reactome.server.models2pathways.reactome.helper;
 
-import org.reactome.server.analysis.core.components.EnrichmentAnalysis;
 import org.reactome.server.analysis.core.data.AnalysisData;
+import org.reactome.server.analysis.core.methods.EnrichmentAnalysis;
 import org.reactome.server.analysis.core.model.*;
 import org.reactome.server.models2pathways.biomodels.model.Annotation;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
@@ -22,7 +22,7 @@ public class AnalysisCoreHelper {
     private static String structure;
 
     public AnalysisCoreHelper() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
         AnalysisData analysisData = context.getBean(AnalysisData.class);
         analysisData.setFileName(structure);
         enrichmentAnalysis = context.getBean(EnrichmentAnalysis.class);
