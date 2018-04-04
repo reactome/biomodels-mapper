@@ -16,7 +16,7 @@ public class FileExporter {
     final static Logger logger = Logger.getLogger(FileExporter.class.getName());
 
     private static final String FILE_NAME = "models2pathways";
-    private static final String PATHWAY_BROWSER_BASE_URL = "http://www.reactome.org/PathwayBrowser/#";
+    private static final String PATHWAY_BROWSER_BASE_URL = "https://reactome.org/PathwayBrowser/#/";
     private static final String GO_EVIDENCE_CODE = "IEA";
     private static String locationPath;
     private static FileWriter fileWriter;
@@ -71,7 +71,7 @@ public class FileExporter {
     }
 
     private static String getLocationPath() {
-        return locationPath + FILE_NAME;
+        return (locationPath.endsWith("/") ? locationPath : locationPath + "/") + FILE_NAME;
     }
 
     public static void setLocationPath(String locationPath) {
