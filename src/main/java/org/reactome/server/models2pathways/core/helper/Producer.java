@@ -1,19 +1,18 @@
 package org.reactome.server.models2pathways.core.helper;
 
-//import BioModelHelper;
-
 import org.reactome.server.models2pathways.biomodels.helper.BioModelHelper;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Logger;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
  */
 public class Producer implements Runnable {
-    final static Logger logger = Logger.getLogger(Producer.class.getName());
+    private static Logger logger = LoggerFactory.getLogger("m2pLogger");
     private static String path;
     private BlockingQueue<BioModel> bioModelBlockingQueue;
 

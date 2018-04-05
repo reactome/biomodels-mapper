@@ -5,16 +5,17 @@ import org.reactome.server.models2pathways.biomodels.model.Annotation;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.models2pathways.core.model.Specie;
 import org.sbml.jsbml.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
  */
 public class BioModelHelper {
-    final static Logger logger = Logger.getLogger(BioModelHelper.class.getName());
+    private static Logger logger = LoggerFactory.getLogger("m2pLogger");
 
     public static BioModel getBioModelByBioModelId(File bioMdFile) {
         Model model = ExtractInformationFromSBMLModel.convertBioModelSBMLString(bioMdFile);

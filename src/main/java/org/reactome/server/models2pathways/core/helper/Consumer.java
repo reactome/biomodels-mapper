@@ -11,16 +11,17 @@ import org.reactome.server.models2pathways.reactome.helper.AnalysisCoreHelper;
 import org.reactome.server.models2pathways.reactome.model.AnalysisResult;
 import org.reactome.server.models2pathways.reactome.model.AnalysisStoredResult;
 import org.reactome.server.models2pathways.reactome.model.PathwaySummary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Logger;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
  */
 public class Consumer implements Runnable {
-    final static Logger logger = Logger.getLogger(Consumer.class.getName());
+    private static Logger logger = LoggerFactory.getLogger("m2pLogger");
 
     private Double significantFDR;
     private Double extendedFDR;

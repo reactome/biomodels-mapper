@@ -7,18 +7,20 @@ import org.reactome.server.models2pathways.core.utils.FileExporter;
 import org.reactome.server.models2pathways.core.utils.JSAPHandler;
 import org.reactome.server.models2pathways.core.utils.PropertiesLoader;
 import org.reactome.server.models2pathways.reactome.helper.AnalysisCoreHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.logging.Logger;
 
 
 /**
  * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
 public class Models2Pathways {
-    final static Logger logger = Logger.getLogger(Models2Pathways.class.getName());
+
+    private static Logger logger = LoggerFactory.getLogger("m2pLogger");
 
     final static int BLOCKING_QUEUE_SIZE = 10;
 

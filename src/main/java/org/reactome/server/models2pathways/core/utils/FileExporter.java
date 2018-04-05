@@ -2,18 +2,19 @@ package org.reactome.server.models2pathways.core.utils;
 
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.models2pathways.reactome.model.PathwaySummary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.logging.Logger;
 
 /**
  * Created by Maximilian Koch (mkoch@ebi.ac.uk).
  */
 public class FileExporter {
-    final static Logger logger = Logger.getLogger(FileExporter.class.getName());
+    private static Logger logger = LoggerFactory.getLogger("m2pLogger");
 
     private static final String FILE_NAME = "models2pathways";
     private static final String PATHWAY_BROWSER_BASE_URL = "https://reactome.org/PathwayBrowser/#/";
