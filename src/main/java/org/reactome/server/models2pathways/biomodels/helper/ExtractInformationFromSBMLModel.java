@@ -181,12 +181,16 @@ public class ExtractInformationFromSBMLModel {
      * Extracts the namespace from an Identifiers.org URI.
      * E.g. http://identifiers.org/taxonomy/8292   >>>  taxonomy
      */
-    //TODO: Got: "StringIndexOutOfBoundsException"
     private static String extractNamespaceFromURI(String uri) {
         try {
             return uri.substring(23, uri.indexOf("/", 24));
         } catch (StringIndexOutOfBoundsException e) {
-            System.err.println("StringIndexOutOfBoundsException on " + uri);
+            try {
+                String[] aux = uri.split(":");
+                return aux[aux.length - 2];
+            } catch (Exception e1) {
+                System.err.println(e1.getMessage() + " for " + uri);
+            }
         }
         return null;
     }
