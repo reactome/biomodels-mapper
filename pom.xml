@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.reactome.server.tools</groupId>
-    <artifactId>Models2Pathways</artifactId>
+    <artifactId>biomodels-mapper</artifactId>
     <version>1.0</version>
     <dependencies>
         <dependency>
@@ -114,7 +114,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>org.reactome.server.models2pathways.core.entrypoint.Models2Pathways</mainClass>
+                    <mainClass>org.reactome.server.models2pathways.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -124,6 +124,37 @@
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.handlers</resource>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.schemas</resource>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>org.reactome.server.models2pathways.Main</Main-Class>
+                                        <!--<X-Compile-Source-JDK>${maven.compile.source}</X-Compile-Source-JDK>-->
+                                        <!--<X-Compile-Target-JDK>${maven.compile.target}</X-Compile-Target-JDK>-->
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <resources>

@@ -5,7 +5,7 @@ import org.reactome.server.analysis.core.model.SpeciesNode;
 import org.reactome.server.analysis.core.model.UserData;
 import org.reactome.server.models2pathways.biomodels.helper.AnnotationHelper;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
-import org.reactome.server.models2pathways.core.entrypoint.Models2Pathways;
+import org.reactome.server.models2pathways.Main;
 import org.reactome.server.models2pathways.core.utils.FileExporter;
 import org.reactome.server.models2pathways.reactome.helper.AnalysisCoreHelper;
 import org.reactome.server.models2pathways.reactome.model.AnalysisResult;
@@ -46,7 +46,7 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-        while (Models2Pathways.isProducerAlive()) {
+        while (Main.isProducerAlive()) {
             BioModel bioModel;
             try {
                 bioModel = bioModelBlockingQueue.take();

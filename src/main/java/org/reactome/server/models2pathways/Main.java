@@ -1,4 +1,4 @@
-package org.reactome.server.models2pathways.core.entrypoint;
+package org.reactome.server.models2pathways;
 
 import com.martiansoftware.jsap.JSAPResult;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
@@ -18,7 +18,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 /**
  * @author Maximilian Koch <mkoch@ebi.ac.uk>
  */
-public class Models2Pathways {
+public class Main {
 
     private static Logger logger = LoggerFactory.getLogger("m2pLogger");
 
@@ -56,8 +56,8 @@ public class Models2Pathways {
         //Let's go... starting threads
         Producer producer = new Producer(bioModelBlockingQueue);
 
-        Models2Pathways.PRODUCER = new Thread(producer);
-        Models2Pathways.PRODUCER.start();
+        Main.PRODUCER = new Thread(producer);
+        Main.PRODUCER.start();
         logger.info("Producer process has been started");
 
         Consumer consumer = null;
@@ -83,6 +83,6 @@ public class Models2Pathways {
     }
 
     public static boolean isProducerAlive() {
-        return Models2Pathways.PRODUCER.isAlive();
+        return Main.PRODUCER.isAlive();
     }
 }
