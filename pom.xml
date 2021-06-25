@@ -3,14 +3,85 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.reactome.server.tools</groupId>
     <artifactId>biomodels-mapper</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>This is a commandline-tool to find cross references between BioModels and Reactome</description>
+    <url>https://github.com/reactome/biomodels-mapper</url>
+
+    <organization>
+        <name>Reactome</name>
+        <url>https://reactome.org</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name></name>
+            <url></url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>tschaka1904</id>
+            <name>Maximilian Koch</name>
+            <roles>
+                <role>alumni</role>
+            </roles>
+        </developer>
+
+        <developer>
+            <id>fabregat</id>
+            <name>Antonio Fabregat</name>
+            <roles>
+                <role>alumni</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/reactome/biomodels-mapper.git</connection>
+        <developerConnection>scm:git:ssh://github.com:reactome/biomodels-mapper.git</developerConnection>
+        <url>https://github.com/reactome/biomodels-mapper/tree/master</url>
+    </scm>
+
+    <properties>
+        <!-- dependencies -->
+        <jackson.annotations.version>2.4.3</jackson.annotations.version>
+        <javassist.version>3.12.1.GA</javassist.version>
+        <jsap.version>2.1</jsap.version>
+        <jcl.over.slf4j.version>1.7.0</jcl.over.slf4j.version>
+        <jsbml.verion>1.3.1</jsbml.verion>
+        <junit.version>4.13.1</junit.version>
+        <httpclient.version>4.3.5</httpclient.version>
+        <reactome.analysis.core.version>3.3.0</reactome.analysis.core.version>
+        <spring.version>4.1.5.RELEASE</spring.version>
+
+        <!-- build -->
+        <jdk.version>1.7</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- maven build and plugins -->
+        <maven.compiler.version>2.0.2</maven.compiler.version>
+        <maven.exec.version>1.6.0</maven.exec.version>
+        <maven.gpg.version>1.5</maven.gpg.version>
+        <maven.javadoc.version>2.10.3</maven.javadoc.version>
+        <maven.release.version>2.5.3</maven.release.version>
+        <maven.resources.version>2.3</maven.resources.version>
+        <maven.shade.version>3.1.0</maven.shade.version>
+        <maven.source.version>2.4</maven.source.version>
+        <nexus-staging-maven-plugin>1.6.7</nexus-staging-maven-plugin>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.sbml.jsbml</groupId>
             <artifactId>jsbml</artifactId>
-            <version>1.3.1</version>
+            <version>${jsbml.verion}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -26,56 +97,66 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.reactome.server.tools</groupId>
             <artifactId>analysis-core</artifactId>
-            <version>3.3.0</version>
+            <version>${reactome.analysis.core.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.3.5</version>
+            <version>${httpclient.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>2.4.3</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.4.3</version>
+            <version>${jackson.annotations.version}</version>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>javassist</groupId>
             <artifactId>javassist</artifactId>
-            <version>3.12.1.GA</version>
+            <version>${javassist.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.martiansoftware</groupId>
             <artifactId>jsap</artifactId>
-            <version>2.1</version>
+            <version>${jsap.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>4.1.5.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.1.5.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>1.6.0</version>
+            <version>${maven.exec.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -95,40 +176,46 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.0</version>
+            <version>${jcl.over.slf4j.version}</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+
     <build>
+        <finalName>${project.artifactId}</finalName>
+
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
+                <version>${maven.exec.version}</version>
                 <configuration>
                     <mainClass>org.reactome.server.models2pathways.Main</mainClass>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.3</version>
+                <version>${maven.resources.version}</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven.shade.version}</version>
                 <executions>
                     <execution>
                         <id>make-assembly</id>
@@ -156,7 +243,80 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Nexus staging plugin for Sonatype deployment -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus-staging-maven-plugin}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+            <!-- Generate source jar file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Generate JavaDoc jar file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Signs deployed jar, source jar, and JavaDoc jar with GPG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven.gpg.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Allows "release" mvn goal to deploy a SNAPSHOT or version release to Sonatype -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven.release.version}</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                </configuration>
+            </plugin>
         </plugins>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -164,6 +324,7 @@
             </resource>
         </resources>
     </build>
+
     <repositories>
         <repository>
             <id>central</id>
@@ -174,6 +335,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <repository>
             <id>central_1</id>
             <name>Maven Repository Switchboard</name>
@@ -183,6 +345,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <!-- EBI repo -->
         <repository>
             <id>nexus-ebi-repo</id>
@@ -195,6 +358,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <!-- EBI SNAPSHOT repo -->
         <repository>
             <id>nexus-ebi-snapshot-repo</id>
@@ -207,6 +371,7 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
         <repository>
             <id>ebi-repo-mvn</id>
             <name>The EBI repository</name>
@@ -215,10 +380,28 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+
         <repository>
             <id>biojava-legacy-repo</id>
             <name>BioJava's Git based legacy maven repo</name>
             <url>https://github.com/biojava/maven-repo/raw/master/</url>
         </repository>
     </repositories>
+
+    <!-- Configures the distribution to nexus repository -->
+    <distributionManagement>
+        <!-- Sonatype Release repo -->
+        <repository>
+            <id>ossrh</id>
+            <name>Sonatype Release Repository</name>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+
+        <!-- Sonatype SNAPSHOT repo -->
+        <snapshotRepository>
+            <id>ossrh</id>
+            <name>Sonatype Snapshot Repository</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
