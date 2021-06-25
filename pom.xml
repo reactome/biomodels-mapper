@@ -51,11 +51,11 @@
 
     <properties>
         <!-- dependencies -->
-        <jackson.annotations.version>2.4.3</jackson.annotations.version>
+        <jackson.version>2.4.3</jackson.version>
         <javassist.version>3.12.1.GA</javassist.version>
         <jsap.version>2.1</jsap.version>
         <jcl.over.slf4j.version>1.7.0</jcl.over.slf4j.version>
-        <jsbml.verion>1.3.1</jsbml.verion>
+        <jsbml.version>1.3.1</jsbml.version>
         <junit.version>4.13.1</junit.version>
         <httpclient.version>4.3.5</httpclient.version>
         <reactome.analysis.core.version>3.3.0</reactome.analysis.core.version>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>org.sbml.jsbml</groupId>
             <artifactId>jsbml</artifactId>
-            <version>${jsbml.verion}</version>
+            <version>${jsbml.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -113,13 +113,13 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.4.3</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.annotations.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
