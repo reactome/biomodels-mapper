@@ -112,7 +112,7 @@ public class AnalysisCoreHelper {
 
         public static Type getType(String type) {
             for (Type t : values()) {
-                if (t.toString().toLowerCase().equals(type.toLowerCase())) {
+                if (t.toString().equalsIgnoreCase(type)) {
                     return t;
                 }
             }
