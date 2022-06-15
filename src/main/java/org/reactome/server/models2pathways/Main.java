@@ -1,6 +1,7 @@
 package org.reactome.server.models2pathways;
 
 import com.martiansoftware.jsap.JSAPResult;
+import org.reactome.server.models2pathways.biomodels.fetcher.BioModelFetcher;
 import org.reactome.server.models2pathways.biomodels.model.BioModel;
 import org.reactome.server.models2pathways.core.helper.*;
 import org.reactome.server.models2pathways.core.utils.FileExporter;
@@ -10,6 +11,7 @@ import org.reactome.server.models2pathways.reactome.helper.AnalysisCoreHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -34,7 +36,11 @@ public class Main {
         //Set up all given arguments.
         FileExporter.setLocationPath(jsapResult.getString("output"));
         AnalysisCoreHelper.setStructure(jsapResult.getString("reactome"));
-        Producer.setPath(jsapResult.getString("biomodels"));
+        String bioModels = jsapResult.getString("biomodels");
+        if (!jsapResult.getBoolean("skip-fetch")) {
+            new BioModelFetcher(new File(bioModels)).fetch();
+        }
+        Producer.setPath(bioModels);
 
         //Load static properties files.
         //TODO: make those as profile. 

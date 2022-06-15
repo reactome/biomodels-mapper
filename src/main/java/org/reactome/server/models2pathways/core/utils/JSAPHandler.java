@@ -24,7 +24,9 @@ public class JSAPHandler {
                 .setRequired(true)
                 .setShortFlag('b')
                 .setLongFlag("biomodels");
-        opt2.setHelp("Path to folder of BioModels files. (MANDATORY");
+        opt2.setHelp("Path to folder of BioModels files. (MANDATORY)");
+
+
 
         FlaggedOption opt3 = new FlaggedOption("reactome")
                 .setStringParser(JSAP.STRING_PARSER)
@@ -56,6 +58,14 @@ public class JSAPHandler {
                 .setLongFlag("coverage");
         opt6.setHelp("minimum pathway reaction coverage");
 
+        FlaggedOption opt7 = new FlaggedOption("skip-fetch")
+                .setStringParser(JSAP.BOOLEAN_PARSER)
+                .setRequired(false)
+                .setShortFlag('k')
+                .setDefault("false")
+                .setLongFlag("skip-fetch");
+        opt7.setHelp("If true, will skip the fetching of new sbml files and will use those placed under biomodels option path");
+
         try {
             jsap.registerParameter(opt1);
             jsap.registerParameter(opt2);
@@ -63,6 +73,7 @@ public class JSAPHandler {
             jsap.registerParameter(opt4);
             jsap.registerParameter(opt5);
             jsap.registerParameter(opt6);
+            jsap.registerParameter(opt7);
         } catch (JSAPException e) {
             e.printStackTrace();
         }
