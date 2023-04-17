@@ -12,7 +12,7 @@
         <analysis-core.version>3.4.2</analysis-core.version>
         <httpclient.version>4.5.13</httpclient.version>
         <jackson.version>2.12.3</jackson.version>
-        <spring.version>5.3.8</spring.version>
+        <spring.version>5.3.27</spring.version>
         <jsap.version>2.1</jsap.version>
         <javassist.version>3.28.0-GA</javassist.version>
         <junit.version>5.8.0-M1</junit.version>
