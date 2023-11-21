@@ -35,9 +35,9 @@ public class Producer implements Runnable {
             }
             for (File file : files) {
                 if (file.getName().startsWith("BIOMD")) {
-                    BioModel bioModel = BioModelHelper.getBioModelByBioModelId(file);
-                    if (bioModel.getSpecie() != null && SpeciesHelper.getInstance().getSpecies().contains(bioModel.getSpecie())) {
-                        bioModelBlockingQueue.put(BioModelHelper.getBioModelByBioModelId(file));
+                    if (!file.getName().endsWith(".xml") && !file.getName().endsWith(".sbml")) {
+                        logger.warn(file.getName()  + " skipped since its format is not supported (only supporting SBML)");
+                        continue;
                     }
                 }
             }

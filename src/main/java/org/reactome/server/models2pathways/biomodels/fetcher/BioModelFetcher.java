@@ -76,7 +76,7 @@ public class BioModelFetcher {
                         "numResults", "100",
                         "sort", "id-asc",
                         "domain", "biomodels",
-                        "query", "*:* AND curationstatus:\"Manually curated\""
+                        "query", "*:* AND curationstatus:\"Manually curated\" AND modelformat:\"SBML\""
                 );
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(BIOMODELS_URL + "/search" + encode(params)))
