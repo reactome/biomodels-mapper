@@ -39,9 +39,17 @@ public class Producer implements Runnable {
                         logger.warn(file.getName()  + " skipped since its format is not supported (only supporting SBML)");
                         continue;
                     }
+                    try {
+                        BioModel bioModel = BioModelHelper.getBioModelByBioModelId(file);
+                        if (bioModel.getSpecie() != null && SpeciesHelper.getInstance().getSpecies().contains(bioModel.getSpecie())) {
+                            bioModelBlockingQueue.put(BioModelHelper.getBioModelByBioModelId(file));
+                        }
+                    } catch (Exception e) {
+                        logger.error(file.getName()  + " produced error :" + e.getMessage(), e);
+                    }
                 }
             }
-        } catch (InterruptedException | NullPointerException e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         } finally {
             Thread.currentThread().interrupt();
