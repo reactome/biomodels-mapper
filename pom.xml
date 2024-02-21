@@ -9,7 +9,7 @@
 
     <properties>
         <jdk.version>11</jdk.version>
-        <analysis-core.version>3.4.2</analysis-core.version>
+        <analysis-core.version>3.4.7</analysis-core.version>
         <httpclient.version>4.5.13</httpclient.version>
         <jackson.version>2.12.3</jackson.version>
         <spring.version>5.3.8</spring.version>
