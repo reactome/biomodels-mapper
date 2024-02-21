@@ -3,6 +3,7 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.reactome.server.tools</groupId>
     <artifactId>biomodels-mapper</artifactId>
     <version>2.0</version>
@@ -22,7 +23,6 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
     </properties>
-
 
     <dependencies>
         <dependency>
@@ -133,7 +133,6 @@
             <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -153,6 +152,7 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -161,6 +161,7 @@
                     <mainClass>org.reactome.server.models2pathways.Main</mainClass>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -169,6 +170,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -200,7 +202,28 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- run checkstyle linter -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.1</version>
+                <!-- uncomment below for custom configs -->
+                <!--
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+                -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -208,6 +231,7 @@
             </resource>
         </resources>
     </build>
+
     <repositories>
         <repository>
             <id>central</id>
@@ -218,6 +242,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <repository>
             <id>central_1</id>
             <name>Maven Repository Switchboard</name>
@@ -227,6 +252,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <!-- EBI repo -->
         <repository>
             <id>nexus-ebi-repo</id>
@@ -239,6 +265,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <!-- EBI SNAPSHOT repo -->
         <repository>
             <id>nexus-ebi-snapshot-repo</id>
@@ -251,6 +278,7 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
         <repository>
             <id>ebi-repo-mvn</id>
             <name>The EBI repository</name>
@@ -259,6 +287,7 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+        
         <repository>
             <id>biojava-legacy-repo</id>
             <name>BioJava's Git based legacy maven repo</name>
