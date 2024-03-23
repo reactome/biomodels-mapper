@@ -1,0 +1,8 @@
+.git
+.github
+
+.dockerignore
+.gitignore
+Dockerfile
+Models2Pathways.pdf
+README.MD
